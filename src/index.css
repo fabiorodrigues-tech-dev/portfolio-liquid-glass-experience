@@ -1,0 +1,310 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "SF Mono", Menlo, Monaco, Consolas, monospace;
+
+  /* macOS Tahoe Official Accent Colors */
+  --color-tahoe-red: #ff3b30;
+  --color-tahoe-orange: #ff9500;
+  --color-tahoe-yellow: #ffcc00;
+  --color-tahoe-green: #34c759;
+  --color-tahoe-mint: #00c7be;
+  --color-tahoe-teal: #30b0c7;
+  --color-tahoe-cyan: #32ade6;
+  --color-tahoe-blue: #007aff;
+  --color-tahoe-indigo: #5856d6;
+  --color-tahoe-purple: #af52de;
+  --color-tahoe-pink: #ff2d55;
+  --color-tahoe-brown: #a2845e;
+  --color-tahoe-gray: #8e8e93;
+
+  /* Official Apple Window Traffic Lights */
+  --color-traffic-red: #ff5f57;
+  --color-traffic-red-border: #e0443e;
+  --color-traffic-yellow: #febc2e;
+  --color-traffic-yellow-border: #d89e24;
+  --color-traffic-green: #28c840;
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-border: hsl(var(--border));
+}
+
+@layer base {
+  :root {
+    --background: 240 10% 96%;
+    --foreground: 240 10% 4%;           /* PRETO PROFUNDO NO MODO DIA (#09090b) */
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 4%;      /* TEXTO DOS CARDS PRETO NO DIA */
+    --muted-foreground: 240 5% 30%;     /* SUBTÍTULOS E LABELS EM CINZA ESCURO (#4b5563) */
+    --border: 240 6% 85%;
+    --accent-color: #007aff;
+  }
+
+  .dark {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;             /* BRANCO NO MODO ESCURO (#f4f4f6) */
+    --card: 240 10% 6%;
+    --card-foreground: 0 0% 98%;        /* TEXTO DOS CARDS BRANCO NA NOITE */
+    --muted-foreground: 240 5% 65%;     /* SUBTÍTULOS EM CINZA CLARO (#a1a1aa) */
+    --border: 240 4% 16%;
+  }
+}
+
+/* REGRA DE SEGURANÇA FORÇADA PARA O MODO CLARO */
+html:not(.dark) body {
+  color: #09090b !important;
+}
+
+html:not(.dark) .text-foreground {
+  color: #09090b !important;
+}
+
+html:not(.dark) .text-muted-foreground {
+  color: #374151 !important;
+}
+
+html:not(.dark) .text-white:not(button):not(a) {
+  color: #09090b !important;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+}
+
+/* Custom Scrollbars in Apple macOS style */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(140, 140, 150, 0.3);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(140, 140, 150, 0.5);
+}
+
+/* 3 Official Liquid Glass Densities modeled directly from Apple macOS 26 UI Kit */
+
+/* 1. Liquid Glass Small: menus, badges, pill tags */
+.liquid-glass-sm {
+  background-color: rgba(245, 246, 250, 0.82);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.08),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+}
+
+.dark .liquid-glass-sm {
+  background-color: rgba(28, 30, 42, 0.45);
+  backdrop-filter: blur(16px) saturate(190%);
+  -webkit-backdrop-filter: blur(16px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.35),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.16);
+}
+
+/* 2. Liquid Glass Medium: project cards, flyout sheets, dialogs */
+.liquid-glass-md {
+  background-color: rgba(245, 246, 250, 0.88);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 36px -6px rgba(0, 0, 0, 0.12),
+              0 4px 14px 0 rgba(0, 0, 0, 0.06),
+              inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.dark .liquid-glass-md {
+  background-color: rgba(22, 24, 34, 0.58);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 16px 42px -6px rgba(0, 0, 0, 0.6),
+              0 4px 12px 0 rgba(0, 0, 0, 0.4),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.18);
+}
+
+/* 3. Liquid Glass Large: main window frame */
+.liquid-glass-lg {
+  background-color: rgba(245, 246, 250, 0.90);
+  backdrop-filter: blur(48px) saturate(200%);
+  -webkit-backdrop-filter: blur(48px) saturate(200%);
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.18),
+              0 8px 24px 0 rgba(0, 0, 0, 0.08),
+              inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.dark .liquid-glass-lg {
+  background-color: rgba(18, 20, 29, 0.70);
+  backdrop-filter: blur(48px) saturate(200%);
+  -webkit-backdrop-filter: blur(48px) saturate(200%);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8),
+              0 15px 35px -10px rgba(0, 0, 0, 0.6),
+              0 0 0 1px rgba(255, 255, 255, 0.08),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.20);
+}
+
+/* Continuous Top Menu Bar */
+.liquid-glass-menubar {
+  background-color: rgba(255, 255, 255, 0.40);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.04);
+}
+
+.dark .liquid-glass-menubar {
+  background-color: rgba(14, 16, 24, 0.50);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Apple Segmented Control */
+.apple-segmented-container {
+  background-color: rgba(0, 0, 0, 0.06);
+  border-radius: 9999px;
+  padding: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.dark .apple-segmented-container {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.apple-segmented-active {
+  background-color: #ffffff;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.12),
+              0 0 1px 0 rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 0 rgba(255, 255, 255, 1);
+  color: var(--accent-color, #007aff);
+  font-weight: 600;
+}
+
+.dark .apple-segmented-active {
+  background-color: rgba(255, 255, 255, 0.22);
+  border-radius: 9999px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.35),
+              0 0 1px 0 rgba(255, 255, 255, 0.2),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Suporte a color-scheme */
+html:not(.dark) {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* Exceção Única para Texto Branco: Botões de ação com fundos sólidos e coloridos */
+.bg-blue-600,
+.bg-blue-600 *,
+.bg-red-600,
+.bg-red-600 *,
+.bg-pink-600,
+.bg-pink-600 *,
+.bg-amber-600,
+.bg-amber-600 *,
+[class*="bg-[#007aff]"],
+[class*="bg-[#007aff]"] *,
+[class*="bg-[#25D366]"],
+[class*="bg-[#25D366]"] *,
+[class*="bg-[#34c759]"],
+[class*="bg-[#34c759]"] *,
+[class*="bg-[#0077b5]"],
+[class*="bg-[#0077b5]"] *,
+[class*="bg-[#5856d6]"],
+[class*="bg-[#5856d6]"] *,
+[class*="bg-[#24292e]"],
+[class*="bg-[#24292e]"] *,
+button[class*="bg-blue"],
+button[class*="bg-red"],
+a[class*="bg-blue"],
+a[class*="bg-red"] {
+  color: #ffffff !important;
+}
+
+/* FORÇA TEXTO PRETO NO MODO CLARO DENTRO DA JANELA */
+.light-theme,
+.light-theme * {
+  color: #09090b !important;
+}
+
+/* Títulos e textos secundários com contraste perfeito */
+.light-theme p,
+.light-theme span,
+.light-theme label {
+  color: #27272a !important;
+}
+
+/* EXCEÇÃO OBRIGATÓRIA: Botões com fundo azul ou vermelho mantêm texto branco */
+.light-theme .bg-blue-600,
+.light-theme .bg-blue-600 *,
+.light-theme .bg-red-600,
+.light-theme .bg-red-600 *,
+.light-theme [class*="bg-[#007aff]"],
+.light-theme [class*="bg-[#007aff]"] *,
+.light-theme [class*="bg-[#25D366]"],
+.light-theme [class*="bg-[#25D366]"] *,
+.light-theme [class*="bg-[#34c759]"],
+.light-theme [class*="bg-[#34c759]"] *,
+.light-theme [class*="bg-[#0077b5]"],
+.light-theme [class*="bg-[#0077b5]"] *,
+.light-theme [class*="bg-[#5856d6]"],
+.light-theme [class*="bg-[#5856d6]"] *,
+.light-theme button[class*="bg-blue"],
+.light-theme button[class*="bg-blue"] *,
+.light-theme a[class*="bg-blue"],
+.light-theme a[class*="bg-blue"] *,
+.light-theme button[class*="bg-red"],
+.light-theme button[class*="bg-red"] *,
+.light-theme a[class*="bg-red"],
+.light-theme a[class*="bg-red"] * {
+  color: #ffffff !important;
+}
+
+/* Fundo e bordas dos cards dentro da janela no modo claro */
+.light-theme .bg-card,
+.light-theme [class*="bg-white/"],
+.light-theme [class*="bg-[#0"] {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(0, 0, 0, 0.14) !important;
+}

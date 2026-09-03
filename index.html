@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Fábio Rodrigues — Apple macOS 26 Liquid Glass Portfolio</title>
+    <meta name="description" content="Portfólio de Fábio Rodrigues (Recife - PE) — Desenvolvimento de Software, Microsserviços Java 21/LGPD, Voice AI, 3D Unreal 5.2, UniFBV e Wolf Agency." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      /* Suporte nativo ao modo de cor */
+      html:not(.dark) {
+        color-scheme: light;
+      }
+      html.dark {
+        color-scheme: dark;
+      }
+
+      /* Exceção Estrita: Mantém texto branco apenas nos botões de fundo escuro e colorido */
+      .bg-blue-600, .bg-blue-600 *,
+      .bg-red-600, .bg-red-600 *,
+      [class*="bg-[#007aff]"], [class*="bg-[#007aff]"] *,
+      [class*="bg-[#25D366]"], [class*="bg-[#25D366]"] *,
+      [class*="bg-[#34c759]"], [class*="bg-[#34c759]"] *,
+      [class*="bg-[#0077b5]"], [class*="bg-[#0077b5]"] *,
+      [class*="bg-[#5856d6]"], [class*="bg-[#5856d6]"] *,
+      [class*="bg-[#24292e]"], [class*="bg-[#24292e]"] *,
+      button[class*="bg-blue"], button[class*="bg-red"],
+      a[class*="bg-blue"], a[class*="bg-red"] {
+        color: #ffffff !important;
+      }
+    </style>
+  </head>
+  <body class="bg-[#080a10] selection:bg-[#007aff]/30">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

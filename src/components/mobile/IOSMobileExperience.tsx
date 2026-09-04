@@ -201,32 +201,18 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. LIMPEZA DA BARRA DE STATUS DO TOPO & DYNAMIC ISLAND (REQUISITO 1)       */}
+      {/* 2. BARRA DE STATUS DO TOPO ULTRALIMPA (SEM DYNAMIC ISLAND - REQUISITO 1)  */}
       {/* ========================================================================= */}
       <header className="fixed top-0 left-0 right-0 z-40 px-5 pt-3 pb-2 flex items-center justify-between select-none backdrop-blur-xl bg-[#f2f2f7]/80 dark:bg-black/60 border-b border-black/5 dark:border-white/5">
         {/* Esquerda: Relógio em tempo real ("19:30") */}
-        <div className="w-16 flex items-center">
+        <div className="flex items-center">
           <span className="font-semibold text-sm tracking-tight text-black dark:text-white">
             {currentTime}
           </span>
         </div>
 
-        {/* Centro: Dynamic Island como pílula preta minimalista e limpa */}
-        <div
-          onClick={() => {
-            triggerHaptic()
-            if (isPlayingMusic) {
-              setIsExpandedPlayerOpen(true)
-            } else {
-              onToggleTheme()
-            }
-          }}
-          className="w-28 h-7 bg-black rounded-full mx-auto shadow-[0_4px_12px_rgba(0,0,0,0.5)] border border-white/10 flex items-center justify-center cursor-pointer active:scale-95 transition-transform"
-          title="Dynamic Island"
-        />
-
-        {/* Direita: Botão da Central de Controle com ícone oficial de 2 toggles */}
-        <div className="w-16 flex items-center justify-end">
+        {/* Direita: Botão oficial de 2 toggles da Central de Controle */}
+        <div className="flex items-center justify-end">
           <button
             type="button"
             onClick={() => {
@@ -243,11 +229,11 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       </header>
 
       {/* ========================================================================= */}
-      {/* 3. NAVEGAÇÃO POR ABAS EM TELA CHEIA (REQUISITO 4 & REQUISITO 3 CONTRASTE) */}
+      {/* 3. NAVEGAÇÃO POR ABAS EM TELA CHEIA (PADDING OTIMIZADO: pb-20)            */}
       {/* ========================================================================= */}
       <main
         id="mobile-scroll-container"
-        className="relative z-10 w-full h-full pt-14 pb-32 overflow-y-auto scroll-smooth px-4 space-y-4"
+        className="relative z-10 w-full h-full pt-14 pb-20 overflow-y-auto scroll-smooth px-4 space-y-4"
       >
         {/* ----------------------------------------------------------------------- */}
         {/* ABA 01: INÍCIO (Widgets de Clima, Foto de Perfil & Apresentação)        */}
@@ -1152,10 +1138,10 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       </main>
 
       {/* ========================================================================= */}
-      {/* 4. DOCK INFERIOR DO IPHONE (5 ITENS EM LIQUID GLASS - REQUISITO 5)        */}
+      {/* 4. DOCK INFERIOR REBAIXADO (REQUISITO 2: bottom-2 rounded-[20px])         */}
       {/* ========================================================================= */}
       <nav
-        className={`fixed bottom-4 left-4 right-4 max-w-sm mx-auto z-40 backdrop-blur-2xl bg-white/95 dark:bg-[#161822]/90 border border-black/5 dark:border-white/15 shadow-[0_12px_36px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_36px_rgba(0,0,0,0.35)] rounded-full px-2 py-2 flex items-center justify-around select-none transition-all duration-300 ${
+        className={`fixed bottom-2 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-sm px-3 py-1.5 rounded-[20px] backdrop-blur-2xl bg-white/95 dark:bg-[#161822]/90 border border-black/5 dark:border-white/15 shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_12px_36px_rgba(0,0,0,0.35)] flex items-center justify-around select-none transition-all duration-300 ${
           isFocusMode ? 'translate-y-24 opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
         }`}
         aria-label="Navegação móvel"
@@ -1163,7 +1149,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         <button
           type="button"
           onClick={() => handleTabSelect('inicio')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-2xl active:scale-95 transition-all cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl active:scale-95 transition-all cursor-pointer ${
             activeTab === 'inicio'
               ? 'bg-black/10 dark:bg-white/15 text-blue-600 dark:text-blue-400 font-bold'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400'
@@ -1176,7 +1162,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         <button
           type="button"
           onClick={() => handleTabSelect('projetos')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-2xl active:scale-95 transition-all cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl active:scale-95 transition-all cursor-pointer ${
             activeTab === 'projetos'
               ? 'bg-black/10 dark:bg-white/15 text-blue-600 dark:text-blue-400 font-bold'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400'
@@ -1189,7 +1175,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         <button
           type="button"
           onClick={() => handleTabSelect('sobre')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-2xl active:scale-95 transition-all cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl active:scale-95 transition-all cursor-pointer ${
             activeTab === 'sobre'
               ? 'bg-black/10 dark:bg-white/15 text-blue-600 dark:text-blue-400 font-bold'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400'
@@ -1202,7 +1188,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         <button
           type="button"
           onClick={() => handleTabSelect('habilidades')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-2xl active:scale-95 transition-all cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl active:scale-95 transition-all cursor-pointer ${
             activeTab === 'habilidades'
               ? 'bg-black/10 dark:bg-white/15 text-blue-600 dark:text-blue-400 font-bold'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400'
@@ -1215,7 +1201,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         <button
           type="button"
           onClick={() => handleTabSelect('contato')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-2xl active:scale-95 transition-all cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl active:scale-95 transition-all cursor-pointer ${
             activeTab === 'contato'
               ? 'bg-black/10 dark:bg-white/15 text-blue-600 dark:text-blue-400 font-bold'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400'
@@ -1227,11 +1213,21 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       </nav>
 
       {/* ========================================================================= */}
-      {/* 5. CENTRAL DE CONTROLE ESTILO iOS (REQUISITO 2 - FIEL AO PRINT 5b27f553)   */}
+      {/* 5. CENTRAL DE CONTROLE ESTILO iOS (REQUISITO 3 - FIEL AO PRINT 5b27f553)   */}
       {/* ========================================================================= */}
       {isControlCenterOpen && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-2xl p-6 flex flex-col justify-between text-white animate-in fade-in duration-200">
-          {/* Linha Superior */}
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-3xl p-5 overflow-y-auto flex flex-col justify-start space-y-3.5 text-white animate-in fade-in duration-200">
+          {/* Puxador do Topo: Microbarra arredondada (w-10 h-1 rounded-full bg-white/30 mx-auto mb-1) */}
+          <div
+            onClick={() => {
+              triggerHaptic()
+              setIsControlCenterOpen(false)
+            }}
+            className="w-10 h-1 rounded-full bg-white/30 hover:bg-white/50 mx-auto cursor-pointer transition-colors"
+            title="Fechar Central de Controle"
+          />
+
+          {/* Linha de Título com Botão Fechar 'X' */}
           <div className="flex items-center justify-between pb-1">
             <div className="flex items-center space-x-2">
               <AppleControlCenterIcon className="w-4 h-4 text-white/90" />
@@ -1245,74 +1241,107 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                 triggerHaptic()
                 setIsControlCenterOpen(false)
               }}
-              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white active:scale-95 transition-all cursor-pointer"
-              title="Fechar Central de Controle"
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white active:scale-95 transition-all cursor-pointer"
+              title="Fechar"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Bloco Superior (2 Cards Quadrados lado a lado, rounded-3xl p-4 bg-white/10 border border-white/10) */}
-          <div className="grid grid-cols-2 gap-4">
-            {/* Card 1 (Status & Foco) */}
-            <div className="rounded-3xl p-4 bg-white/10 border border-white/10 flex flex-col justify-between h-36">
+          {/* Linha Superior (Grid de 2 Colunas, h-36 gap-3.5) */}
+          <div className="grid grid-cols-2 gap-3.5 h-36">
+            {/* Bloco Esquerdo (Status & Modos, rounded-[26px] bg-white/10 p-3.5 flex flex-col justify-between) */}
+            <div className="rounded-[26px] bg-white/10 border border-white/10 p-3.5 flex flex-col justify-between h-36">
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">
-                  Status
-                </span>
-                <h3 className="text-xs font-bold text-white mt-0.5 truncate">
+                <div className="flex items-center space-x-1.5 mb-0.5">
+                  <span className="w-2 h-2 rounded-full bg-[#34c759] animate-pulse" />
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-300">
+                    Recife, PE
+                  </span>
+                </div>
+                <h3 className="text-xs font-bold text-white truncate">
                   Fábio Rodrigues
                 </h3>
-                <span className="text-[10px] text-zinc-400 block truncate">
-                  Recife, PE
-                </span>
               </div>
 
+              {/* Botão Modo Foco: cápsula com ícone de lua para ocultar o dock */}
               <button
                 type="button"
                 onClick={() => {
                   triggerHaptic()
                   onToggleFocusMode()
                 }}
-                className={`py-2 px-2.5 rounded-2xl text-[10px] font-bold flex items-center justify-between transition-all cursor-pointer active:scale-95 ${
+                className={`py-1.5 px-2.5 rounded-xl text-[10px] font-semibold flex items-center justify-between transition-all cursor-pointer active:scale-95 ${
                   isFocusMode
                     ? 'bg-indigo-600 text-white shadow-sm'
-                    : 'bg-white/10 hover:bg-white/20 text-white/90 border border-white/10'
+                    : 'bg-white/15 hover:bg-white/25 text-white'
                 }`}
               >
                 <span className="flex items-center gap-1.5">
                   <Moon className="w-3 h-3" />
                   <span>Modo Foco</span>
                 </span>
-                <span className="text-[9px] opacity-75">
+                <span className="text-[9px] opacity-80">
                   {isFocusMode ? 'Ativo' : 'Dock'}
+                </span>
+              </button>
+
+              {/* Botão Tema: alternador instantâneo Modo Claro / Escuro */}
+              <button
+                type="button"
+                onClick={() => {
+                  triggerHaptic()
+                  onToggleTheme()
+                }}
+                className="py-1.5 px-2.5 rounded-xl text-[10px] font-semibold bg-white/15 hover:bg-white/25 text-white flex items-center justify-between transition-all cursor-pointer active:scale-95"
+              >
+                <span className="flex items-center gap-1.5">
+                  {isDark ? <Moon className="w-3 h-3 text-indigo-400" /> : <Sun className="w-3 h-3 text-amber-400" />}
+                  <span>Aparência</span>
+                </span>
+                <span className="text-[9px] opacity-80">
+                  {isDark ? 'Escuro' : 'Claro'}
                 </span>
               </button>
             </div>
 
-            {/* Card 2 (Música Compacto) */}
+            {/* Bloco Direito (Widget de Música, rounded-[26px] bg-white/10 p-4 flex flex-col justify-between) */}
             <div
               onClick={() => {
                 triggerHaptic()
                 setIsExpandedPlayerOpen(true)
               }}
-              className="rounded-3xl p-4 bg-white/10 border border-white/10 flex flex-col justify-between h-36 cursor-pointer group active:scale-98 transition-all"
+              className="rounded-[26px] bg-white/10 border border-white/10 p-3.5 flex flex-col justify-between h-36 cursor-pointer group active:scale-[0.98] transition-all"
             >
-              <div className="flex items-start space-x-2.5">
-                <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white shadow-sm shrink-0">
+              <div className="flex items-start space-x-2">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white shadow-sm shrink-0">
                   <Music className="w-4 h-4" />
                 </div>
                 <div className="overflow-hidden">
                   <span className="text-[11px] font-bold text-white block truncate">
-                    Lofi Chillout
+                    Música Ambiente
                   </span>
-                  <span className="text-[9.5px] text-zinc-400 block truncate">
-                    Fábio Rodrigues Playlist
+                  <span className="text-[9px] text-zinc-300 block truncate">
+                    Lofi Chill • YouTube
                   </span>
                 </div>
               </div>
 
+              {/* Controles táteis: Retroceder, Play/Pause, Avançar vinculados à playlist */}
               <div className="flex items-center justify-between pt-1">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    triggerHaptic()
+                    onSkipTrack()
+                  }}
+                  className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center active:scale-90 transition-transform cursor-pointer"
+                  title="Retroceder"
+                >
+                  <SkipBack className="w-3 h-3" />
+                </button>
+
                 <button
                   type="button"
                   onClick={(e) => {
@@ -1333,22 +1362,22 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                     triggerHaptic()
                     onSkipTrack()
                   }}
-                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center active:scale-90 transition-transform cursor-pointer"
-                  title="Próxima Faixa"
+                  className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center active:scale-90 transition-transform cursor-pointer"
+                  title="Avançar"
                 >
-                  <SkipForward className="w-3.5 h-3.5" />
+                  <SkipForward className="w-3 h-3" />
                 </button>
 
-                <span className="text-[10px] font-semibold text-blue-400">
+                <span className="text-[9px] font-semibold text-blue-400">
                   Expandir &gt;
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Linha de Sliders Verticais Autênticos da Apple (grid grid-cols-2 gap-4 h-40) */}
-          <div className="grid grid-cols-2 gap-4 h-40">
-            {/* Slider 1 (Brilho) */}
+          {/* Linha de Sliders Verticais do iOS (grid grid-cols-2 gap-3.5 h-38) */}
+          <div className="grid grid-cols-2 gap-3.5 h-38">
+            {/* Slider de Brilho: Cápsula vertical com Sol fixado no centro */}
             <div
               onPointerDown={(e) => {
                 isDraggingBrightnessRef.current = true
@@ -1362,24 +1391,24 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
               onPointerUp={() => {
                 isDraggingBrightnessRef.current = false
               }}
-              className="rounded-3xl bg-white/15 border border-white/10 relative overflow-hidden flex flex-col justify-end items-center pb-4 cursor-pointer touch-none select-none"
-              title="Brilho da Tela (Arraste verticalmente)"
+              className="rounded-[26px] bg-white/15 backdrop-blur-xl border border-white/10 relative overflow-hidden flex flex-col justify-end items-center pb-3 cursor-pointer touch-none select-none h-38"
+              title="Brilho da Tela"
             >
-              {/* Preenchimento proporcional */}
+              {/* Preenchimento branco translúcido (bg-white/80) */}
               <div
-                className="absolute bottom-0 left-0 right-0 bg-white transition-all duration-75 pointer-events-none"
+                className="absolute bottom-0 left-0 right-0 bg-white/80 transition-all duration-75 pointer-events-none"
                 style={{ height: `${brightness}%` }}
               />
-              {/* Ícone de Sol no centro com contraste */}
-              <div className="relative z-10 flex flex-col items-center pointer-events-none">
+              {/* Ícone de Sol fixado no centro da cápsula */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
                 <Sun
                   className={`w-6 h-6 transition-colors ${
-                    brightness > 30 ? 'text-zinc-950' : 'text-white'
+                    brightness > 50 ? 'text-zinc-950' : 'text-white'
                   }`}
                 />
                 <span
                   className={`text-[10px] font-mono font-bold mt-1 ${
-                    brightness > 30 ? 'text-zinc-950' : 'text-white'
+                    brightness > 50 ? 'text-zinc-950' : 'text-white'
                   }`}
                 >
                   {brightness}%
@@ -1387,7 +1416,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
               </div>
             </div>
 
-            {/* Slider 2 (Volume) */}
+            {/* Slider de Volume: Cápsula vertical com Alto-falante no centro */}
             <div
               onPointerDown={(e) => {
                 isDraggingVolumeRef.current = true
@@ -1401,28 +1430,28 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
               onPointerUp={() => {
                 isDraggingVolumeRef.current = false
               }}
-              className="rounded-3xl bg-white/15 border border-white/10 relative overflow-hidden flex flex-col justify-end items-center pb-4 cursor-pointer touch-none select-none"
-              title="Volume do Áudio (Arraste verticalmente)"
+              className="rounded-[26px] bg-white/15 backdrop-blur-xl border border-white/10 relative overflow-hidden flex flex-col justify-end items-center pb-3 cursor-pointer touch-none select-none h-38"
+              title="Volume do Som"
             >
-              {/* Preenchimento proporcional */}
+              {/* Preenchimento branco translúcido (bg-white/80) */}
               <div
-                className="absolute bottom-0 left-0 right-0 bg-white transition-all duration-75 pointer-events-none"
+                className="absolute bottom-0 left-0 right-0 bg-white/80 transition-all duration-75 pointer-events-none"
                 style={{ height: `${soundVolume}%` }}
               />
-              {/* Ícone de Alto-Falante no centro com contraste */}
-              <div className="relative z-10 flex flex-col items-center pointer-events-none">
+              {/* Ícone de Alto-Falante fixado no centro da cápsula */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
                 {soundVolume === 0 ? (
                   <VolumeX className="w-6 h-6 text-white" />
                 ) : (
                   <Volume2
                     className={`w-6 h-6 transition-colors ${
-                      soundVolume > 30 ? 'text-zinc-950' : 'text-white'
+                      soundVolume > 50 ? 'text-zinc-950' : 'text-white'
                     }`}
                   />
                 )}
                 <span
                   className={`text-[10px] font-mono font-bold mt-1 ${
-                    soundVolume > 30 ? 'text-zinc-950' : 'text-white'
+                    soundVolume > 50 ? 'text-zinc-950' : 'text-white'
                   }`}
                 >
                   {soundVolume}%
@@ -1431,59 +1460,32 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </div>
           </div>
 
-          {/* Bloco Inferior: Botão Cápsula de Tema + Linha de Cores de Acento */}
-          <div className="space-y-3">
-            {/* Botão Cápsula de Tema (Aparência) */}
-            <button
-              type="button"
-              onClick={() => {
-                triggerHaptic()
-                onToggleTheme()
-              }}
-              className="w-full py-3.5 px-4 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/10 flex items-center justify-between active:scale-98 transition-all cursor-pointer"
-            >
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center">
-                  {isDark ? <Moon className="w-4 h-4 text-indigo-400" /> : <Sun className="w-4 h-4 text-amber-400" />}
-                </div>
-                <div className="text-left">
-                  <span className="text-xs font-bold text-white block">
-                    Aparência
-                  </span>
-                  <span className="text-[10px] text-zinc-400 block">
-                    {isDark ? 'Modo Escuro Ativado' : 'Modo Claro Ativado'}
-                  </span>
-                </div>
-              </div>
-              <span className="px-3 py-1 rounded-full text-[10px] font-bold bg-white/15 text-white">
-                Alternar
-              </span>
-            </button>
-
-            {/* Linha de Cores de Acento: 5 círculos coloridos funcionais */}
-            <div className="rounded-2xl p-3 bg-white/10 border border-white/10 flex items-center justify-around">
-              {PRIMARY_ACCENT_KEYS.map((key) => {
-                const def = ACCENT_COLORS[key]
-                const isSelected = accentColor === key
-                return (
-                  <button
-                    key={key}
-                    type="button"
-                    onClick={() => {
-                      triggerHaptic()
-                      onChangeAccent(key)
-                    }}
-                    className={`w-7 h-7 rounded-full transition-all cursor-pointer flex items-center justify-center ${
-                      isSelected ? 'ring-2 ring-white ring-offset-2 ring-offset-black scale-110' : 'opacity-80 hover:opacity-100'
-                    }`}
-                    style={{ backgroundColor: isDark ? def.dark : def.light }}
-                    title={def.name}
-                  >
-                    {isSelected && <span className="w-2 h-2 rounded-full bg-white shadow-sm" />}
-                  </button>
-                )
-              })}
-            </div>
+          {/* Bloco Inferior: Seletor de Cores de Acento (cápsula estreita com 5 pontos de cor) */}
+          <div className="rounded-[22px] p-2.5 bg-white/10 border border-white/10 flex items-center justify-around">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-400 mr-1 hidden sm:inline">
+              Acento:
+            </span>
+            {PRIMARY_ACCENT_KEYS.map((key) => {
+              const def = ACCENT_COLORS[key]
+              const isSelected = accentColor === key
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => {
+                    triggerHaptic()
+                    onChangeAccent(key)
+                  }}
+                  className={`w-7 h-7 rounded-full transition-all cursor-pointer flex items-center justify-center ${
+                    isSelected ? 'ring-2 ring-white ring-offset-2 ring-offset-black scale-110' : 'opacity-80 hover:opacity-100'
+                  }`}
+                  style={{ backgroundColor: isDark ? def.dark : def.light }}
+                  title={def.name}
+                >
+                  {isSelected && <span className="w-2 h-2 rounded-full bg-white shadow-sm" />}
+                </button>
+              )
+            })}
           </div>
         </div>
       )}

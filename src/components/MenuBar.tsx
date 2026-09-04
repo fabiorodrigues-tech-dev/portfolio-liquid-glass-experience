@@ -73,11 +73,17 @@ export const MenuBar: React.FC<MenuBarProps> = ({
 
           {activeMenu === 'about' && (
             <div
-              className={`absolute left-0 top-10 w-72 p-5 rounded-2xl apple-liquid-glass ${
-                isDark ? 'bg-[#0c0d14]/85 text-white' : 'bg-white/90 text-zinc-950'
-              } shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-100 border-none select-none`}
+              className={`z-50 apple-liquid-glass shadow-2xl animate-in fade-in select-none border border-black/10 dark:border-white/15 ${
+                isDark ? 'bg-[#0c0d14]/90 text-white' : 'bg-white/95 text-zinc-950'
+              }
+              /* Mobile: Floating Card Sheet (< md) */
+              max-md:fixed max-md:inset-x-3 max-md:bottom-20 max-md:top-auto max-md:w-auto max-md:rounded-2xl max-md:slide-in-from-bottom-4
+              /* Desktop: Top-left Popover (>= md) */
+              md:absolute md:left-0 md:top-10 md:w-72 md:rounded-2xl md:zoom-in-95 md:duration-100 p-5`}
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Mobile grabber pill */}
+              <div className="w-8 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-3 md:hidden" />
               {/* Header */}
               <div className="flex items-start justify-between">
                 <div>
@@ -144,7 +150,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
           className="px-1.5 py-0.5 font-medium text-[12px] tracking-tight text-zinc-900 dark:text-white cursor-default"
           title="Horário Oficial de Brasília / Recife"
         >
-          <span>{currentDate} </span>
+          <span className="hidden sm:inline">{currentDate} </span>
           <span className="font-bold">{currentTime}</span>
         </div>
 

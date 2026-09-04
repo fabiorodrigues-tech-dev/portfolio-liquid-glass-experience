@@ -132,7 +132,7 @@ export function App() {
       />
 
       {/* 3. Main Window Frame (Liquid Glass Large) */}
-      <div className="flex-1 flex items-center justify-center p-2 sm:p-5 pb-16 sm:pb-5 overflow-hidden">
+      <div className="flex-1 w-full h-full p-0 overflow-hidden md:flex md:items-center md:justify-center md:p-5">
         <WindowFrame
           activeTab={activeTab}
           onTabChange={setActiveTab}

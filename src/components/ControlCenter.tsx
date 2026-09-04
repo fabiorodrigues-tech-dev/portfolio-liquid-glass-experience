@@ -89,15 +89,21 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
     <>
       {/* Backdrop for dismiss */}
       <div
-        className="fixed inset-0 z-40 bg-black/10 backdrop-blur-[1px]"
+        className="fixed inset-0 z-50 bg-black/30 dark:bg-black/50 backdrop-blur-[2px] animate-in fade-in duration-200"
         onClick={onClose}
       />
 
-      {/* Control Center Panel */}
+      {/* Control Center Panel - Mobile Bottom Sheet / Desktop Flyout */}
       <div
-        className="fixed top-[calc(2.5rem+env(safe-area-inset-top,0px))] sm:top-9 right-3 left-3 sm:left-auto sm:right-3 w-auto sm:w-88 max-w-full sm:max-w-sm max-h-[calc(100dvh-4.5rem-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px))] overflow-y-auto custom-scrollbar px-4 py-3.5 sm:p-3 apple-liquid-glass rounded-2xl animate-in fade-in slide-in-from-top-2 duration-200 select-none shadow-2xl z-50"
+        className="fixed z-50 apple-liquid-glass select-none shadow-2xl transition-all
+          /* Mobile: iOS-style Liquid Glass Bottom Sheet (< md) */
+          inset-x-0 bottom-0 rounded-t-[28px] rounded-b-none border-t border-x-0 border-b-0 border-white/25 dark:border-white/15 px-4 pt-3 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] max-h-[85dvh] overflow-y-auto custom-scrollbar animate-in slide-in-from-bottom duration-300
+          /* Desktop: macOS Top-right Flyout (>= md) */
+          md:top-9 md:right-3 md:bottom-auto md:left-auto md:w-88 md:rounded-2xl md:border md:border-white/25 md:dark:border-white/15 md:p-3 md:max-h-[calc(100vh-5rem)] md:slide-in-from-top-2 md:duration-200"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Mobile Pull / Grabber Handle */}
+        <div className="w-10 h-1 rounded-full bg-black/20 dark:bg-white/25 mx-auto mb-3 md:hidden" />
         {/* Top 2-Column Grid */}
         <div className="grid grid-cols-2 gap-2 mb-2">
           {/* Action Group: 3 Real Functional Buttons */}

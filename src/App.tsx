@@ -240,13 +240,6 @@ export function App() {
           theme={theme}
         />
 
-        {/* 7. macOS Quick Look Inspector Modal (Spacebar / Preview) */}
-        <ProjectQuickLook
-          project={selectedProject}
-          onClose={() => setSelectedProject(null)}
-          theme={theme}
-        />
-
         {/* 8. macOS Floating Dock at Bottom with Physical Magnification & Focus Mode */}
         <Dock
           activeTab={activeTab}
@@ -267,10 +260,26 @@ export function App() {
         <IOSMobileExperience
           theme={theme}
           onToggleTheme={toggleTheme}
+          accentColor={accentColor}
+          onChangeAccent={setAccentColor}
+          isFocusMode={isFocusMode}
+          onToggleFocusMode={() => setIsFocusMode((prev) => !prev)}
+          isPlayingMusic={isPlayingMusic}
+          onTogglePlayMusic={togglePlayMusic}
+          soundVolume={soundVolume}
+          onChangeVolume={setSoundVolume}
+          onSkipTrack={skipTrack}
           soundEffectsEnabled={isSoundEffectsEnabled}
           onSelectProject={setSelectedProject}
         />
       </div>
+
+      {/* Quick Look Inspector Modal (Shared for Desktop & Mobile) */}
+      <ProjectQuickLook
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+        theme={theme}
+      />
 
       {/* ========================================================================= */}
       {/* 3. PERSISTENT BACKGROUND SERVICES (YouTube Ambient Audio)                 */}

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import type { AccentColor, Project, TabType, ThemeMode } from './types'
+import { useState, useEffect, useCallback } from 'react'
+import type { AccentColor, Project, TabType, ThemeMode, GlassStyle } from './types'
 import { TahoeWallpaper } from './components/TahoeWallpaper'
 import { MenuBar } from './components/MenuBar'
 import { WindowFrame } from './components/WindowFrame'
@@ -11,6 +11,7 @@ import { AudioPlayer } from './components/AudioPlayer'
 import { IntroBootScreen } from './components/IntroBootScreen'
 import { PROJECTS_DATA } from './data/portfolioData'
 import { ACCENT_COLORS } from './data/accentColors'
+import { playHapticClick } from './lib/soundEffects'
 
 export function App() {
   const [theme, setTheme] = useState<ThemeMode>(() => {
@@ -30,6 +31,22 @@ export function App() {
     return 'blue'
   })
 
+  const [glassStyle, setGlassStyle] = useState<GlassStyle>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('macos_glass_style') as GlassStyle
+      if (saved) return saved
+    }
+    return 'translucent'
+  })
+
+  const [isSoundEffectsEnabled, setIsSoundEffectsEnabled] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('macos_sfx_enabled')
+      if (saved !== null) return saved === 'true'
+    }
+    return true
+  })
+
   const [activeTab, setActiveTab] = useState<TabType>('projetos')
   const [isControlCenterOpen, setIsControlCenterOpen] = useState(false)
   const [isSpotlightOpen, setIsSpotlightOpen] = useState(false)
@@ -42,6 +59,7 @@ export function App() {
   const [isSoundMuted, setIsSoundMuted] = useState(false)
   const [skipTrigger, setSkipTrigger] = useState(0)
 
+
   // Synchronize document dark class & local storage
   useEffect(() => {
     const root = document.documentElement
@@ -52,6 +70,22 @@ export function App() {
     }
     localStorage.setItem('macos_theme', theme)
   }, [theme])
+
+  // Synchronize glass mode (translucent vs tinted) to html element & localStorage
+  useEffect(() => {
+    const root = document.documentElement
+    if (glassStyle === 'tinted') {
+      root.classList.add('glass-tinted')
+    } else {
+      root.classList.remove('glass-tinted')
+    }
+    localStorage.setItem('macos_glass_style', glassStyle)
+  }, [glassStyle])
+
+  // Synchronize SFX state to localStorage
+  useEffect(() => {
+    localStorage.setItem('macos_sfx_enabled', String(isSoundEffectsEnabled))
+  }, [isSoundEffectsEnabled])
 
   // Synchronize accent color to CSS variable --accent-color and local storage
   useEffect(() => {
@@ -75,6 +109,27 @@ export function App() {
       return next
     })
   }
+
+  const toggleGlassStyle = () => {
+    setGlassStyle((prev) => (prev === 'translucent' ? 'tinted' : 'translucent'))
+  }
+
+  const toggleSoundEffects = () => {
+    setIsSoundEffectsEnabled((prev) => {
+      const next = !prev
+      if (next) {
+        playHapticClick()
+      }
+      return next
+    })
+  }
+
+  const handleTabChange = useCallback((tab: TabType) => {
+    if (isSoundEffectsEnabled) {
+      playHapticClick()
+    }
+    setActiveTab(tab)
+  }, [isSoundEffectsEnabled])
 
   const togglePlayMusic = () => {
     setIsPlayingMusic((prev) => !prev)
@@ -103,19 +158,20 @@ export function App() {
         e.preventDefault()
         setIsSpotlightOpen((prev) => !prev)
       } else if (e.key === '1') {
-        setActiveTab('projetos')
+        handleTabChange('projetos')
       } else if (e.key === '2') {
-        setActiveTab('sobre')
+        handleTabChange('sobre')
       } else if (e.key === '3') {
-        setActiveTab('habilidades')
+        handleTabChange('habilidades')
       } else if (e.key === '4') {
-        setActiveTab('contato')
+        handleTabChange('contato')
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [handleTabChange])
+
 
   return (
     <div className="relative w-screen h-screen h-[100dvh] overflow-hidden flex flex-col justify-between text-zinc-900 dark:text-white">
@@ -127,7 +183,7 @@ export function App() {
         onOpenSpotlight={() => setIsSpotlightOpen(true)}
         onToggleControlCenter={() => setIsControlCenterOpen((prev) => !prev)}
         isControlCenterOpen={isControlCenterOpen}
-        onSelectTab={setActiveTab}
+        onSelectTab={handleTabChange}
         theme={theme}
       />
 
@@ -135,7 +191,7 @@ export function App() {
       <div className="flex-1 flex items-center justify-center p-3 sm:p-5 overflow-hidden max-md:p-0 max-md:block max-md:w-full max-md:h-full">
         <WindowFrame
           activeTab={activeTab}
-          onTabChange={setActiveTab}
+          onTabChange={handleTabChange}
           theme={theme}
           onToggleTheme={toggleTheme}
           onOpenSpotlight={() => setIsSpotlightOpen(true)}
@@ -154,6 +210,10 @@ export function App() {
         onChangeAccent={setAccentColor}
         isFocusMode={isFocusMode}
         onToggleFocusMode={() => setIsFocusMode((prev) => !prev)}
+        glassStyle={glassStyle}
+        onToggleGlassStyle={toggleGlassStyle}
+        isSoundEffectsEnabled={isSoundEffectsEnabled}
+        onToggleSoundEffects={toggleSoundEffects}
         isPlayingMusic={isPlayingMusic}
         onTogglePlayMusic={togglePlayMusic}
         soundVolume={soundVolume}
@@ -176,7 +236,7 @@ export function App() {
       <SpotlightModal
         isOpen={isSpotlightOpen}
         onClose={() => setIsSpotlightOpen(false)}
-        onSelectTab={setActiveTab}
+        onSelectTab={handleTabChange}
         onOpenProject={(id) => {
           const found = PROJECTS_DATA.find((p) => p.id === id)
           if (found) setSelectedProject(found)
@@ -194,7 +254,7 @@ export function App() {
       {/* 8. macOS Floating Dock at Bottom with Physical Magnification & Focus Mode */}
       <Dock
         activeTab={activeTab}
-        onSelectTab={setActiveTab}
+        onSelectTab={handleTabChange}
         onToggleControlCenter={() => setIsControlCenterOpen((prev) => !prev)}
         theme={theme}
         isFocusMode={isFocusMode}

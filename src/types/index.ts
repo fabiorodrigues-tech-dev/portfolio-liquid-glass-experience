@@ -2,6 +2,8 @@ export type TabType = 'projetos' | 'sobre' | 'habilidades' | 'contato'
 
 export type ThemeMode = 'light' | 'dark'
 
+export type GlassStyle = 'translucent' | 'tinted'
+
 export type AccentColor =
   | 'blue'
   | 'cyan'

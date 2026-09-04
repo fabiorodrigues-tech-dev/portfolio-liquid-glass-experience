@@ -6,18 +6,16 @@ import {
   VolumeX,
   Palette,
   Check,
-  Briefcase,
   Eye,
   EyeOff,
-  FileDown,
-  ArrowUpRight,
   Sparkles,
+  Layers,
   Play,
   Pause,
   SkipForward,
   Music,
 } from 'lucide-react'
-import type { AccentColor, ThemeMode } from '../types'
+import type { AccentColor, ThemeMode, GlassStyle } from '../types'
 import { ACCENT_COLORS, PRIMARY_ACCENT_KEYS } from '../data/accentColors'
 
 interface ControlCenterProps {
@@ -29,6 +27,10 @@ interface ControlCenterProps {
   onChangeAccent: (color: AccentColor) => void
   isFocusMode: boolean
   onToggleFocusMode: () => void
+  glassStyle: GlassStyle
+  onToggleGlassStyle: () => void
+  isSoundEffectsEnabled: boolean
+  onToggleSoundEffects: () => void
   isPlayingMusic: boolean
   onTogglePlayMusic: () => void
   soundVolume: number
@@ -47,6 +49,10 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
   onChangeAccent,
   isFocusMode,
   onToggleFocusMode,
+  glassStyle,
+  onToggleGlassStyle,
+  isSoundEffectsEnabled,
+  onToggleSoundEffects,
   isPlayingMusic,
   onTogglePlayMusic,
   soundVolume,
@@ -96,7 +102,13 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
       {/* Control Center Panel - Mobile Bottom Sheet / Desktop Flyout */}
       <div
         className={`fixed top-9 right-3 w-88 p-3 rounded-2xl apple-liquid-glass ${
-          isDark ? 'bg-[#0c0d14]/85 text-white' : 'bg-white/85 text-zinc-950'
+          isDark
+            ? glassStyle === 'tinted'
+              ? 'bg-[#0c0d14]/90 text-white'
+              : 'bg-[#0c0d14]/60 text-white'
+            : glassStyle === 'tinted'
+            ? 'bg-white/90 text-zinc-950'
+            : 'bg-white/65 text-zinc-950'
         } shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-150 border border-black/10 dark:border-white/15 select-none
         max-md:top-auto max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:w-full max-md:rounded-t-[28px] max-md:rounded-b-none max-md:border-t max-md:border-x-0 max-md:border-b-0 max-md:px-4 max-md:pt-3 max-md:pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] max-md:max-h-[85dvh] max-md:overflow-y-auto max-md:slide-in-from-bottom`}
         onClick={(e) => e.stopPropagation()}
@@ -105,36 +117,43 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
         <div className="w-10 h-1 rounded-full bg-black/20 dark:bg-white/25 mx-auto mb-3 max-md:block hidden" />
         {/* Top 2-Column Grid */}
         <div className="grid grid-cols-2 gap-2 mb-2">
-          {/* Action Group: 3 Real Functional Buttons */}
+          {/* Action Group: 3 Real Functional Native System Controls */}
           <div className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl p-2.5 flex flex-col justify-between space-y-2">
-            {/* Botão 1: Status Profissional (LinkedIn) */}
-            <a
-              href="https://www.linkedin.com/in/fabiorodrigues-dev/"
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center space-x-2 p-1 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-colors group"
-              title="Abrir perfil no LinkedIn"
+            {/* Botão 1: Liquid Glass (Alternador de Estilo de Vidro) */}
+            <button
+              type="button"
+              onClick={onToggleGlassStyle}
+              className={`flex items-center space-x-2 p-1 rounded-xl transition-all text-left group cursor-pointer ${
+                glassStyle === 'tinted'
+                  ? 'bg-[#007aff]/15 dark:bg-[#0a84ff]/25'
+                  : 'hover:bg-black/5 dark:hover:bg-white/10'
+              }`}
+              title="Alternar estilo óptico: Translúcido (Alta Refração) vs Tonalizado (Sóbrio)"
             >
-              <div className="w-7 h-7 rounded-full bg-[#0077b5] text-white flex items-center justify-center shrink-0 shadow-sm relative">
-                <Briefcase className="w-3.5 h-3.5" />
-                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#34c759] border border-white dark:border-[#161822] animate-pulse" />
+              <div
+                className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                  glassStyle === 'tinted'
+                    ? 'bg-[#007aff] text-white shadow-sm'
+                    : 'bg-black/10 dark:bg-white/10 text-zinc-700 dark:text-zinc-300'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5" />
               </div>
               <div className="leading-tight overflow-hidden">
-                <div className="text-[11px] font-bold text-zinc-900 dark:text-white flex items-center gap-1 truncate">
-                  <span>Disponível</span>
-                  <ArrowUpRight className="w-2.5 h-2.5 opacity-60 group-hover:translate-x-0.5 transition-transform" />
+                <div className="text-[11px] font-bold text-zinc-900 dark:text-white truncate">
+                  Liquid Glass
                 </div>
                 <div className="text-[9.5px] text-zinc-600 dark:text-zinc-400 truncate font-medium">
-                  Contratação imediata
+                  {glassStyle === 'tinted' ? 'Tonalizado' : 'Translúcido'}
                 </div>
               </div>
-            </a>
+            </button>
 
             {/* Botão 2: Modo Foco (Toggle Ocultar Dock) */}
             <button
               type="button"
               onClick={onToggleFocusMode}
-              className={`flex items-center space-x-2 p-1 rounded-xl transition-all text-left ${
+              className={`flex items-center space-x-2 p-1 rounded-xl transition-all text-left cursor-pointer ${
                 isFocusMode
                   ? 'bg-[#5856d6]/15 dark:bg-[#5e5ce6]/25'
                   : 'hover:bg-black/5 dark:hover:bg-white/10'
@@ -159,32 +178,44 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
                   Modo Foco
                 </div>
                 <div className="text-[9.5px] text-zinc-600 dark:text-zinc-400 truncate font-medium">
-                  {isFocusMode ? 'Dock Oculto' : 'Dock Visível'}
+                  Oculta o Dock
                 </div>
               </div>
             </button>
 
-            {/* Botão 3: Download CV */}
-            <a
-              href="https://www.linkedin.com/in/fabiorodrigues-dev/"
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center space-x-2 p-1 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-colors group"
-              title="Baixar Currículo de Fábio Rodrigues"
+            {/* Botão 3: Sons da Interface (Feedback Tátil SFX) */}
+            <button
+              type="button"
+              onClick={onToggleSoundEffects}
+              className={`flex items-center space-x-2 p-1 rounded-xl transition-all text-left cursor-pointer ${
+                isSoundEffectsEnabled
+                  ? 'bg-[#34c759]/15 dark:bg-[#30d158]/25'
+                  : 'hover:bg-black/5 dark:hover:bg-white/10'
+              }`}
+              title={isSoundEffectsEnabled ? 'Sons táteis da interface ativados' : 'Sons da interface desativados'}
             >
-              <div className="w-7 h-7 rounded-full bg-[#34c759] text-white flex items-center justify-center shrink-0 shadow-sm">
-                <FileDown className="w-3.5 h-3.5" />
+              <div
+                className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                  isSoundEffectsEnabled
+                    ? 'bg-[#34c759] text-white shadow-sm'
+                    : 'bg-black/10 dark:bg-white/10 text-zinc-500 dark:text-zinc-400'
+                }`}
+              >
+                {isSoundEffectsEnabled ? (
+                  <Volume2 className="w-3.5 h-3.5" />
+                ) : (
+                  <VolumeX className="w-3.5 h-3.5" />
+                )}
               </div>
               <div className="leading-tight overflow-hidden">
-                <div className="text-[11px] font-bold text-zinc-900 dark:text-white flex items-center gap-1 truncate">
-                  <span>Download CV</span>
-                  <ArrowUpRight className="w-2.5 h-2.5 opacity-60 group-hover:translate-x-0.5 transition-transform" />
+                <div className="text-[11px] font-bold text-zinc-900 dark:text-white truncate">
+                  Sons da Interface
                 </div>
                 <div className="text-[9.5px] text-zinc-600 dark:text-zinc-400 truncate font-medium">
-                  PDF Profissional
+                  Cliques Táteis
                 </div>
               </div>
-            </a>
+            </button>
           </div>
 
           {/* Right Column: Theme Switcher & System Specs */}

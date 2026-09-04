@@ -52,7 +52,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
                 </span>
               </div>
               <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400 mt-0.5">
-                Bacharel em Design (UniFBV) • Software Architect • Filmmaker & Social Media
+                Bacharel em Design (UniFBV) • Desenvolvedor Full Stack • Filmmaker & Social Media
               </p>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-zinc-600 dark:text-zinc-400 mt-2">
                 <span className="flex items-center space-x-1">

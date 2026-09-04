@@ -312,7 +312,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'Java 21 & Spring Boot 3', level: 95, accentColor: 'blue', tag: 'Backend', description: 'Microsserviços, LGPD compliance, JPA/Hibernate, Spring Security, arquitetura limpa' },
       { name: 'React 19 & Next.js', level: 98, accentColor: 'cyan', tag: 'Frontend', description: 'Arquitetura por componentes, Server Actions, estado reativo, fidelidade Apple' },
       { name: 'TypeScript & Node.js', level: 96, accentColor: 'mint', tag: 'Full Stack', description: 'Tipagem rigorosa, APIs assíncronas, WebSockets para streaming de dados' },
-      { name: 'Voice AI & Agentes (Vapi / LLMs)', level: 92, accentColor: 'purple', tag: 'Inteligência Artificial', description: 'Pipelines de áudio bidirecional em tempo real, prompt engineering e tool calling' },
+      { name: 'Voice AI & Agentes (Vapi / LLMs)', level: 92, accentColor: 'purple', tag: 'Inteligência Artificial', description: 'Pipelines de áudio bidirecional em tempo real, prompt development e tool calling' },
     ],
   },
   {

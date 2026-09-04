@@ -31,7 +31,7 @@
 
 Portfólio interativo concebido como um sistema operacional desktop de última geração (macOS 26 Tahoe). O projeto integra um motor óptico proprietário de **Liquid Glass** com desfoque dinâmico de alta densidade, refração realista, profundidade tridimensional e uma experiência adaptativa *Edge-to-Edge* para dispositivos móveis inspirada nas diretrizes nativas do iOS.
 
-### 🛠️ Stack Tecnológica & Engenharia de Front-End
+### 🛠️ Stack Tecnológica & Desenvolvimento Front-End
 
 - **Core:** React 19, TypeScript, Vite
 - **Estilização & Design System:** Tailwind CSS v4, variáveis customizadas em CSS puro para refração óptica.

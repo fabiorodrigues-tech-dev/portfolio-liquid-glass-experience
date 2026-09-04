@@ -660,7 +660,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
               </div>
 
               <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed pt-1">
-                Bacharel em Design pela <strong>Faculdade Boa Viagem (UniFBV)</strong> com foco estrito em Ergonomia Cognitiva, UX/UI e Semiótica. Fundador da <strong>Wolf Agency</strong>, unindo engenharia de software distribuído e tração comercial de alto crescimento.
+                Bacharel em Design pela <strong>Faculdade Boa Viagem (UniFBV)</strong> com foco estrito em Ergonomia Cognitiva, UX/UI e Semiótica. Fundador da <strong>Wolf Agency</strong>, unindo desenvolvimento de software distribuído e tração comercial de alto crescimento.
               </p>
             </div>
 
@@ -671,7 +671,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                 <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400">
                   <Code2 className="w-4 h-4" />
                   <h4 className="text-xs font-bold uppercase tracking-wider">
-                    Vertente 01 • Engenharia & Software (Dev)
+                    Vertente 01 • Desenvolvimento de Software
                   </h4>
                 </div>
                 <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
@@ -767,12 +767,12 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
               </h2>
             </div>
 
-            {/* Bloco 1: Stack Dev & Engenharia */}
+            {/* Bloco 1: Desenvolvimento & Stack Dev */}
             <div className="bg-white dark:bg-[#1c1c1e]/90 border border-black/5 dark:border-white/10 shadow-sm rounded-[28px] p-5 space-y-3">
               <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400">
                 <Code2 className="w-4 h-4" />
                 <h3 className="text-xs font-bold uppercase tracking-wider">
-                  1. Stack Dev & Engenharia de Software
+                  1. Desenvolvimento & Stack Dev
                 </h3>
               </div>
               <p className="text-[11px] text-zinc-600 dark:text-zinc-400">

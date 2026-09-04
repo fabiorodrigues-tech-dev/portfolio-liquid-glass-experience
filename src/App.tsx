@@ -138,7 +138,6 @@ export function App() {
           onTabChange={setActiveTab}
           theme={theme}
           onToggleTheme={toggleTheme}
-          onOpenControlCenter={() => setIsControlCenterOpen(true)}
           onOpenSpotlight={() => setIsSpotlightOpen(true)}
           onSelectProject={setSelectedProject}
           isFocusMode={isFocusMode}

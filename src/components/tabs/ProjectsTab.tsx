@@ -27,7 +27,7 @@ export const ProjectsTab: React.FC<ProjectsTabProps> = ({ onSelectProject, theme
           <div className="flex items-center space-x-2 mb-1">
             <span className="w-2 h-2 rounded-full bg-[#007aff] animate-ping" />
             <span className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
-              PORTFÓLIO DE DESENVOLVIMENTO DE SOFTWARE & DESIGN
+              PORTFÓLIO DE DESENVOLVIMENTO DE SOFTWARE & DESIGN / MARKETING
             </span>
           </div>
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">

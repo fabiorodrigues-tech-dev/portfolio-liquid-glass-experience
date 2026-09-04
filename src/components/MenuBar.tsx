@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Search, SlidersHorizontal } from 'lucide-react'
+import { Search } from 'lucide-react'
+import { AppleControlCenterIcon } from './icons/ControlCenterIcon'
 import type { TabType, ThemeMode } from '../types'
 
 interface MenuBarProps {
@@ -159,7 +160,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
           title="Central de Controle"
           aria-label="Central de Controle"
         >
-          <SlidersHorizontal className="w-3.5 h-3.5" />
+          <AppleControlCenterIcon className={`w-4 h-4 ${isControlCenterOpen ? 'text-[#007aff]' : 'text-zinc-900 dark:text-white'}`} />
         </button>
       </div>
     </header>

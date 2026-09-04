@@ -6,14 +6,13 @@ import { ProjectsTab } from './tabs/ProjectsTab'
 import { AboutTab } from './tabs/AboutTab'
 import { SkillsTab } from './tabs/SkillsTab'
 import { ContactTab } from './tabs/ContactTab'
-import { Sun, Moon, SlidersHorizontal, Search } from 'lucide-react'
+import { Sun, Moon, Search } from 'lucide-react'
 
 interface WindowFrameProps {
   activeTab: TabType
   onTabChange: (tab: TabType) => void
   theme: ThemeMode
   onToggleTheme: () => void
-  onOpenControlCenter: () => void
   onOpenSpotlight: () => void
   onSelectProject: (project: Project) => void
   isFocusMode?: boolean
@@ -24,7 +23,6 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
   onTabChange,
   theme,
   onToggleTheme,
-  onOpenControlCenter,
   onOpenSpotlight,
   onSelectProject,
   isFocusMode = false,
@@ -68,7 +66,7 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
           : isFocusMode
           ? 'max-w-5xl h-[calc(100vh-62px)] mt-8'
           : 'max-w-5xl h-[calc(100vh-110px)] mt-10'
-      } ${isDark ? 'dark-theme' : 'light-theme'} mx-auto flex flex-col apple-liquid-glass rounded-3xl overflow-hidden select-none`}
+      } ${isDark ? 'dark-theme' : 'light-theme'} mx-auto flex flex-col apple-liquid-glass window-frame rounded-3xl overflow-hidden select-none`}
     >
       {/* Window Top Toolbar Header */}
       <div className="h-13 px-4 flex items-center justify-between border-b border-black/5 dark:border-white/10 shrink-0 relative">
@@ -119,16 +117,6 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
             ) : (
               <Sun className="w-3.5 h-3.5 text-[#ff9500]" />
             )}
-          </button>
-
-          {/* Control Center Trigger */}
-          <button
-            type="button"
-            onClick={onOpenControlCenter}
-            className="w-7 h-7 rounded-lg bg-black/5 dark:bg-white/10 border-none flex items-center justify-center hover:bg-black/10 dark:hover:bg-white/20 transition-colors text-zinc-900 dark:text-white cursor-pointer"
-            title="Ajustes & Central de Controle"
-          >
-            <SlidersHorizontal className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>

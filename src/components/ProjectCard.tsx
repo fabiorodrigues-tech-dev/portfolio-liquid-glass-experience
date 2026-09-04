@@ -29,7 +29,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   return (
     <article
       onClick={() => onSelectProject(project)}
-      className="apple-liquid-glass rounded-2xl p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer group flex flex-col justify-between relative overflow-hidden"
+      className="bg-white/40 dark:bg-white/[0.05] backdrop-blur-xl border border-white/70 dark:border-white/10 rounded-2xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] dark:shadow-none transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer group flex flex-col justify-between relative overflow-hidden"
     >
       {/* Card Ambient Glow */}
       <div
@@ -104,7 +104,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           {project.metrics.map((m, idx) => (
             <div
               key={idx}
-              className="bg-black/[0.03] dark:bg-white/[0.03] rounded-xl p-3 text-center"
+              className="bg-white/50 dark:bg-white/[0.04] border border-white/80 dark:border-white/10 rounded-xl p-3 shadow-sm text-center"
             >
               <div
                 className="text-sm font-bold tracking-tight"
@@ -120,8 +120,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
       </div>
 
+      {/* Explicit Divider */}
+      <div className="h-px w-full bg-black/60 dark:bg-white/10 my-3.5" />
+
       {/* Card Footer: Tech Tags & Links */}
-      <div className="pt-3 border-t border-black/5 dark:border-white/10 flex items-center justify-between gap-2 mt-auto">
+      <div className="flex items-center justify-between gap-2 mt-auto">
         <div className="flex flex-wrap gap-1">
           {project.tags.slice(0, 3).map((tag) => (
             <span

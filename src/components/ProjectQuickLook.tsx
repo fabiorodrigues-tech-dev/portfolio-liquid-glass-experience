@@ -95,7 +95,7 @@ export const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({
               {project.metrics.map((metric, idx) => (
                 <div
                   key={idx}
-                  className="bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/5 rounded-xl p-3 text-center transition-transform hover:scale-[1.02]"
+                  className="bg-white/50 dark:bg-white/[0.04] border border-white/80 dark:border-white/10 rounded-xl p-3 shadow-sm text-center transition-transform hover:scale-[1.02]"
                 >
                   <div
                     className="text-xl font-bold tracking-tight"

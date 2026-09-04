@@ -23,7 +23,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
   return (
     <div className="space-y-6 pb-8">
       {/* Hero Profile Card */}
-      <div className="bg-white/80 dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/10 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-none p-5 relative overflow-hidden">
+      <div className="bg-white/40 dark:bg-white/[0.05] backdrop-blur-xl border border-white/70 dark:border-white/10 rounded-2xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] dark:shadow-none transition-all relative overflow-hidden">
         {/* Specular Ambient Glow */}
         <div className="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-[#007aff]/15 blur-3xl pointer-events-none" />
 
@@ -68,7 +68,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
           </div>
 
           {/* Status Badge */}
-          <div className="bg-black/[0.04] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 px-3.5 py-2 rounded-2xl self-start md:self-auto flex items-center space-x-2.5">
+          <div className="bg-white/50 dark:bg-white/[0.04] border border-white/80 dark:border-white/10 px-3.5 py-2 rounded-xl self-start md:self-auto flex items-center space-x-2.5">
             <span className="w-2.5 h-2.5 rounded-full bg-[#34c759] animate-pulse" />
             <div>
               <div className="text-[11px] font-semibold text-zinc-900 dark:text-white">
@@ -100,7 +100,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
           {/* Pilar 1: Desenvolvimento Full Stack */}
-          <div className="bg-white/90 dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.3)] transition-all space-y-2.5 flex flex-col justify-between">
+          <div className="bg-white/40 dark:bg-white/[0.04] backdrop-blur-xl border border-white/70 dark:border-white/10 dark:text-white dark:shadow-none rounded-2xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] transition-all space-y-2.5 flex flex-col justify-between">
             <div>
               <div className="w-8 h-8 rounded-xl bg-blue-500/10 text-[#007aff] flex items-center justify-center mb-2">
                 <Code2 className="w-4 h-4" />
@@ -120,7 +120,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
           </div>
 
           {/* Pilar 2: Audiovisual, Edição & Social Media */}
-          <div className="bg-white/90 dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.3)] transition-all space-y-2.5 flex flex-col justify-between">
+          <div className="bg-white/40 dark:bg-white/[0.04] backdrop-blur-xl border border-white/70 dark:border-white/10 dark:text-white dark:shadow-none rounded-2xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] transition-all space-y-2.5 flex flex-col justify-between">
             <div>
               <div className="w-8 h-8 rounded-xl bg-pink-500/10 text-[#ff2d55] flex items-center justify-center mb-2">
                 <Video className="w-4 h-4" />
@@ -140,7 +140,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
           </div>
 
           {/* Pilar 3: Mídia, Performance & Branding */}
-          <div className="bg-white/90 dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.3)] transition-all space-y-2.5 flex flex-col justify-between">
+          <div className="bg-white/40 dark:bg-white/[0.04] backdrop-blur-xl border border-white/70 dark:border-white/10 dark:text-white dark:shadow-none rounded-2xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] transition-all space-y-2.5 flex flex-col justify-between">
             <div>
               <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-[#34c759] flex items-center justify-center mb-2">
                 <TrendingUp className="w-4 h-4" />
@@ -160,7 +160,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
           </div>
 
           {/* Pilar 4: Gestão & Rotinas Administrativas */}
-          <div className="bg-white/90 dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.3)] transition-all space-y-2.5 flex flex-col justify-between">
+          <div className="bg-white/40 dark:bg-white/[0.04] backdrop-blur-xl border border-white/70 dark:border-white/10 dark:text-white dark:shadow-none rounded-2xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] transition-all space-y-2.5 flex flex-col justify-between">
             <div>
               <div className="w-8 h-8 rounded-xl bg-purple-500/10 text-[#af52de] flex items-center justify-center mb-2">
                 <Building2 className="w-4 h-4" />
@@ -196,7 +196,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
             return (
               <div
                 key={item.id}
-                className="bg-white/85 dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/10 rounded-2xl p-5 mb-4 shadow-[0_4px_16px_rgba(0,0,0,0.04)] dark:shadow-none transition-all hover:translate-x-1"
+                className="bg-white/40 dark:bg-white/[0.05] backdrop-blur-xl border border-white/70 dark:border-white/10 rounded-2xl p-5 mb-4 shadow-[0_4px_16px_rgba(0,0,0,0.04)] dark:shadow-none transition-all hover:translate-x-1"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-1 mb-2">
                   <div>
@@ -207,7 +207,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
                       {item.company} • <span className="text-zinc-600 dark:text-zinc-400 font-normal">{item.type}</span>
                     </div>
                   </div>
-                  <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-black/[0.04] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-zinc-800 dark:text-zinc-100 self-start md:self-auto font-medium">
+                  <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-white/50 dark:bg-white/[0.04] border border-white/80 dark:border-white/10 text-zinc-800 dark:text-zinc-100 self-start md:self-auto font-medium">
                     {item.period}
                   </span>
                 </div>
@@ -237,7 +237,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
                   {item.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-black/[0.04] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-zinc-800 dark:text-zinc-100"
+                      className="bg-white/50 dark:bg-white/[0.04] border border-white/80 dark:border-white/10 rounded-lg px-2.5 py-1 text-xs font-medium text-zinc-800 dark:text-zinc-200"
                     >
                       {tech}
                     </span>

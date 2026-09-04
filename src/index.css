@@ -112,16 +112,22 @@ html, body, #root {
 }
 
 /* Modo Escuro Oficial */
-.dark .apple-liquid-glass {
+.dark .apple-liquid-glass,
+.dark .window-frame {
   background: rgba(14, 16, 23, 0.42) !important;
   box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15), 0 20px 40px -15px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
   color: #f5f5f7 !important;
 }
 
-/* Modo Claro Oficial */
+/* Modo Claro Oficial: Translucidez Real do Liquid Glass */
+html:not(.dark) .window-frame,
 html:not(.dark) .apple-liquid-glass {
-  background: rgba(255, 255, 255, 0.52) !important;
-  box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.7), 0 15px 35px -10px rgba(0, 0, 0, 0.08) !important;
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(30px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.1) !important;
   color: #09090b !important;
 }
 
@@ -329,8 +335,20 @@ a[class*="bg-red"],
   color: #ffffff !important;
 }
 
-/* Fundo e bordas dos cards dentro da janela no modo claro */
-.light-theme .bg-card {
-  background-color: rgba(255, 255, 255, 0.92);
-  border-color: rgba(0, 0, 0, 0.14);
+/* Suporte a Vidro Líquido Refinado para cards e painéis no Modo Claro */
+html:not(.dark) .light-theme .liquid-card {
+  background-color: rgba(255, 255, 255, 0.40);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.70);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+/* FORÇA LINHAS DIVISÓRIAS EM PRETO NO MODO DIA */
+html:not(.dark) hr,
+html:not(.dark) [role="separator"],
+html:not(.dark) div[class*="h-[1px]"],
+html:not(.dark) div[class*="h-px"] {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  border-color: rgba(0, 0, 0, 0.7) !important;
 }

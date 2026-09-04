@@ -46,7 +46,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
           return (
             <div
               key={idx}
-              className="bg-white/80 dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/10 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-none p-5 flex flex-col justify-between relative overflow-hidden"
+              className="bg-white/40 dark:bg-white/[0.05] backdrop-blur-xl border border-white/70 dark:border-white/10 rounded-2xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] dark:shadow-none transition-all flex flex-col justify-between relative overflow-hidden"
             >
               {/* Specular Edge Glow */}
               <div
@@ -58,7 +58,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
                 {/* Category Header */}
                 <div className="flex items-center space-x-3 mb-3">
                   <div
-                    className="w-8 h-8 rounded-xl flex items-center justify-center bg-black/[0.04] dark:bg-white/[0.04] border border-black/10 dark:border-white/10"
+                    className="w-8 h-8 rounded-xl flex items-center justify-center bg-white/50 dark:bg-white/[0.04] border border-white/80 dark:border-white/10"
                     style={{ color: accentHex }}
                   >
                     {idx === 0 && <Code2 className="w-4 h-4" />}
@@ -79,13 +79,16 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
                 </div>
 
                 {/* Skills Progress List */}
-                <div className="space-y-4 my-4">
+                <div className="my-4">
                   {cat.skills.map((skill) => {
                     const skillAccent = ACCENT_COLORS[skill.accentColor] || ACCENT_COLORS.blue
                     const skillHex = isDark ? skillAccent.dark : skillAccent.light
 
                     return (
-                      <div key={skill.name} className="space-y-1.5">
+                      <div
+                        key={skill.name}
+                        className="space-y-1.5 pb-3 mb-3 border-b border-black/[0.08] dark:border-white/10 last:border-b-0"
+                      >
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-semibold text-zinc-900 dark:text-white flex items-center gap-1.5">
                             <span
@@ -105,7 +108,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
                         </div>
 
                         {/* Liquid Progress Bar */}
-                        <div className="h-1.5 w-full bg-black/10 dark:bg-white/10 rounded-full overflow-hidden p-[0.5px]">
+                        <div className="bg-zinc-200 dark:bg-white/10 h-1.5 w-full rounded-full overflow-hidden">
                           <div
                             className="h-full rounded-full transition-all duration-1000 shadow-sm"
                             style={{
@@ -124,11 +127,14 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
                 </div>
               </div>
 
+              {/* Explicit Divider */}
+              <div className="h-px w-full bg-black/60 dark:bg-white/10 mt-4 mb-2.5" />
+
               {/* Bottom tag indicator */}
-              <div className="pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[11px] text-zinc-600 dark:text-zinc-400">
+              <div className="flex items-center justify-between text-xs text-zinc-600 dark:text-zinc-400 font-medium">
                 <span>Práticas de Desenvolvimento & Clean Code</span>
                 <span className="flex items-center space-x-1 font-medium text-[#007aff] dark:text-[#0a84ff]">
-                  <CheckCircle2 className="w-3 h-3" />
+                  <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>Nível Sênior / Staff</span>
                 </span>
               </div>
@@ -148,7 +154,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Categoria 1: Desenvolvimento & Stack Dev */}
-          <div className="bg-white/90 dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.25)] space-y-3">
+          <div className="bg-white/50 dark:bg-white/[0.03] backdrop-blur-xl border border-white/70 dark:border-white/10 shadow-[0_6px_20px_rgba(0,0,0,0.05)] rounded-2xl p-5 space-y-3">
             <div className="flex items-center space-x-2 text-xs font-bold text-zinc-900 dark:text-white">
               <Code2 className="w-3.5 h-3.5 text-[#007aff]" />
               <span>Desenvolvimento & Stack Dev</span>
@@ -173,7 +179,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
               ].map((tool) => (
                 <span
                   key={tool}
-                  className="px-2 py-0.5 rounded-lg text-[10.5px] font-medium bg-black/[0.04] dark:bg-white/[0.04] text-zinc-800 dark:text-zinc-100 border border-black/10 dark:border-white/10"
+                  className="bg-white/95 dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/10 shadow-[0_2px_6px_rgba(0,0,0,0.06)] text-zinc-800 dark:text-zinc-200 font-semibold dark:font-medium px-2.5 py-1 rounded-lg text-xs hover:scale-105 dark:hover:scale-100 dark:hover:bg-white/15 transition-all cursor-default"
                 >
                   {tool}
                 </span>
@@ -182,7 +188,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
           </div>
 
           {/* Categoria 2: Audiovisual & Criativo */}
-          <div className="bg-white/90 dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.25)] space-y-3">
+          <div className="bg-white/50 dark:bg-white/[0.03] backdrop-blur-xl border border-white/70 dark:border-white/10 shadow-[0_6px_20px_rgba(0,0,0,0.05)] rounded-2xl p-5 space-y-3">
             <div className="flex items-center space-x-2 text-xs font-bold text-zinc-900 dark:text-white">
               <Video className="w-3.5 h-3.5 text-[#ff2d55]" />
               <span>Audiovisual & Criativo</span>
@@ -199,7 +205,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
               ].map((tool) => (
                 <span
                   key={tool}
-                  className="px-2 py-0.5 rounded-lg text-[10.5px] font-medium bg-black/[0.04] dark:bg-white/[0.04] text-zinc-800 dark:text-zinc-100 border border-black/10 dark:border-white/10"
+                  className="bg-white/95 dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/10 shadow-[0_2px_6px_rgba(0,0,0,0.06)] text-zinc-800 dark:text-zinc-200 font-semibold dark:font-medium px-2.5 py-1 rounded-lg text-xs hover:scale-105 dark:hover:scale-100 dark:hover:bg-white/15 transition-all cursor-default"
                 >
                   {tool}
                 </span>
@@ -208,7 +214,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
           </div>
 
           {/* Categoria 3: Marketing & Dados */}
-          <div className="bg-white/90 dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.25)] space-y-3">
+          <div className="bg-white/50 dark:bg-white/[0.03] backdrop-blur-xl border border-white/70 dark:border-white/10 shadow-[0_6px_20px_rgba(0,0,0,0.05)] rounded-2xl p-5 space-y-3">
             <div className="flex items-center space-x-2 text-xs font-bold text-zinc-900 dark:text-white">
               <TrendingUp className="w-3.5 h-3.5 text-[#34c759]" />
               <span>Marketing & Dados</span>
@@ -225,7 +231,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
               ].map((tool) => (
                 <span
                   key={tool}
-                  className="px-2 py-0.5 rounded-lg text-[10.5px] font-medium bg-black/[0.04] dark:bg-white/[0.04] text-zinc-800 dark:text-zinc-100 border border-black/10 dark:border-white/10"
+                  className="bg-white/95 dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/10 shadow-[0_2px_6px_rgba(0,0,0,0.06)] text-zinc-800 dark:text-zinc-200 font-semibold dark:font-medium px-2.5 py-1 rounded-lg text-xs hover:scale-105 dark:hover:scale-100 dark:hover:bg-white/15 transition-all cursor-default"
                 >
                   {tool}
                 </span>
@@ -234,7 +240,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
           </div>
 
           {/* Categoria 4: Hardware & Sistema */}
-          <div className="bg-white/90 dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.25)] space-y-3">
+          <div className="bg-white/50 dark:bg-white/[0.03] backdrop-blur-xl border border-white/70 dark:border-white/10 shadow-[0_6px_20px_rgba(0,0,0,0.05)] rounded-2xl p-5 space-y-3">
             <div className="flex items-center space-x-2 text-xs font-bold text-zinc-900 dark:text-white">
               <Box className="w-3.5 h-3.5 text-[#af52de]" />
               <span>Hardware & Sistema</span>
@@ -248,7 +254,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
               ].map((tool) => (
                 <span
                   key={tool}
-                  className="px-2 py-0.5 rounded-lg text-[10.5px] font-medium bg-black/[0.04] dark:bg-white/[0.04] text-zinc-800 dark:text-zinc-100 border border-black/10 dark:border-white/10"
+                  className="bg-white/95 dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/10 shadow-[0_2px_6px_rgba(0,0,0,0.06)] text-zinc-800 dark:text-zinc-200 font-semibold dark:font-medium px-2.5 py-1 rounded-lg text-xs hover:scale-105 dark:hover:scale-100 dark:hover:bg-white/15 transition-all cursor-default"
                 >
                   {tool}
                 </span>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   CloudSun,
   MapPin,
@@ -9,8 +9,6 @@ import {
   Send,
   Home,
   ArrowUpRight,
-  Sun,
-  Moon,
   Volume2,
   VolumeX,
   Play,
@@ -30,8 +28,8 @@ import {
 } from 'lucide-react'
 import { GithubIcon, WhatsAppIcon } from '../icons/SocialIcons'
 import { AppleControlCenterIcon } from '../icons/ControlCenterIcon'
+import { ControlCenterMobile } from './ControlCenterMobile'
 import type { ThemeMode, Project, AccentColor } from '../../types'
-import { PRIMARY_ACCENT_KEYS, ACCENT_COLORS } from '../../data/accentColors'
 import { playHapticClick } from '../../lib/soundEffects'
 
 interface IOSMobileExperienceProps {
@@ -47,6 +45,7 @@ interface IOSMobileExperienceProps {
   onChangeVolume: (vol: number) => void
   onSkipTrack: () => void
   soundEffectsEnabled?: boolean
+  onToggleSoundEffects?: () => void
   onSelectProject?: (project: Project) => void
 }
 
@@ -65,6 +64,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
   onChangeVolume,
   onSkipTrack,
   soundEffectsEnabled = true,
+  onToggleSoundEffects,
 }) => {
   // Navigation tab state (Full-screen native scroll views)
   const [activeTab, setActiveTab] = useState<MobileTab>('inicio')
@@ -77,15 +77,6 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
   const [currentTime, setCurrentTime] = useState<string>('19:30')
   const [currentDateFormatted, setCurrentDateFormatted] = useState<string>('')
 
-  // Screen Brightness (60% - 100%)
-  const [brightness, setBrightness] = useState<number>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('macos_brightness')
-      return saved ? Math.max(50, Math.min(100, Number(saved))) : 100
-    }
-    return 100
-  })
-
   // Contact form states
   const [emailCopied, setEmailCopied] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -97,8 +88,6 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
   })
 
   const isDark = theme === 'dark'
-  const isDraggingBrightnessRef = useRef(false)
-  const isDraggingVolumeRef = useRef(false)
 
   // Clock updater
   useEffect(() => {
@@ -121,10 +110,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
     return () => clearInterval(timer)
   }, [])
 
-  // Sync brightness to HTML root element
-  useEffect(() => {
-    document.documentElement.style.filter = `brightness(${brightness}%)`
-  }, [brightness])
+
 
   const triggerHaptic = () => {
     if (soundEffectsEnabled) {
@@ -160,24 +146,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
     }, 4000)
   }
 
-  // Interactive Brightness Slider Drag Handler
-  const handleBrightnessPointer = (e: React.PointerEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const y = e.clientY - rect.top
-    const pct = Math.round(100 - (y / rect.height) * 100)
-    const clamped = Math.max(50, Math.min(100, pct))
-    setBrightness(clamped)
-    localStorage.setItem('macos_brightness', String(clamped))
-  }
 
-  // Interactive Volume Slider Drag Handler
-  const handleVolumePointer = (e: React.PointerEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const y = e.clientY - rect.top
-    const pct = Math.round(100 - (y / rect.height) * 100)
-    const clamped = Math.max(0, Math.min(100, pct))
-    onChangeVolume(clamped)
-  }
 
   return (
     <div className="relative w-full h-[100dvh] overflow-hidden bg-[#f2f2f7] dark:bg-[#000000] text-zinc-900 dark:text-white font-sans selection:bg-blue-500 selection:text-white">
@@ -1213,282 +1182,26 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       </nav>
 
       {/* ========================================================================= */}
-      {/* 5. CENTRAL DE CONTROLE ESTILO iOS (REQUISITO 3 - FIEL AO PRINT 5b27f553)   */}
+      {/* 5. CENTRAL DE CONTROLE NATIVA iOS (COMPONENTE EXCLUSIVO ControlCenterMobile) */}
       {/* ========================================================================= */}
-      {isControlCenterOpen && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-3xl p-5 overflow-y-auto flex flex-col justify-start space-y-3.5 text-white animate-in fade-in duration-200">
-          {/* Puxador do Topo: Microbarra arredondada (w-10 h-1 rounded-full bg-white/30 mx-auto mb-1) */}
-          <div
-            onClick={() => {
-              triggerHaptic()
-              setIsControlCenterOpen(false)
-            }}
-            className="w-10 h-1 rounded-full bg-white/30 hover:bg-white/50 mx-auto cursor-pointer transition-colors"
-            title="Fechar Central de Controle"
-          />
-
-          {/* Linha de Título com Botão Fechar 'X' */}
-          <div className="flex items-center justify-between pb-1">
-            <div className="flex items-center space-x-2">
-              <AppleControlCenterIcon className="w-4 h-4 text-white/90" />
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-white/90">
-                CENTRAL DE CONTROLE
-              </span>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                triggerHaptic()
-                setIsControlCenterOpen(false)
-              }}
-              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white active:scale-95 transition-all cursor-pointer"
-              title="Fechar"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Linha Superior (Grid de 2 Colunas, h-36 gap-3.5) */}
-          <div className="grid grid-cols-2 gap-3.5 h-36">
-            {/* Bloco Esquerdo (Status & Modos, rounded-[26px] bg-white/10 p-3.5 flex flex-col justify-between) */}
-            <div className="rounded-[26px] bg-white/10 border border-white/10 p-3.5 flex flex-col justify-between h-36">
-              <div>
-                <div className="flex items-center space-x-1.5 mb-0.5">
-                  <span className="w-2 h-2 rounded-full bg-[#34c759] animate-pulse" />
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-300">
-                    Recife, PE
-                  </span>
-                </div>
-                <h3 className="text-xs font-bold text-white truncate">
-                  Fábio Rodrigues
-                </h3>
-              </div>
-
-              {/* Botão Modo Foco: cápsula com ícone de lua para ocultar o dock */}
-              <button
-                type="button"
-                onClick={() => {
-                  triggerHaptic()
-                  onToggleFocusMode()
-                }}
-                className={`py-1.5 px-2.5 rounded-xl text-[10px] font-semibold flex items-center justify-between transition-all cursor-pointer active:scale-95 ${
-                  isFocusMode
-                    ? 'bg-indigo-600 text-white shadow-sm'
-                    : 'bg-white/15 hover:bg-white/25 text-white'
-                }`}
-              >
-                <span className="flex items-center gap-1.5">
-                  <Moon className="w-3 h-3" />
-                  <span>Modo Foco</span>
-                </span>
-                <span className="text-[9px] opacity-80">
-                  {isFocusMode ? 'Ativo' : 'Dock'}
-                </span>
-              </button>
-
-              {/* Botão Tema: alternador instantâneo Modo Claro / Escuro */}
-              <button
-                type="button"
-                onClick={() => {
-                  triggerHaptic()
-                  onToggleTheme()
-                }}
-                className="py-1.5 px-2.5 rounded-xl text-[10px] font-semibold bg-white/15 hover:bg-white/25 text-white flex items-center justify-between transition-all cursor-pointer active:scale-95"
-              >
-                <span className="flex items-center gap-1.5">
-                  {isDark ? <Moon className="w-3 h-3 text-indigo-400" /> : <Sun className="w-3 h-3 text-amber-400" />}
-                  <span>Aparência</span>
-                </span>
-                <span className="text-[9px] opacity-80">
-                  {isDark ? 'Escuro' : 'Claro'}
-                </span>
-              </button>
-            </div>
-
-            {/* Bloco Direito (Widget de Música, rounded-[26px] bg-white/10 p-4 flex flex-col justify-between) */}
-            <div
-              onClick={() => {
-                triggerHaptic()
-                setIsExpandedPlayerOpen(true)
-              }}
-              className="rounded-[26px] bg-white/10 border border-white/10 p-3.5 flex flex-col justify-between h-36 cursor-pointer group active:scale-[0.98] transition-all"
-            >
-              <div className="flex items-start space-x-2">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white shadow-sm shrink-0">
-                  <Music className="w-4 h-4" />
-                </div>
-                <div className="overflow-hidden">
-                  <span className="text-[11px] font-bold text-white block truncate">
-                    Música Ambiente
-                  </span>
-                  <span className="text-[9px] text-zinc-300 block truncate">
-                    Lofi Chill • YouTube
-                  </span>
-                </div>
-              </div>
-
-              {/* Controles táteis: Retroceder, Play/Pause, Avançar vinculados à playlist */}
-              <div className="flex items-center justify-between pt-1">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    triggerHaptic()
-                    onSkipTrack()
-                  }}
-                  className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center active:scale-90 transition-transform cursor-pointer"
-                  title="Retroceder"
-                >
-                  <SkipBack className="w-3 h-3" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    triggerHaptic()
-                    onTogglePlayMusic()
-                  }}
-                  className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center active:scale-90 transition-transform cursor-pointer shadow-sm"
-                  title={isPlayingMusic ? 'Pausar' : 'Tocar'}
-                >
-                  {isPlayingMusic ? <Pause className="w-3.5 h-3.5 fill-black" /> : <Play className="w-3.5 h-3.5 fill-black ml-0.5" />}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    triggerHaptic()
-                    onSkipTrack()
-                  }}
-                  className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center active:scale-90 transition-transform cursor-pointer"
-                  title="Avançar"
-                >
-                  <SkipForward className="w-3 h-3" />
-                </button>
-
-                <span className="text-[9px] font-semibold text-blue-400">
-                  Expandir &gt;
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Linha de Sliders Verticais do iOS (grid grid-cols-2 gap-3.5 h-38) */}
-          <div className="grid grid-cols-2 gap-3.5 h-38">
-            {/* Slider de Brilho: Cápsula vertical com Sol fixado no centro */}
-            <div
-              onPointerDown={(e) => {
-                isDraggingBrightnessRef.current = true
-                handleBrightnessPointer(e)
-              }}
-              onPointerMove={(e) => {
-                if (isDraggingBrightnessRef.current || e.buttons === 1) {
-                  handleBrightnessPointer(e)
-                }
-              }}
-              onPointerUp={() => {
-                isDraggingBrightnessRef.current = false
-              }}
-              className="rounded-[26px] bg-white/15 backdrop-blur-xl border border-white/10 relative overflow-hidden flex flex-col justify-end items-center pb-3 cursor-pointer touch-none select-none h-38"
-              title="Brilho da Tela"
-            >
-              {/* Preenchimento branco translúcido (bg-white/80) */}
-              <div
-                className="absolute bottom-0 left-0 right-0 bg-white/80 transition-all duration-75 pointer-events-none"
-                style={{ height: `${brightness}%` }}
-              />
-              {/* Ícone de Sol fixado no centro da cápsula */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-                <Sun
-                  className={`w-6 h-6 transition-colors ${
-                    brightness > 50 ? 'text-zinc-950' : 'text-white'
-                  }`}
-                />
-                <span
-                  className={`text-[10px] font-mono font-bold mt-1 ${
-                    brightness > 50 ? 'text-zinc-950' : 'text-white'
-                  }`}
-                >
-                  {brightness}%
-                </span>
-              </div>
-            </div>
-
-            {/* Slider de Volume: Cápsula vertical com Alto-falante no centro */}
-            <div
-              onPointerDown={(e) => {
-                isDraggingVolumeRef.current = true
-                handleVolumePointer(e)
-              }}
-              onPointerMove={(e) => {
-                if (isDraggingVolumeRef.current || e.buttons === 1) {
-                  handleVolumePointer(e)
-                }
-              }}
-              onPointerUp={() => {
-                isDraggingVolumeRef.current = false
-              }}
-              className="rounded-[26px] bg-white/15 backdrop-blur-xl border border-white/10 relative overflow-hidden flex flex-col justify-end items-center pb-3 cursor-pointer touch-none select-none h-38"
-              title="Volume do Som"
-            >
-              {/* Preenchimento branco translúcido (bg-white/80) */}
-              <div
-                className="absolute bottom-0 left-0 right-0 bg-white/80 transition-all duration-75 pointer-events-none"
-                style={{ height: `${soundVolume}%` }}
-              />
-              {/* Ícone de Alto-Falante fixado no centro da cápsula */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-                {soundVolume === 0 ? (
-                  <VolumeX className="w-6 h-6 text-white" />
-                ) : (
-                  <Volume2
-                    className={`w-6 h-6 transition-colors ${
-                      soundVolume > 50 ? 'text-zinc-950' : 'text-white'
-                    }`}
-                  />
-                )}
-                <span
-                  className={`text-[10px] font-mono font-bold mt-1 ${
-                    soundVolume > 50 ? 'text-zinc-950' : 'text-white'
-                  }`}
-                >
-                  {soundVolume}%
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Bloco Inferior: Seletor de Cores de Acento (cápsula estreita com 5 pontos de cor) */}
-          <div className="rounded-[22px] p-2.5 bg-white/10 border border-white/10 flex items-center justify-around">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-400 mr-1 hidden sm:inline">
-              Acento:
-            </span>
-            {PRIMARY_ACCENT_KEYS.map((key) => {
-              const def = ACCENT_COLORS[key]
-              const isSelected = accentColor === key
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => {
-                    triggerHaptic()
-                    onChangeAccent(key)
-                  }}
-                  className={`w-7 h-7 rounded-full transition-all cursor-pointer flex items-center justify-center ${
-                    isSelected ? 'ring-2 ring-white ring-offset-2 ring-offset-black scale-110' : 'opacity-80 hover:opacity-100'
-                  }`}
-                  style={{ backgroundColor: isDark ? def.dark : def.light }}
-                  title={def.name}
-                >
-                  {isSelected && <span className="w-2 h-2 rounded-full bg-white shadow-sm" />}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-      )}
+      <ControlCenterMobile
+        isOpen={isControlCenterOpen}
+        onClose={() => setIsControlCenterOpen(false)}
+        theme={theme}
+        onToggleTheme={onToggleTheme}
+        accentColor={accentColor}
+        onChangeAccent={onChangeAccent}
+        isFocusMode={isFocusMode}
+        onToggleFocusMode={onToggleFocusMode}
+        isSoundEffectsEnabled={soundEffectsEnabled}
+        onToggleSoundEffects={onToggleSoundEffects}
+        isPlayingMusic={isPlayingMusic}
+        onTogglePlayMusic={onTogglePlayMusic}
+        soundVolume={soundVolume}
+        onChangeVolume={onChangeVolume}
+        onSkipTrack={onSkipTrack}
+        onOpenExpandedPlayer={() => setIsExpandedPlayerOpen(true)}
+      />
 
       {/* ========================================================================= */}
       {/* 6. PLAYER DE MÚSICA EXPANDIDO ESTILO iOS (PRINT 60ab514e)                  */}

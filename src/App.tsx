@@ -270,6 +270,7 @@ export function App() {
           onChangeVolume={setSoundVolume}
           onSkipTrack={skipTrack}
           soundEffectsEnabled={isSoundEffectsEnabled}
+          onToggleSoundEffects={toggleSoundEffects}
           onSelectProject={setSelectedProject}
         />
       </div>

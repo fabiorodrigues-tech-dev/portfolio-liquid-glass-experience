@@ -138,7 +138,6 @@ O projeto está configurado com implantação contínua na **Vercel**. Cada alte
 *Desenvolvedor Full Stack & Creative Technologist*
 
 - 💼 **LinkedIn:** [linkedin.com/in/fabiorodrigues-dev](https://www.linkedin.com/in/fabiorodrigues-dev/)
-- 🐙 **GitHub:** [@fabiorodrigues-tech-dev](https://github.com/fabiorodrigues-tech-dev)
 - ✉️ **E-mail:** [fabiorodrigues.tech.dev@gmail.com](mailto:fabiorodrigues.tech.dev@gmail.com)
 
 ---

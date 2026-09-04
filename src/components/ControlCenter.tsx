@@ -95,7 +95,7 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
 
       {/* Control Center Panel */}
       <div
-        className="fixed top-9 right-3 z-50 w-88 p-3 apple-liquid-glass rounded-2xl animate-in fade-in slide-in-from-top-2 duration-200 select-none shadow-2xl"
+        className="fixed top-[calc(2.5rem+env(safe-area-inset-top,0px))] sm:top-9 right-3 left-3 sm:left-auto sm:right-3 w-auto sm:w-88 max-w-full sm:max-w-sm max-h-[calc(100dvh-4.5rem-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px))] overflow-y-auto custom-scrollbar px-4 py-3.5 sm:p-3 apple-liquid-glass rounded-2xl animate-in fade-in slide-in-from-top-2 duration-200 select-none shadow-2xl z-50"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top 2-Column Grid */}

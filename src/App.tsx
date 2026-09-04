@@ -118,7 +118,7 @@ export function App() {
   }, [])
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden flex flex-col justify-between text-zinc-900 dark:text-white">
+    <div className="relative w-screen h-screen h-[100dvh] overflow-hidden flex flex-col justify-between text-zinc-900 dark:text-white">
       {/* 1. Official macOS Tahoe Dynamic Silk Wave Wallpaper */}
       <TahoeWallpaper theme={theme} />
 
@@ -132,7 +132,7 @@ export function App() {
       />
 
       {/* 3. Main Window Frame (Liquid Glass Large) */}
-      <div className="flex-1 flex items-center justify-center p-3 sm:p-5 overflow-hidden">
+      <div className="flex-1 flex items-center justify-center p-2 sm:p-5 pb-16 sm:pb-5 overflow-hidden">
         <WindowFrame
           activeTab={activeTab}
           onTabChange={setActiveTab}

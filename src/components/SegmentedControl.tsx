@@ -37,14 +37,14 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({ activeTab, o
             role="tab"
             aria-selected={isActive}
             onClick={() => onChange(tab.id)}
-            className={`relative flex items-center space-x-1.5 px-4 py-1.5 text-xs rounded-full cursor-pointer outline-none transition-all duration-300 ease-out ${
+            className={`relative flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-4 py-1 sm:py-1.5 text-xs rounded-full cursor-pointer outline-none transition-all duration-300 ease-out ${
               isActive
                 ? 'bg-white/95 text-zinc-950 dark:bg-white/20 dark:text-white font-bold shadow-sm'
                 : 'text-zinc-600 hover:text-zinc-950 dark:text-white/60 dark:hover:text-white font-medium'
             }`}
           >
             <IconComponent className={`w-3.5 h-3.5 ${isActive ? 'text-current' : 'opacity-70'}`} />
-            <span>{tab.label}</span>
+            <span className="hidden sm:inline">{tab.label}</span>
           </button>
         )
       })}

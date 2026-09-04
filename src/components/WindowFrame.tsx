@@ -62,14 +62,14 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
     <div
       className={`w-full transition-all duration-300 relative ${
         isMaximized
-          ? 'max-w-[98vw] h-[calc(100vh-75px)] mt-9'
+          ? 'max-w-[98vw] h-[calc(100vh-75px)] h-[calc(100dvh-75px)] mt-8 sm:mt-9'
           : isFocusMode
-          ? 'max-w-5xl h-[calc(100vh-62px)] mt-8'
-          : 'max-w-5xl h-[calc(100vh-110px)] mt-10'
-      } ${isDark ? 'dark-theme' : 'light-theme'} mx-auto flex flex-col apple-liquid-glass window-frame rounded-3xl overflow-hidden select-none`}
+          ? 'max-w-5xl h-[calc(100vh-62px)] h-[calc(100dvh-62px)] mt-7 sm:mt-8'
+          : 'max-w-5xl h-[calc(100dvh-5.5rem-env(safe-area-inset-bottom,0px))] sm:h-[calc(100vh-110px)] mt-8 sm:mt-10'
+      } ${isDark ? 'dark-theme' : 'light-theme'} mx-auto flex flex-col apple-liquid-glass window-frame rounded-2xl sm:rounded-3xl overflow-hidden select-none`}
     >
       {/* Window Top Toolbar Header */}
-      <div className="h-13 px-4 flex items-center justify-between border-b border-black/5 dark:border-white/10 shrink-0 relative">
+      <div className="h-11 sm:h-13 px-3 sm:px-4 flex items-center justify-between border-b border-black/5 dark:border-white/10 shrink-0 relative">
         {/* Left: Official Apple Traffic Lights & Window Title */}
         <div className="flex items-center space-x-3.5">
           <TrafficLights
@@ -122,7 +122,7 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
       </div>
 
       {/* Window Scrollable Content Pane */}
-      <main className="flex-1 overflow-y-auto px-6 py-6 custom-scrollbar text-zinc-900 dark:text-white">
+      <main className="flex-1 overflow-y-auto px-3.5 sm:px-6 py-4 sm:py-6 pb-12 sm:pb-6 custom-scrollbar text-zinc-900 dark:text-white">
         {activeTab === 'projetos' && (
           <ProjectsTab onSelectProject={onSelectProject} theme={theme} />
         )}
@@ -132,14 +132,14 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
       </main>
 
       {/* Window Status Bar Footer */}
-      <footer className="h-7 px-4 flex items-center justify-between border-t border-black/10 dark:border-white/15 text-[11px] text-zinc-600 dark:text-zinc-400 shrink-0 font-medium">
-        <div className="flex items-center space-x-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#34c759]" />
-          <span>macOS 26 Tahoe UI Kit • Liquid Glass Large (Calibrado)</span>
+      <footer className="h-7 px-3 sm:px-4 flex items-center justify-between border-t border-black/10 dark:border-white/15 text-[11px] text-zinc-600 dark:text-zinc-400 shrink-0 font-medium overflow-hidden">
+        <div className="flex items-center space-x-2 truncate">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#34c759] shrink-0" />
+          <span className="truncate">macOS 26 Tahoe UI Kit • Liquid Glass</span>
         </div>
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 shrink-0">
           <span className="hidden sm:inline">Pressione ⌘K para Spotlight</span>
-          <span className="font-mono">React 19 + Tailwind v4</span>
+          <span className="font-mono text-[10px] sm:text-[11px]">React 19 + Tailwind</span>
         </div>
       </footer>
     </div>

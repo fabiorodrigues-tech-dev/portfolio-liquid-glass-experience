@@ -39,7 +39,7 @@ export const ProjectsTab: React.FC<ProjectsTabProps> = ({ onSelectProject, theme
         </div>
 
         {/* Filter Controls */}
-        <div className="apple-liquid-glass rounded-full p-1 flex flex-wrap gap-1 self-start md:self-auto select-none">
+        <div className="backdrop-blur-2xl backdrop-saturate-180 bg-black/5 dark:bg-white/[0.07] border border-black/10 dark:border-white/15 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_4px_12px_rgba(0,0,0,0.15)] rounded-full p-1 flex items-center gap-1 overflow-x-auto no-scrollbar transition-all flex-nowrap whitespace-nowrap self-start md:self-auto select-none">
           {(
             [
               { id: 'todos', label: 'Todos' },
@@ -56,10 +56,10 @@ export const ProjectsTab: React.FC<ProjectsTabProps> = ({ onSelectProject, theme
                 key={item.id}
                 type="button"
                 onClick={() => setFilter(item.id as FilterCategory)}
-                className={`relative px-4 py-1.5 text-xs rounded-full cursor-pointer outline-none transition-all duration-300 ease-out ${
+                className={`relative rounded-full cursor-pointer outline-none transition-all duration-300 ease-out shrink-0 ${
                   isActive
-                    ? 'bg-white/95 text-zinc-950 dark:bg-white/20 dark:text-white font-bold shadow-sm'
-                    : 'text-zinc-600 hover:text-zinc-950 dark:text-white/60 dark:hover:text-white font-medium'
+                    ? 'bg-white/95 text-zinc-950 dark:bg-white/20 dark:text-white backdrop-blur-md shadow-sm px-3.5 py-1 text-xs font-semibold transition-all'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white px-3.5 py-1 text-xs font-medium transition-colors'
                 }`}
               >
                 {item.label}

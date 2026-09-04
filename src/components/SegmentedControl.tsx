@@ -23,7 +23,7 @@ const TABS: TabOption[] = [
 export const SegmentedControl: React.FC<SegmentedControlProps> = ({ activeTab, onChange }) => {
   return (
     <div
-      className="apple-liquid-glass rounded-full p-1 flex items-center gap-1 select-none"
+      className="backdrop-blur-2xl backdrop-saturate-180 bg-black/5 dark:bg-white/[0.07] border border-black/10 dark:border-white/15 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_4px_12px_rgba(0,0,0,0.15)] rounded-full p-1 flex items-center gap-1 transition-all select-none"
       role="tablist"
       aria-label="Navegação de seções"
     >
@@ -37,10 +37,10 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({ activeTab, o
             role="tab"
             aria-selected={isActive}
             onClick={() => onChange(tab.id)}
-            className={`relative flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-4 py-1 sm:py-1.5 text-xs rounded-full cursor-pointer outline-none transition-all duration-300 ease-out ${
+            className={`relative flex items-center space-x-1 sm:space-x-1.5 cursor-pointer outline-none ${
               isActive
-                ? 'bg-white/95 text-zinc-950 dark:bg-white/20 dark:text-white font-bold shadow-sm'
-                : 'text-zinc-600 hover:text-zinc-950 dark:text-white/60 dark:hover:text-white font-medium'
+                ? 'bg-white/95 text-zinc-950 dark:bg-white/20 dark:text-white backdrop-blur-md shadow-sm rounded-full px-4 py-1.5 font-semibold text-xs transition-all'
+                : 'text-zinc-600 hover:text-zinc-950 dark:text-white/60 dark:hover:text-white rounded-full px-2.5 sm:px-4 py-1 sm:py-1.5 font-medium text-xs transition-colors'
             }`}
           >
             <IconComponent className={`w-3.5 h-3.5 ${isActive ? 'text-current' : 'opacity-70'}`} />

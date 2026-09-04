@@ -73,51 +73,100 @@ export const MenuBar: React.FC<MenuBarProps> = ({
 
           {activeMenu === 'about' && (
             <div
-              className={`absolute left-0 top-10 w-72 p-5 rounded-2xl apple-liquid-glass ${
-                isDark ? 'bg-[#0c0d14]/85 text-white' : 'bg-white/90 text-zinc-950'
-              } shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-100 border-none select-none
+              className={`absolute left-0 top-10 w-[350px] p-5 rounded-2xl apple-liquid-glass ${
+                isDark ? 'bg-[#0c0d14]/90 text-white' : 'bg-white/90 text-zinc-900'
+              } backdrop-blur-2xl shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-100 border-none select-none
               max-md:fixed max-md:left-3 max-md:right-3 max-md:bottom-20 max-md:top-auto max-md:w-auto max-md:slide-in-from-bottom-4`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Mobile grabber pill */}
               <div className="w-8 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-3 max-md:block hidden" />
-              {/* Header */}
+
+              {/* Header Executivo */}
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="font-bold text-sm text-zinc-950 dark:text-white">
                     Fábio Rodrigues
                   </h3>
-                  <p className="text-xs text-[#374151] dark:text-zinc-400 mb-3">
-                    Desenvolvedor Full Stack & Filmmaker
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-2">
+                    Creative Technologist & Full Stack Developer
                   </p>
                 </div>
                 <span className="w-2 h-2 rounded-full bg-[#34c759] mt-1 shrink-0 animate-pulse" title="Status: Online" />
               </div>
 
-              {/* Detalhes do Sistema em micro-linhas de fonte mono */}
-              <div className="space-y-1.5 py-3 border-y border-black/10 dark:border-white/10 text-[11px] font-mono">
-                <div className="flex items-center justify-between">
-                  <span className="text-[#374151] dark:text-zinc-400">Versão:</span>
-                  <span className="text-[#09090b] dark:text-zinc-200 font-medium">macOS 26 Tahoe (Liquid Glass)</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[#374151] dark:text-zinc-400">Origem:</span>
-                  <span className="text-[#09090b] dark:text-zinc-200 font-medium">Recife - PE, Brasil</span>
-                </div>
-                <div className="flex flex-col gap-0.5 pt-1">
-                  <span className="text-[#374151] dark:text-zinc-400">Core:</span>
-                  <span className="text-[#09090b] dark:text-zinc-200 text-[10.5px]">Java 21 LTS, Spring Boot, React 19, 4K ProRes</span>
+              {/* Sub-linha do Sistema */}
+              <div className="text-[11px] font-mono text-zinc-600 dark:text-zinc-400 pb-3 mb-3 border-b border-black/10 dark:border-white/10 flex items-center justify-between">
+                <span>macOS 26 Tahoe</span>
+                <span>Recife — PE, Brasil</span>
+              </div>
+
+              {/* Categorias com Micro-Pills Elegantes */}
+              {/* DEV */}
+              <div className="mb-2.5">
+                <span className="text-[10px] font-mono uppercase text-zinc-400 dark:text-zinc-500 tracking-wider block mb-1">
+                  Dev & Backend
+                </span>
+                <div className="flex flex-wrap gap-1.5 text-[11px] font-mono">
+                  <span className="px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-zinc-800 dark:text-zinc-200">
+                    Java 21 LTS
+                  </span>
+                  <span className="px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-zinc-800 dark:text-zinc-200">
+                    Spring Boot
+                  </span>
+                  <span className="px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-zinc-800 dark:text-zinc-200">
+                    React 19
+                  </span>
+                  <span className="px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-zinc-800 dark:text-zinc-200">
+                    TypeScript
+                  </span>
                 </div>
               </div>
 
-              {/* Botão com sombra de elevação tátil Apple */}
+              {/* AUDIOVISUAL */}
+              <div className="mb-2.5">
+                <span className="text-[10px] font-mono uppercase text-zinc-400 dark:text-zinc-500 tracking-wider block mb-1">
+                  Audiovisual
+                </span>
+                <div className="flex flex-wrap gap-1.5 text-[11px] font-mono">
+                  <span className="px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-zinc-800 dark:text-zinc-200">
+                    4K ProRes
+                  </span>
+                  <span className="px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-zinc-800 dark:text-zinc-200">
+                    Final Cut Pro
+                  </span>
+                  <span className="px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-zinc-800 dark:text-zinc-200">
+                    Logic Pro (Sound)
+                  </span>
+                </div>
+              </div>
+
+              {/* MARKETING */}
+              <div className="mb-3.5">
+                <span className="text-[10px] font-mono uppercase text-zinc-400 dark:text-zinc-500 tracking-wider block mb-1">
+                  Marketing & Gestão
+                </span>
+                <div className="flex flex-wrap gap-1.5 text-[11px] font-mono">
+                  <span className="px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-zinc-800 dark:text-zinc-200">
+                    Performance Ads
+                  </span>
+                  <span className="px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-zinc-800 dark:text-zinc-200">
+                    Growth
+                  </span>
+                  <span className="px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-zinc-800 dark:text-zinc-200">
+                    CRO
+                  </span>
+                </div>
+              </div>
+
+              {/* Botão Inferior */}
               <button
                 type="button"
                 onClick={() => {
                   setActiveMenu(null)
                   onSelectTab?.('sobre')
                 }}
-                className="w-full mt-3 py-2.5 px-4 rounded-xl font-semibold text-xs text-zinc-900 dark:text-white bg-white dark:bg-white/10 border border-black/10 dark:border-white/15 shadow-[0_3px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.14)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs text-zinc-900 dark:text-white bg-white dark:bg-white/10 border border-black/10 dark:border-white/15 shadow-[0_3px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.14)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Ver Trajetória Completa</span>
               </button>

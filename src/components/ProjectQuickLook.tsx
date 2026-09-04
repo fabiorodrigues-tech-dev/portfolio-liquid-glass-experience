@@ -23,19 +23,19 @@ export const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end md:items-center justify-center p-0 md:p-4 bg-black/40 backdrop-blur-md animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md animate-in fade-in duration-200 max-md:items-end max-md:p-0"
       onClick={onClose}
     >
       {/* Modal Window / Mobile Bottom Sheet */}
       <div
-        className="w-full max-w-2xl bg-[#f5f6fa]/95 dark:bg-[#0c0d14]/95 backdrop-blur-2xl overflow-hidden shadow-2xl animate-in slide-in-from-bottom md:zoom-in-95 duration-200 border border-black/10 dark:border-white/15 rounded-t-[28px] rounded-b-none md:rounded-2xl max-h-[90dvh] md:max-h-none flex flex-col"
+        className="w-full max-w-2xl bg-[#f5f6fa]/95 dark:bg-[#0c0d14]/95 backdrop-blur-2xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 border border-black/10 dark:border-white/15 rounded-2xl max-md:rounded-t-[28px] max-md:rounded-b-none max-md:max-h-[90dvh] flex flex-col max-md:slide-in-from-bottom"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Mobile Grabber Handle */}
-        <div className="w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mt-2.5 mb-1 md:hidden" />
+        <div className="w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mt-2.5 mb-1 max-md:block hidden" />
 
         {/* Modal Header with Title and Close Button */}
-        <div className="flex items-center justify-between px-4 py-3 md:px-6 md:py-4 border-b border-black/10 dark:border-white/10 shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-black/10 dark:border-white/10 shrink-0 max-md:px-4 max-md:py-3">
           <div className="flex items-center space-x-2">
             <span
               className="w-3 h-3 rounded-full"
@@ -57,7 +57,7 @@ export const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-4 md:p-6 max-h-[75vh] md:max-h-[75vh] overflow-y-auto custom-scrollbar space-y-6 flex-1">
+        <div className="p-6 max-h-[75vh] overflow-y-auto custom-scrollbar space-y-6 flex-1 max-md:p-4">
           {/* Visual Hero Banner with Liquid Glass Accent Gradient */}
           <div
             className={`w-full h-44 rounded-2xl bg-gradient-to-br ${project.imageGradient} p-6 flex flex-col justify-end relative overflow-hidden border border-black/10 dark:border-white/10`}

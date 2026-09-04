@@ -95,15 +95,14 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
 
       {/* Control Center Panel - Mobile Bottom Sheet / Desktop Flyout */}
       <div
-        className="fixed z-50 apple-liquid-glass select-none shadow-2xl transition-all
-          /* Mobile: iOS-style Liquid Glass Bottom Sheet (< md) */
-          inset-x-0 bottom-0 rounded-t-[28px] rounded-b-none border-t border-x-0 border-b-0 border-white/25 dark:border-white/15 px-4 pt-3 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] max-h-[85dvh] overflow-y-auto custom-scrollbar animate-in slide-in-from-bottom duration-300
-          /* Desktop: macOS Top-right Flyout (>= md) */
-          md:top-9 md:right-3 md:bottom-auto md:left-auto md:w-88 md:rounded-2xl md:border md:border-white/25 md:dark:border-white/15 md:p-3 md:max-h-[calc(100vh-5rem)] md:slide-in-from-top-2 md:duration-200"
+        className={`fixed top-9 right-3 w-88 p-3 rounded-2xl apple-liquid-glass ${
+          isDark ? 'bg-[#0c0d14]/85 text-white' : 'bg-white/85 text-zinc-950'
+        } shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-150 border border-black/10 dark:border-white/15 select-none
+        max-md:top-auto max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:w-full max-md:rounded-t-[28px] max-md:rounded-b-none max-md:border-t max-md:border-x-0 max-md:border-b-0 max-md:px-4 max-md:pt-3 max-md:pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] max-md:max-h-[85dvh] max-md:overflow-y-auto max-md:slide-in-from-bottom`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Mobile Pull / Grabber Handle */}
-        <div className="w-10 h-1 rounded-full bg-black/20 dark:bg-white/25 mx-auto mb-3 md:hidden" />
+        <div className="w-10 h-1 rounded-full bg-black/20 dark:bg-white/25 mx-auto mb-3 max-md:block hidden" />
         {/* Top 2-Column Grid */}
         <div className="grid grid-cols-2 gap-2 mb-2">
           {/* Action Group: 3 Real Functional Buttons */}

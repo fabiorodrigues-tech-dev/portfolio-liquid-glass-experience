@@ -95,13 +95,13 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
 
       {/* Control Center Panel */}
       <div
-        className="fixed top-9 right-3 z-50 w-88 p-3 bg-[#f5f6fa]/95 dark:bg-[#0c0d14]/95 backdrop-blur-2xl animate-in fade-in slide-in-from-top-2 duration-200 select-none shadow-2xl border border-black/10 dark:border-white/15 rounded-2xl"
+        className="fixed top-9 right-3 z-50 w-88 p-3 apple-liquid-glass rounded-2xl animate-in fade-in slide-in-from-top-2 duration-200 select-none shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top 2-Column Grid */}
         <div className="grid grid-cols-2 gap-2 mb-2">
           {/* Action Group: 3 Real Functional Buttons */}
-          <div className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl p-2.5 flex flex-col justify-between space-y-2 border border-black/10 dark:border-white/10">
+          <div className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl p-2.5 flex flex-col justify-between space-y-2">
             {/* Botão 1: Status Profissional (LinkedIn) */}
             <a
               href="https://www.linkedin.com/in/fabiorodrigues-dev/"
@@ -131,7 +131,7 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
               onClick={onToggleFocusMode}
               className={`flex items-center space-x-2 p-1 rounded-xl transition-all text-left ${
                 isFocusMode
-                  ? 'bg-[#5856d6]/15 dark:bg-[#5e5ce6]/25 border border-[#5856d6]/30'
+                  ? 'bg-[#5856d6]/15 dark:bg-[#5e5ce6]/25'
                   : 'hover:bg-black/5 dark:hover:bg-white/10'
               }`}
               title="Modo Foco: Oculta o Dock e expande a leitura"
@@ -188,14 +188,11 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
             <button
               type="button"
               onClick={onToggleTheme}
-              className="rounded-2xl p-2.5 flex-1 flex flex-col justify-between text-left transition-all active:scale-[0.98] group border border-black/10 dark:border-white/10"
+              className="rounded-2xl p-2.5 flex-1 flex flex-col justify-between text-left transition-all active:scale-[0.98] group"
               style={{
                 background: isDark
                   ? 'rgba(10, 132, 255, 0.15)'
                   : 'rgba(255, 255, 255, 0.65)',
-                borderColor: isDark
-                  ? 'rgba(10, 132, 255, 0.35)'
-                  : 'rgba(0, 0, 0, 0.15)',
               }}
             >
               <div className="flex items-center justify-between w-full">
@@ -227,7 +224,7 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
             </button>
 
             {/* Quick Status Pill */}
-            <div className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl p-2.5 flex items-center space-x-2 border border-black/10 dark:border-white/10">
+            <div className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl p-2.5 flex items-center space-x-2">
               <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 text-white flex items-center justify-center shadow-sm">
                 <Sparkles className="w-3.5 h-3.5" />
               </div>
@@ -244,7 +241,7 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
         </div>
 
         {/* Display Brightness Slider (Controls HTML tag brightness 60% to 100%) */}
-        <div className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl p-2.5 mb-2 border border-black/10 dark:border-white/10">
+        <div className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl p-2.5 mb-2">
           <div className="flex items-center justify-between mb-1.5 px-0.5">
             <span className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 flex items-center gap-1">
               <Sun className="w-3 h-3 text-[#ff9500]" /> Brilho da Tela
@@ -253,11 +250,19 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
               {brightness}%
             </span>
           </div>
-          <div className="relative h-6 bg-black/10 dark:bg-white/10 rounded-xl overflow-hidden flex items-center p-1">
-            <div
-              className="absolute left-0 top-0 bottom-0 bg-[#007aff]/60 dark:bg-white/30 rounded-xl transition-all"
-              style={{ width: `${((brightness - 60) / 40) * 100}%` }}
-            />
+          <div className="relative py-1 flex items-center">
+            <div className="relative w-full h-1.5 bg-black/10 dark:bg-white/15 rounded-full flex items-center">
+              <div
+                className="h-full bg-[#ff9500] rounded-full transition-all"
+                style={{ width: `${Math.round(((brightness - 60) / 40) * 100)}%` }}
+              />
+              <div
+                className="absolute w-4 h-4 rounded-full apple-liquid-glass shadow-md pointer-events-none -translate-x-1/2 transition-all flex items-center justify-center"
+                style={{
+                  left: `calc(8px + ${(Math.round(((brightness - 60) / 40) * 100) / 100)} * (100% - 16px))`,
+                }}
+              />
+            </div>
             <input
               type="range"
               min="60"
@@ -267,12 +272,11 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
               className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
               title={`Ajustar brilho: ${brightness}%`}
             />
-            <Sun className="relative z-10 w-3.5 h-3.5 ml-2 text-zinc-900 dark:text-white/80 pointer-events-none" />
           </div>
         </div>
 
         {/* Ambient Music Player (YouTube ID: 2OVsnsqBpp8) */}
-        <div className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl p-2.5 mb-2 border border-black/10 dark:border-white/10 space-y-2">
+        <div className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl p-2.5 mb-2 space-y-2">
           {/* Player Header & Controls */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2.5 overflow-hidden">
@@ -336,11 +340,19 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
               </span>
             </div>
 
-            <div className="relative h-5 bg-black/10 dark:bg-white/10 rounded-xl overflow-hidden flex items-center p-1">
-              <div
-                className="absolute left-0 top-0 bottom-0 bg-[var(--accent-color,#007aff)] rounded-xl transition-all"
-                style={{ width: isSoundMuted ? '0%' : `${soundVolume}%` }}
-              />
+            <div className="relative py-1 flex items-center">
+              <div className="relative w-full h-1.5 bg-black/10 dark:bg-white/15 rounded-full flex items-center">
+                <div
+                  className="h-full bg-[var(--accent-color,#007aff)] rounded-full transition-all"
+                  style={{ width: isSoundMuted ? '0%' : `${soundVolume}%` }}
+                />
+                <div
+                  className="absolute w-4 h-4 rounded-full apple-liquid-glass shadow-md pointer-events-none -translate-x-1/2 transition-all flex items-center justify-center"
+                  style={{
+                    left: `calc(8px + ${((isSoundMuted ? 0 : soundVolume) / 100)} * (100% - 16px))`,
+                  }}
+                />
+              </div>
               <input
                 type="range"
                 min="0"
@@ -357,7 +369,7 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
         </div>
 
         {/* Apple Tahoe Accent Color Palette Picker (5 Curated Colors) */}
-        <div className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl p-2.5 border border-black/10 dark:border-white/10">
+        <div className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl p-2.5">
           <div className="flex items-center justify-between mb-2 px-0.5">
             <span className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 flex items-center gap-1">
               <Palette className="w-3 h-3 text-current" /> Cor de Acento

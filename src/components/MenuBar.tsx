@@ -55,90 +55,70 @@ export const MenuBar: React.FC<MenuBarProps> = ({
   }, [activeMenu])
 
   return (
-    <header className={`fixed top-0 left-0 w-full h-7 z-30 liquid-glass-menubar flex items-center justify-between px-3 text-[13px] select-none ${isDark ? 'dark-theme' : 'light-theme'} text-zinc-900 dark:text-white`}>
-      {/* 1. Lado Esquerdo: Logo FR, FÁBIO RODRIGUES e RECIFE, BR */}
-      <div className="flex items-center space-x-2">
-        {/* Monograma Logo "FR" com Dropdown */}
+    <header className={`fixed top-0 left-0 w-full h-8 px-4 flex items-center justify-between apple-liquid-glass z-40 select-none ${isDark ? 'dark-theme' : 'light-theme'} text-zinc-900 dark:text-white`}>
+      {/* 1. Lado Esquerdo: Título do Sistema "Portfólio OS" com Popover Sobre Este Portfólio */}
+      <div className="flex items-center">
         <div className="relative">
-          <button
-            type="button"
+          <div
             onClick={(e) => {
               e.stopPropagation()
-              setActiveMenu(activeMenu === 'fr' ? null : 'fr')
+              setActiveMenu(activeMenu === 'about' ? null : 'about')
             }}
-            className={`w-6 h-5 rounded px-1 flex items-center justify-center font-bold text-[11px] tracking-wider transition-all ${
-              activeMenu === 'fr'
-                ? 'bg-black/15 dark:bg-white/20 text-[#007aff]'
-                : 'hover:bg-black/5 dark:hover:bg-white/10 text-zinc-900 dark:text-white'
-            }`}
-            title="Menu do Sistema"
+            className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-black/5 dark:hover:bg-white/10 cursor-pointer transition-colors"
           >
-            FR
-          </button>
+            <span className="font-bold text-xs text-zinc-900 dark:text-white">⌘ Portfólio OS</span>
+            <span className="text-[10px] text-zinc-500 font-mono hidden sm:inline">• RECIFE, BR</span>
+          </div>
 
-          {activeMenu === 'fr' && (
+          {activeMenu === 'about' && (
             <div
-              className="absolute left-0 top-6.5 w-60 p-1.5 rounded-xl bg-[#f5f6fa]/95 dark:bg-[#0c0d14]/95 backdrop-blur-2xl shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-100 border border-black/10 dark:border-white/15"
+              className={`absolute left-0 top-10 w-72 p-5 rounded-2xl apple-liquid-glass ${
+                isDark ? 'bg-[#0c0d14]/85 text-white' : 'bg-white/90 text-zinc-950'
+              } shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-100 border-none select-none`}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="px-2.5 py-1 text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 uppercase tracking-wider">
-                Fábio Rodrigues
+              {/* Header */}
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="font-bold text-sm text-zinc-950 dark:text-white">
+                    Fábio Rodrigues
+                  </h3>
+                  <p className="text-xs text-[#374151] dark:text-zinc-400 mb-3">
+                    Desenvolvedor Full Stack & Filmmaker
+                  </p>
+                </div>
+                <span className="w-2 h-2 rounded-full bg-[#34c759] mt-1 shrink-0 animate-pulse" title="Status: Online" />
               </div>
+
+              {/* Detalhes do Sistema em micro-linhas de fonte mono */}
+              <div className="space-y-1.5 py-3 border-y border-black/10 dark:border-white/10 text-[11px] font-mono">
+                <div className="flex items-center justify-between">
+                  <span className="text-[#374151] dark:text-zinc-400">Versão:</span>
+                  <span className="text-[#09090b] dark:text-zinc-200 font-medium">macOS 26 Tahoe (Liquid Glass)</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[#374151] dark:text-zinc-400">Origem:</span>
+                  <span className="text-[#09090b] dark:text-zinc-200 font-medium">Recife - PE, Brasil</span>
+                </div>
+                <div className="flex flex-col gap-0.5 pt-1">
+                  <span className="text-[#374151] dark:text-zinc-400">Core:</span>
+                  <span className="text-[#09090b] dark:text-zinc-200 text-[10.5px]">Java 21 LTS, Spring Boot, React 19, 4K ProRes</span>
+                </div>
+              </div>
+
+              {/* Botão com sombra de elevação tátil Apple */}
               <button
                 type="button"
                 onClick={() => {
                   setActiveMenu(null)
                   onSelectTab?.('sobre')
                 }}
-                className="w-full px-2.5 py-1 text-left text-[12px] font-medium rounded-lg hover:bg-[#007aff] hover:text-white transition-colors flex items-center justify-between text-zinc-900 dark:text-white"
+                className="w-full mt-3 py-2.5 px-4 rounded-xl font-semibold text-xs text-zinc-900 dark:text-white bg-white dark:bg-white/10 border border-black/10 dark:border-white/15 shadow-[0_3px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.14)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Sobre o Desenvolvedor</span>
-                <span className="text-[10px] opacity-70">Recife - PE</span>
+                <span>Ver Trajetória Completa</span>
               </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveMenu(null)
-                  onToggleControlCenter()
-                }}
-                className="w-full px-2.5 py-1 text-left text-[12px] rounded-lg hover:bg-[#007aff] hover:text-white transition-colors text-zinc-900 dark:text-white"
-              >
-                Central de Controle...
-              </button>
-              <div className="h-[1px] my-1 bg-black/10 dark:bg-white/15" />
-              <a
-                href="https://www.linkedin.com/in/fabiorodrigues-dev/"
-                target="_blank"
-                rel="noreferrer"
-                className="w-full px-2.5 py-1 text-left text-[12px] rounded-lg hover:bg-[#007aff] hover:text-white transition-colors block text-zinc-900 dark:text-white"
-              >
-                Conectar no LinkedIn
-              </a>
-              <a
-                href="https://github.com/fabiorodrigues-tech-dev"
-                target="_blank"
-                rel="noreferrer"
-                className="w-full px-2.5 py-1 text-left text-[12px] rounded-lg hover:bg-[#007aff] hover:text-white transition-colors block text-zinc-900 dark:text-white"
-              >
-                Ver Repositório GitHub
-              </a>
-              <div className="h-[1px] my-1 bg-black/10 dark:bg-white/15" />
-              <div className="px-2.5 py-0.5 text-[10px] text-zinc-600 dark:text-zinc-400">
-                macOS 26 Tahoe • Recife, BR
-              </div>
             </div>
           )}
-        </div>
-
-        {/* Nome do Desenvolvedor */}
-        <span className="font-bold text-[12px] tracking-tight uppercase text-zinc-900 dark:text-white">
-          FÁBIO RODRIGUES
-        </span>
-
-        {/* Localização Badge */}
-        <div className="flex items-center space-x-1.5 px-2 py-0.5 rounded-full liquid-glass-sm text-[10px] font-semibold text-zinc-600 dark:text-zinc-400 border border-black/10 dark:border-white/15">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#34c759] animate-pulse" />
-          <span className="tracking-wide">RECIFE, BR</span>
         </div>
       </div>
 

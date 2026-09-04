@@ -32,12 +32,12 @@ export const PROJECTS_DATA: Project[] = [
       {
         label: 'DEMO ONLINE (LGPD)',
         url: 'https://nova-control-center-alsl.onrender.com/',
-        customClass: 'bg-[#007aff] hover:bg-[#0062cc] text-white font-semibold',
+        customClass: 'bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-xl',
       },
       {
         label: 'REPOSITÓRIO GITHUB',
         url: 'https://github.com/fabiorodrigues-tech-dev/NOVA',
-        customClass: 'bg-black/[0.04] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-zinc-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/15',
+        customClass: 'bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 text-zinc-900 dark:bg-white/10 dark:border-white/15 dark:text-white dark:hover:bg-white/15 font-bold px-4 py-2 rounded-xl',
       },
     ],
     imageGradient: 'from-blue-600/30 via-indigo-500/20 to-cyan-600/30',
@@ -69,6 +69,18 @@ export const PROJECTS_DATA: Project[] = [
     ],
     githubUrl: 'https://github.com/fabiorodrigues-tech-dev',
     liveUrl: 'https://www.linkedin.com/feed/update/urn:li:activity:7493208152142794754/',
+    actionButtons: [
+      {
+        label: 'DEMO SOFIA (VOICE AI)',
+        url: 'https://www.linkedin.com/feed/update/urn:li:activity:7493208152142794754/',
+        customClass: 'bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-2 rounded-xl',
+      },
+      {
+        label: 'REPOSITÓRIO GITHUB',
+        url: 'https://github.com/fabiorodrigues-tech-dev',
+        customClass: 'bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 text-zinc-900 dark:bg-white/10 dark:border-white/15 dark:text-white dark:hover:bg-white/15 font-bold px-4 py-2 rounded-xl',
+      },
+    ],
     imageGradient: 'from-purple-600/30 via-pink-500/20 to-indigo-700/30',
     featured: true,
   },

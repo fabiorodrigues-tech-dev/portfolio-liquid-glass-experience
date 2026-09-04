@@ -95,7 +95,7 @@ export const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({
               {project.metrics.map((metric, idx) => (
                 <div
                   key={idx}
-                  className="bg-black/[0.04] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 rounded-xl p-3 text-center transition-transform hover:scale-[1.02]"
+                  className="bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/5 rounded-xl p-3 text-center transition-transform hover:scale-[1.02]"
                 >
                   <div
                     className="text-xl font-bold tracking-tight"
@@ -164,7 +164,7 @@ export const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({
                 href={project.githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="px-4 py-2 rounded-xl text-sm font-medium bg-black/[0.04] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/20 transition-all flex items-center space-x-2 text-zinc-900 dark:text-white"
+                className="bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 text-zinc-900 dark:bg-white/10 dark:border-white/15 dark:text-white dark:hover:bg-white/20 font-bold px-4 py-2 rounded-xl text-xs sm:text-sm transition-all flex items-center space-x-2"
               >
                 <GithubIcon className="w-4 h-4" />
                 <span>Repositório</span>
@@ -176,12 +176,26 @@ export const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({
                 href={project.liveUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="px-4 py-2 rounded-xl text-sm font-medium text-white shadow-md transition-all flex items-center space-x-2 active:scale-95"
-                style={{
-                  backgroundColor: accentHex,
-                }}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-white shadow-md transition-all flex items-center space-x-2 active:scale-95 ${
+                  project.id === 'nova-enterprise'
+                    ? 'bg-blue-600 hover:bg-blue-500'
+                    : project.id === 'sofia-voice-ai'
+                    ? 'bg-purple-600 hover:bg-purple-500'
+                    : ''
+                }`}
+                style={
+                  project.id !== 'nova-enterprise' && project.id !== 'sofia-voice-ai'
+                    ? { backgroundColor: accentHex }
+                    : undefined
+                }
               >
-                <span>Acessar Case / Link Oficial</span>
+                <span>
+                  {project.id === 'nova-enterprise'
+                    ? 'Demo NOVA (LGPD)'
+                    : project.id === 'sofia-voice-ai'
+                    ? 'Demo SOFIA (Voice AI)'
+                    : 'Acessar Case / Link Oficial'}
+                </span>
                 <ExternalLink className="w-4 h-4" />
               </a>
             )}

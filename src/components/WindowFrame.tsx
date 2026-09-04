@@ -68,10 +68,10 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
           : isFocusMode
           ? 'max-w-5xl h-[calc(100vh-62px)] mt-8'
           : 'max-w-5xl h-[calc(100vh-110px)] mt-10'
-      } ${isDark ? 'dark-theme' : 'light-theme'} mx-auto flex flex-col liquid-glass-lg bg-[#f5f6fa]/90 dark:bg-[#0c0d14]/90 backdrop-blur-2xl border border-black/15 dark:border-white/15 text-zinc-900 dark:text-white overflow-hidden select-none`}
+      } ${isDark ? 'dark-theme' : 'light-theme'} mx-auto flex flex-col apple-liquid-glass rounded-3xl overflow-hidden select-none`}
     >
       {/* Window Top Toolbar Header */}
-      <div className="h-13 px-4 flex items-center justify-between border-b border-black/10 dark:border-white/15 shrink-0 relative">
+      <div className="h-13 px-4 flex items-center justify-between border-b border-black/5 dark:border-white/10 shrink-0 relative">
         {/* Left: Official Apple Traffic Lights & Window Title */}
         <div className="flex items-center space-x-3.5">
           <TrafficLights
@@ -101,7 +101,7 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
           <button
             type="button"
             onClick={onOpenSpotlight}
-            className="w-7 h-7 rounded-lg bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-center hover:bg-black/10 dark:hover:bg-white/20 transition-colors text-zinc-900 dark:text-white cursor-pointer"
+            className="w-7 h-7 rounded-lg bg-black/5 dark:bg-white/10 border-none flex items-center justify-center hover:bg-black/10 dark:hover:bg-white/20 transition-colors text-zinc-900 dark:text-white cursor-pointer"
             title="Spotlight Search (⌘K)"
           >
             <Search className="w-3.5 h-3.5" />
@@ -111,7 +111,7 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
           <button
             type="button"
             onClick={onToggleTheme}
-            className="w-7 h-7 rounded-lg bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-center hover:bg-black/10 dark:hover:bg-white/20 transition-colors text-zinc-900 dark:text-white cursor-pointer"
+            className="w-7 h-7 rounded-lg bg-black/5 dark:bg-white/10 border-none flex items-center justify-center hover:bg-black/10 dark:hover:bg-white/20 transition-colors text-zinc-900 dark:text-white cursor-pointer"
             title={isDark ? 'Alternar para Modo Claro' : 'Alternar para Modo Escuro'}
           >
             {isDark ? (
@@ -125,7 +125,7 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
           <button
             type="button"
             onClick={onOpenControlCenter}
-            className="w-7 h-7 rounded-lg bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-center hover:bg-black/10 dark:hover:bg-white/20 transition-colors text-zinc-900 dark:text-white cursor-pointer"
+            className="w-7 h-7 rounded-lg bg-black/5 dark:bg-white/10 border-none flex items-center justify-center hover:bg-black/10 dark:hover:bg-white/20 transition-colors text-zinc-900 dark:text-white cursor-pointer"
             title="Ajustes & Central de Controle"
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />

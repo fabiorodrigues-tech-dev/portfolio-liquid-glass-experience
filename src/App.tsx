@@ -8,6 +8,7 @@ import { SpotlightModal } from './components/SpotlightModal'
 import { ProjectQuickLook } from './components/ProjectQuickLook'
 import { Dock } from './components/Dock'
 import { AudioPlayer } from './components/AudioPlayer'
+import { IntroBootScreen } from './components/IntroBootScreen'
 import { PROJECTS_DATA } from './data/portfolioData'
 import { ACCENT_COLORS } from './data/accentColors'
 
@@ -199,6 +200,9 @@ export function App() {
         theme={theme}
         isFocusMode={isFocusMode}
       />
+
+      {/* 9. macOS Intro Boot Screen (First Visit) */}
+      <IntroBootScreen />
     </div>
   )
 }

@@ -46,7 +46,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
           return (
             <div
               key={idx}
-              className="bg-black/[0.04] dark:bg-white/[0.04] backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden"
+              className="bg-white/80 dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/10 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-none p-5 flex flex-col justify-between relative overflow-hidden"
             >
               {/* Specular Edge Glow */}
               <div
@@ -138,7 +138,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
       </div>
 
       {/* Specialized Tooling Cards: 4 Compact Categories with Microbadges */}
-      <div className="bg-black/[0.04] dark:bg-white/[0.04] backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl p-5 space-y-4">
+      <div className="space-y-4">
         <div className="flex items-center space-x-2">
           <Sparkles className="w-4 h-4 text-[#ff9500]" />
           <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
@@ -146,9 +146,9 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Categoria 1: Desenvolvimento & Stack Dev */}
-          <div className="rounded-2xl p-3.5 space-y-2 border border-black/10 dark:border-white/15 bg-black/[0.02] dark:bg-white/[0.02]">
+          <div className="bg-white/90 dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.25)] space-y-3">
             <div className="flex items-center space-x-2 text-xs font-bold text-zinc-900 dark:text-white">
               <Code2 className="w-3.5 h-3.5 text-[#007aff]" />
               <span>Desenvolvimento & Stack Dev</span>
@@ -160,7 +160,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
                 'JUnit 5',
                 'TypeScript',
                 'React 19 / Next.js',
-                'Angular',
+                'Antigravity IDE',
                 'RESTful APIs',
                 'PostgreSQL',
                 'Docker & OrbStack',
@@ -182,7 +182,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
           </div>
 
           {/* Categoria 2: Audiovisual & Criativo */}
-          <div className="rounded-2xl p-3.5 space-y-2 border border-black/10 dark:border-white/15 bg-black/[0.02] dark:bg-white/[0.02]">
+          <div className="bg-white/90 dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.25)] space-y-3">
             <div className="flex items-center space-x-2 text-xs font-bold text-zinc-900 dark:text-white">
               <Video className="w-3.5 h-3.5 text-[#ff2d55]" />
               <span>Audiovisual & Criativo</span>
@@ -208,7 +208,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
           </div>
 
           {/* Categoria 3: Marketing & Dados */}
-          <div className="rounded-2xl p-3.5 space-y-2 border border-black/10 dark:border-white/15 bg-black/[0.02] dark:bg-white/[0.02]">
+          <div className="bg-white/90 dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.25)] space-y-3">
             <div className="flex items-center space-x-2 text-xs font-bold text-zinc-900 dark:text-white">
               <TrendingUp className="w-3.5 h-3.5 text-[#34c759]" />
               <span>Marketing & Dados</span>
@@ -234,7 +234,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
           </div>
 
           {/* Categoria 4: Hardware & Sistema */}
-          <div className="rounded-2xl p-3.5 space-y-2 border border-black/10 dark:border-white/15 bg-black/[0.02] dark:bg-white/[0.02]">
+          <div className="bg-white/90 dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.25)] space-y-3">
             <div className="flex items-center space-x-2 text-xs font-bold text-zinc-900 dark:text-white">
               <Box className="w-3.5 h-3.5 text-[#af52de]" />
               <span>Hardware & Sistema</span>

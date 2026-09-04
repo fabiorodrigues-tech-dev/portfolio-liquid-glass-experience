@@ -23,7 +23,7 @@ const TABS: TabOption[] = [
 export const SegmentedControl: React.FC<SegmentedControlProps> = ({ activeTab, onChange }) => {
   return (
     <div
-      className="apple-segmented-container inline-flex items-center relative select-none"
+      className="apple-liquid-glass rounded-full p-1 flex items-center gap-1 select-none"
       role="tablist"
       aria-label="Navegação de seções"
     >
@@ -37,10 +37,10 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({ activeTab, o
             role="tab"
             aria-selected={isActive}
             onClick={() => onChange(tab.id)}
-            className={`relative flex items-center space-x-1.5 px-3 py-1 text-[13px] font-medium transition-all duration-200 rounded-full cursor-default outline-none ${
+            className={`relative flex items-center space-x-1.5 px-4 py-1.5 text-xs rounded-full cursor-pointer outline-none transition-all duration-300 ease-out ${
               isActive
-                ? 'apple-segmented-active'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+                ? 'bg-white/95 text-zinc-950 dark:bg-white/20 dark:text-white font-bold shadow-sm'
+                : 'text-zinc-600 hover:text-zinc-950 dark:text-white/60 dark:hover:text-white font-medium'
             }`}
           >
             <IconComponent className={`w-3.5 h-3.5 ${isActive ? 'text-current' : 'opacity-70'}`} />

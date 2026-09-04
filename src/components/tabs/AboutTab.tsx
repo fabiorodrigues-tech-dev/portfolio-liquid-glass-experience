@@ -23,7 +23,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
   return (
     <div className="space-y-6 pb-8">
       {/* Hero Profile Card */}
-      <div className="bg-black/[0.04] dark:bg-white/[0.04] backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl p-6 relative overflow-hidden">
+      <div className="bg-white/80 dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/10 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-none p-5 relative overflow-hidden">
         {/* Specular Ambient Glow */}
         <div className="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-[#007aff]/15 blur-3xl pointer-events-none" />
 
@@ -100,7 +100,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
           {/* Pilar 1: Desenvolvimento Full Stack */}
-          <div className="bg-black/[0.04] dark:bg-white/[0.04] backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl p-4.5 space-y-2.5 flex flex-col justify-between">
+          <div className="bg-white/90 dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.3)] transition-all space-y-2.5 flex flex-col justify-between">
             <div>
               <div className="w-8 h-8 rounded-xl bg-blue-500/10 text-[#007aff] flex items-center justify-center mb-2">
                 <Code2 className="w-4 h-4" />
@@ -120,7 +120,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
           </div>
 
           {/* Pilar 2: Audiovisual, Edição & Social Media */}
-          <div className="bg-black/[0.04] dark:bg-white/[0.04] backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl p-4.5 space-y-2.5 flex flex-col justify-between">
+          <div className="bg-white/90 dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.3)] transition-all space-y-2.5 flex flex-col justify-between">
             <div>
               <div className="w-8 h-8 rounded-xl bg-pink-500/10 text-[#ff2d55] flex items-center justify-center mb-2">
                 <Video className="w-4 h-4" />
@@ -140,7 +140,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
           </div>
 
           {/* Pilar 3: Mídia, Performance & Branding */}
-          <div className="bg-black/[0.04] dark:bg-white/[0.04] backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl p-4.5 space-y-2.5 flex flex-col justify-between">
+          <div className="bg-white/90 dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.3)] transition-all space-y-2.5 flex flex-col justify-between">
             <div>
               <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-[#34c759] flex items-center justify-center mb-2">
                 <TrendingUp className="w-4 h-4" />
@@ -160,7 +160,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
           </div>
 
           {/* Pilar 4: Gestão & Rotinas Administrativas */}
-          <div className="bg-black/[0.04] dark:bg-white/[0.04] backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl p-4.5 space-y-2.5 flex flex-col justify-between">
+          <div className="bg-white/90 dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/10 rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.3)] transition-all space-y-2.5 flex flex-col justify-between">
             <div>
               <div className="w-8 h-8 rounded-xl bg-purple-500/10 text-[#af52de] flex items-center justify-center mb-2">
                 <Building2 className="w-4 h-4" />
@@ -196,7 +196,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ theme }) => {
             return (
               <div
                 key={item.id}
-                className="bg-black/[0.04] dark:bg-white/[0.04] backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl p-5 transition-all hover:translate-x-1"
+                className="bg-white/85 dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/10 rounded-2xl p-5 mb-4 shadow-[0_4px_16px_rgba(0,0,0,0.04)] dark:shadow-none transition-all hover:translate-x-1"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-1 mb-2">
                   <div>

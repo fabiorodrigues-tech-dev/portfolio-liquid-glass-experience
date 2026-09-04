@@ -9,6 +9,7 @@ import { ProjectQuickLook } from './components/ProjectQuickLook'
 import { Dock } from './components/Dock'
 import { AudioPlayer } from './components/AudioPlayer'
 import { IntroBootScreen } from './components/IntroBootScreen'
+import { IOSMobileExperience } from './components/mobile/IOSMobileExperience'
 import { PROJECTS_DATA } from './data/portfolioData'
 import { ACCENT_COLORS } from './data/accentColors'
 import { playHapticClick } from './lib/soundEffects'
@@ -174,56 +175,106 @@ export function App() {
 
 
   return (
-    <div className="relative w-screen h-screen h-[100dvh] overflow-hidden flex flex-col justify-between text-zinc-900 dark:text-white">
-      {/* 1. Official macOS Tahoe Dynamic Silk Wave Wallpaper */}
-      <TahoeWallpaper theme={theme} />
+    <>
+      {/* ========================================================================= */}
+      {/* 1. DESKTOP EXPERIENCE: macOS 26 Tahoe (telas lg / >= 1024px)              */}
+      {/* ========================================================================= */}
+      <div className="hidden lg:flex relative w-screen h-screen h-[100dvh] overflow-hidden flex-col justify-between text-zinc-900 dark:text-white">
+        {/* 1. Official macOS Tahoe Dynamic Silk Wave Wallpaper */}
+        <TahoeWallpaper theme={theme} />
 
-      {/* 2. Fixed Continuous Top macOS Menu Bar */}
-      <MenuBar
-        onOpenSpotlight={() => setIsSpotlightOpen(true)}
-        onToggleControlCenter={() => setIsControlCenterOpen((prev) => !prev)}
-        isControlCenterOpen={isControlCenterOpen}
-        onSelectTab={handleTabChange}
-        theme={theme}
-      />
+        {/* 2. Fixed Continuous Top macOS Menu Bar */}
+        <MenuBar
+          onOpenSpotlight={() => setIsSpotlightOpen(true)}
+          onToggleControlCenter={() => setIsControlCenterOpen((prev) => !prev)}
+          isControlCenterOpen={isControlCenterOpen}
+          onSelectTab={handleTabChange}
+          theme={theme}
+        />
 
-      {/* 3. Main Window Frame (Liquid Glass Large) */}
-      <div className="flex-1 flex items-center justify-center p-3 sm:p-5 overflow-hidden max-md:p-0 max-md:block max-md:w-full max-md:h-full">
-        <WindowFrame
-          activeTab={activeTab}
-          onTabChange={handleTabChange}
+        {/* 3. Main Window Frame (Liquid Glass Large) */}
+        <div className="flex-1 flex items-center justify-center p-3 sm:p-5 overflow-hidden">
+          <WindowFrame
+            activeTab={activeTab}
+            onTabChange={handleTabChange}
+            theme={theme}
+            onToggleTheme={toggleTheme}
+            onOpenSpotlight={() => setIsSpotlightOpen(true)}
+            onSelectProject={setSelectedProject}
+            isFocusMode={isFocusMode}
+          />
+        </div>
+
+        {/* 4. Official Apple Control Center Flyout */}
+        <ControlCenter
+          isOpen={isControlCenterOpen}
+          onClose={() => setIsControlCenterOpen(false)}
           theme={theme}
           onToggleTheme={toggleTheme}
-          onOpenSpotlight={() => setIsSpotlightOpen(true)}
-          onSelectProject={setSelectedProject}
+          accentColor={accentColor}
+          onChangeAccent={setAccentColor}
           isFocusMode={isFocusMode}
+          onToggleFocusMode={() => setIsFocusMode((prev) => !prev)}
+          glassStyle={glassStyle}
+          onToggleGlassStyle={toggleGlassStyle}
+          isSoundEffectsEnabled={isSoundEffectsEnabled}
+          onToggleSoundEffects={toggleSoundEffects}
+          isPlayingMusic={isPlayingMusic}
+          onTogglePlayMusic={togglePlayMusic}
+          soundVolume={soundVolume}
+          onChangeVolume={setSoundVolume}
+          isSoundMuted={isSoundMuted}
+          onToggleMute={toggleMute}
+          onSkipTrack={skipTrack}
+        />
+
+        {/* 6. macOS Spotlight Search Dialog (Cmd + K) */}
+        <SpotlightModal
+          isOpen={isSpotlightOpen}
+          onClose={() => setIsSpotlightOpen(false)}
+          onSelectTab={handleTabChange}
+          onOpenProject={(id) => {
+            const found = PROJECTS_DATA.find((p) => p.id === id)
+            if (found) setSelectedProject(found)
+          }}
+          theme={theme}
+        />
+
+        {/* 7. macOS Quick Look Inspector Modal (Spacebar / Preview) */}
+        <ProjectQuickLook
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+          theme={theme}
+        />
+
+        {/* 8. macOS Floating Dock at Bottom with Physical Magnification & Focus Mode */}
+        <Dock
+          activeTab={activeTab}
+          onSelectTab={handleTabChange}
+          onToggleControlCenter={() => setIsControlCenterOpen((prev) => !prev)}
+          theme={theme}
+          isFocusMode={isFocusMode}
+        />
+
+        {/* 9. macOS Intro Boot Screen (First Visit) */}
+        <IntroBootScreen />
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 2. MOBILE EXPERIENCE: iOS 26 (telas < 1024px)                             */}
+      {/* ========================================================================= */}
+      <div className="block lg:hidden w-full min-h-screen relative">
+        <IOSMobileExperience
+          theme={theme}
+          onToggleTheme={toggleTheme}
+          soundEffectsEnabled={isSoundEffectsEnabled}
+          onSelectProject={setSelectedProject}
         />
       </div>
 
-      {/* 4. Official Apple Control Center Flyout */}
-      <ControlCenter
-        isOpen={isControlCenterOpen}
-        onClose={() => setIsControlCenterOpen(false)}
-        theme={theme}
-        onToggleTheme={toggleTheme}
-        accentColor={accentColor}
-        onChangeAccent={setAccentColor}
-        isFocusMode={isFocusMode}
-        onToggleFocusMode={() => setIsFocusMode((prev) => !prev)}
-        glassStyle={glassStyle}
-        onToggleGlassStyle={toggleGlassStyle}
-        isSoundEffectsEnabled={isSoundEffectsEnabled}
-        onToggleSoundEffects={toggleSoundEffects}
-        isPlayingMusic={isPlayingMusic}
-        onTogglePlayMusic={togglePlayMusic}
-        soundVolume={soundVolume}
-        onChangeVolume={setSoundVolume}
-        isSoundMuted={isSoundMuted}
-        onToggleMute={toggleMute}
-        onSkipTrack={skipTrack}
-      />
-
-      {/* 5. Ambient YouTube Audio Player (Persistent in Background) */}
+      {/* ========================================================================= */}
+      {/* 3. PERSISTENT BACKGROUND SERVICES (YouTube Ambient Audio)                 */}
+      {/* ========================================================================= */}
       <AudioPlayer
         isPlaying={isPlayingMusic}
         volume={soundVolume}
@@ -231,38 +282,7 @@ export function App() {
         skipTrigger={skipTrigger}
         onStateChange={setIsPlayingMusic}
       />
-
-      {/* 6. macOS Spotlight Search Dialog (Cmd + K) */}
-      <SpotlightModal
-        isOpen={isSpotlightOpen}
-        onClose={() => setIsSpotlightOpen(false)}
-        onSelectTab={handleTabChange}
-        onOpenProject={(id) => {
-          const found = PROJECTS_DATA.find((p) => p.id === id)
-          if (found) setSelectedProject(found)
-        }}
-        theme={theme}
-      />
-
-      {/* 7. macOS Quick Look Inspector Modal (Spacebar / Preview) */}
-      <ProjectQuickLook
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-        theme={theme}
-      />
-
-      {/* 8. macOS Floating Dock at Bottom with Physical Magnification & Focus Mode */}
-      <Dock
-        activeTab={activeTab}
-        onSelectTab={handleTabChange}
-        onToggleControlCenter={() => setIsControlCenterOpen((prev) => !prev)}
-        theme={theme}
-        isFocusMode={isFocusMode}
-      />
-
-      {/* 9. macOS Intro Boot Screen (First Visit) */}
-      <IntroBootScreen />
-    </div>
+    </>
   )
 }
 

@@ -102,8 +102,8 @@ portfolio-v2-macos/
 ### Passo a Passo
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/fabiorodrigues-tech-dev/portfolio-creative-technologist.git
-   cd portfolio-creative-technologist
+   git clone https://github.com/fabiorodrigues-tech-dev/portfolio-liquid-glass-experience.git
+   cd portfolio-liquid-glass-experience
    ```
 
 2. Instale as dependências:

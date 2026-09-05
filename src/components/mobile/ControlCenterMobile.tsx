@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import {
   Sun,
   Moon,
+  Volume1,
   Volume2,
   VolumeX,
   Play,
@@ -223,8 +224,8 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         </button>
       </div>
 
-      {/* 3. Grid em Simetria Perfeita (largura exata de 325px centralizada) */}
-      <div className="w-full max-w-[325px] mx-auto flex flex-col gap-3">
+      {/* 3. Grid em Simetria Perfeita (largura centralizada de até 340px) */}
+      <div className="w-full max-w-[340px] mx-auto flex flex-col gap-3">
         {/* Cabeçalho Sutil Oficial do iOS */}
         <div className="flex justify-between items-center mb-3 text-white/80 px-1">
           <span className="text-xs font-semibold tracking-wide flex items-center gap-1.5">
@@ -405,19 +406,18 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
 
             {/* Linha 2: 4 Botões Circulares de Redes (Esquerda) + 2 Sliders Verticais (Direita) */}
             <div className="w-full grid grid-cols-2 gap-3.5 h-[155px]">
-              {/* Lado Esquerdo: 4 Botões Circulares de Redes (LinkedIn, WhatsApp, GitHub, Instagram em w-12 h-12) */}
-              <div className="grid grid-cols-2 gap-2.5 place-items-center h-[155px]">
+              {/* Lado Esquerdo: 4 Botões Circulares de Redes no tamanho oficial Apple (w-14 h-14 com ícones w-6 h-6) */}
+              <div className="grid grid-cols-2 gap-2 place-items-center h-[155px]">
                 {/* Botão 1: LinkedIn */}
                 <a
                   href="https://www.linkedin.com/in/fabiorodrigues-dev/"
                   target="_blank"
                   rel="noreferrer"
                   onClick={triggerHaptic}
-                  style={LIQUID_GLASS_STYLE}
-                  className="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shadow-sm hover:brightness-110"
+                  className="w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shadow-sm"
                   title="LinkedIn Oficial"
                 >
-                  <LinkedinIcon className="w-5 h-5 fill-white" />
+                  <LinkedinIcon className="w-6 h-6 fill-white" />
                 </a>
 
                 {/* Botão 2: WhatsApp */}
@@ -426,11 +426,10 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   target="_blank"
                   rel="noreferrer"
                   onClick={triggerHaptic}
-                  style={LIQUID_GLASS_STYLE}
-                  className="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shadow-sm hover:brightness-110"
+                  className="w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shadow-sm"
                   title="WhatsApp (+55 (81) 99185-1507)"
                 >
-                  <WhatsAppIcon className="w-5 h-5 fill-white" />
+                  <WhatsAppIcon className="w-6 h-6 fill-white" />
                 </a>
 
                 {/* Botão 3: GitHub */}
@@ -439,11 +438,10 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   target="_blank"
                   rel="noreferrer"
                   onClick={triggerHaptic}
-                  style={LIQUID_GLASS_STYLE}
-                  className="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shadow-sm hover:brightness-110"
+                  className="w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shadow-sm"
                   title="GitHub (Octocat)"
                 >
-                  <GithubIcon className="w-5 h-5 fill-white" />
+                  <GithubIcon className="w-6 h-6 fill-white" />
                 </a>
 
                 {/* Botão 4: Instagram */}
@@ -452,11 +450,10 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   target="_blank"
                   rel="noreferrer"
                   onClick={triggerHaptic}
-                  style={LIQUID_GLASS_STYLE}
-                  className="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shadow-sm hover:brightness-110"
+                  className="w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shadow-sm"
                   title="Instagram (@f.a.rodrigues)"
                 >
-                  <InstagramIcon className="w-5 h-5" />
+                  <InstagramIcon className="w-6 h-6" />
                 </a>
               </div>
 
@@ -561,43 +558,48 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         )}
 
         {/* ========================================================================= */}
-        {/* PÁGINA 2: 🎵 PLAYER DE ÁUDIO EXPANDIDO (MÍDIA)                             */}
+        {/* PÁGINA 2: 🎵 PLAYER DE ÁUDIO EXPANDIDO (MÍDIA - Conforme print 614efa)     */}
         {/* ========================================================================= */}
         {activeTab === 'media' && (
-          <div
-            style={LIQUID_GLASS_STYLE}
-            className="rounded-[28px] border border-white/15 p-5 flex flex-col items-center justify-between text-white animate-in fade-in slide-in-from-right-4 duration-300"
-          >
-            {/* Capa de Álbum em Destaque */}
-            <div className="w-32 h-32 rounded-3xl bg-gradient-to-tr from-purple-600 via-pink-500 to-indigo-600 flex items-center justify-center shadow-2xl my-2 relative group">
-              <Music className={`w-12 h-12 text-white ${isPlayingMusic ? 'animate-bounce' : ''}`} />
-              {isPlayingMusic && (
-                <span className="absolute -inset-1 rounded-3xl bg-purple-500/20 blur-sm pointer-events-none animate-pulse" />
-              )}
+          <div className="w-full max-w-[340px] mx-auto rounded-[36px] bg-white/[0.12] backdrop-blur-3xl border border-white/15 p-6 shadow-2xl flex flex-col justify-between select-none text-white animate-in fade-in zoom-in-95 duration-200">
+            {/* 1. Capa do Álbum Grande */}
+            <div className="w-full aspect-square rounded-[24px] bg-gradient-to-tr from-purple-600 via-indigo-600 to-blue-500 shadow-xl flex items-center justify-center mb-5 overflow-hidden border border-white/10">
+              <Music className={`w-16 h-16 text-white/80 ${isPlayingMusic ? 'animate-pulse' : ''}`} />
             </div>
 
-            {/* Informações da Faixa */}
-            <div className="text-center my-2">
-              <h3 className="text-base font-bold text-white tracking-tight">
-                Lofi Chillout
-              </h3>
-              <p className="text-xs text-white/70 mt-0.5">
-                Fábio Rodrigues • Trilha Sonora Ambiente
-              </p>
+            {/* 2. Informações da Faixa */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="truncate pr-2">
+                <h3 className="font-bold text-base truncate">Lofi Chillout</h3>
+                <p className="text-xs text-white/60 truncate">Fábio Rodrigues • Trilha Sonora Ambiente</p>
+              </div>
+              <span className="text-white/40 text-lg cursor-pointer px-1">•••</span>
             </div>
 
-            {/* Controles Principais de Reprodução */}
-            <div className="flex items-center justify-center gap-6 my-2">
+            {/* 3. Scrubber de Tempo */}
+            <div className="w-full mb-4">
+              <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
+                <div className="h-full bg-white/90 w-1/3 rounded-full" />
+              </div>
+              <div className="flex justify-between text-[10px] font-mono text-white/40 mt-1.5">
+                <span>1:12</span>
+                <span>-2:48</span>
+              </div>
+            </div>
+
+            {/* 4. Controles Principais de Reprodução */}
+            <div className="flex items-center justify-center gap-9 my-1">
               <button
                 type="button"
                 onClick={() => {
                   triggerHaptic()
                   onSkipTrack()
                 }}
-                className="w-10 h-10 rounded-full flex items-center justify-center text-white/80 hover:text-white active:scale-90 transition-transform cursor-pointer"
-                title="Retroceder Faixa"
+                className="text-white/80 hover:text-white active:scale-90 transition-transform cursor-pointer"
+                title="Retroceder"
+                aria-label="Retroceder"
               >
-                <SkipBack className="w-5 h-5 fill-current" />
+                <SkipBack className="w-7 h-7 fill-current" />
               </button>
 
               <button
@@ -606,13 +608,14 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   triggerHaptic()
                   onTogglePlayMusic()
                 }}
-                className="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center active:scale-90 transition-transform cursor-pointer shadow-xl"
+                className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg cursor-pointer"
                 title={isPlayingMusic ? 'Pausar' : 'Reproduzir'}
+                aria-label={isPlayingMusic ? 'Pausar' : 'Reproduzir'}
               >
                 {isPlayingMusic ? (
-                  <Pause className="w-6 h-6 fill-black" />
+                  <Pause className="w-6 h-6 fill-current" />
                 ) : (
-                  <Play className="w-6 h-6 fill-black ml-0.5" />
+                  <Play className="w-6 h-6 fill-current ml-0.5" />
                 )}
               </button>
 
@@ -622,48 +625,47 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   triggerHaptic()
                   onSkipTrack()
                 }}
-                className="w-10 h-10 rounded-full flex items-center justify-center text-white/80 hover:text-white active:scale-90 transition-transform cursor-pointer"
-                title="Avançar Faixa"
+                className="text-white/80 hover:text-white active:scale-90 transition-transform cursor-pointer"
+                title="Avançar"
+                aria-label="Avançar"
               >
-                <SkipForward className="w-5 h-5 fill-current" />
+                <SkipForward className="w-7 h-7 fill-current" />
               </button>
             </div>
 
-            {/* Slider Horizontal de Volume */}
-            <div className="w-full flex items-center gap-3 px-2 mt-2">
-              <Volume2 className="w-4 h-4 text-white/60 shrink-0" />
-              <div className="relative flex-1 h-3 bg-white/10 rounded-full overflow-hidden">
-                <div
-                  className="absolute left-0 top-0 bottom-0 bg-white rounded-full transition-all duration-75"
-                  style={{ width: `${volume}%` }}
-                />
+            {/* 5. Slider de Volume Horizontal com Alto-Falantes */}
+            <div className="flex items-center gap-3 my-4 px-1">
+              <Volume1 className="w-4 h-4 text-white/40" />
+              <div className="relative flex-1 h-1.5 bg-white/20 rounded-full overflow-hidden">
+                <div className="h-full bg-white" style={{ width: `${volume}%` }} />
                 <input
                   type="range"
                   min="0"
                   max="100"
                   value={volume}
                   onChange={(e) => setVolume(Number(e.target.value))}
+                  aria-label="Volume"
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                  title={`Volume: ${volume}%`}
                 />
               </div>
-              <span className="text-[10px] font-mono font-bold text-white/70 w-8 text-right">
-                {volume}%
-              </span>
+              <Volume2 className="w-4 h-4 text-white/40" />
             </div>
 
-            {/* Botão de Expansão Completa */}
-            <button
-              type="button"
-              onClick={() => {
-                triggerHaptic()
-                onOpenExpandedPlayer()
-              }}
-              className="mt-3 text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 cursor-pointer"
-            >
-              <span>Abrir Player Completo do iOS</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
+            {/* 6. Botão Cápsula AirPlay */}
+            <div className="mx-auto mt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  triggerHaptic()
+                  onOpenExpandedPlayer()
+                }}
+                className="px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center gap-2 text-[11px] font-medium text-white/80 cursor-pointer active:scale-95 transition-all"
+                title="AirPlay & Dispositivos"
+              >
+                <Radio className="w-3.5 h-3.5" />
+                <span>AirPlay</span>
+              </button>
+            </div>
           </div>
         )}
 

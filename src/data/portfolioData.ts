@@ -212,7 +212,7 @@ export const PROJECTS_DATA: Project[] = [
 export const EXPERIENCE_DATA: ExperienceItem[] = [
   {
     id: 'exp-infinit',
-    role: 'Especialista em Comunicação Visual & Criação Multimídia',
+    role: 'Comunicação Visual & Criação Multimídia',
     company: 'Infinit Tecnologia',
     period: '2026 – Atual',
     type: 'Híbrido / Recife, PE & São Paulo, SP',
@@ -229,7 +229,7 @@ export const EXPERIENCE_DATA: ExperienceItem[] = [
   },
   {
     id: 'exp-unigames',
-    role: 'Consultor de Conteúdo Visual, Mídia & Comunidade Digital',
+    role: 'Consultor de Conteúdo & Customer Seller (CRM / CX)',
     company: 'Unigames',
     period: 'Jul/2025 – Dez/2025',
     type: 'Remoto / Recife, PE',
@@ -245,7 +245,7 @@ export const EXPERIENCE_DATA: ExperienceItem[] = [
   },
   {
     id: 'exp-wolf-agency',
-    role: 'Sócio-Proprietário & Diretor de Mídia e Performance',
+    role: 'Sócio-Fundador & Diretor de Mídia/Performance',
     company: 'Wolf Agency',
     period: 'Jan/2025 – Jun/2025',
     type: 'Remoto / Recife, PE',
@@ -261,7 +261,7 @@ export const EXPERIENCE_DATA: ExperienceItem[] = [
   },
   {
     id: 'exp-quintal',
-    role: 'Gerente Geral & Gestor de Marketing',
+    role: 'Gerente Geral & Gestor de Marketing (PDV / iFood)',
     company: 'Quintal dos Primos',
     period: 'Jun/2024 – Dez/2024',
     type: 'Recife, PE',
@@ -277,8 +277,8 @@ export const EXPERIENCE_DATA: ExperienceItem[] = [
   },
   {
     id: 'exp-olimac',
-    role: 'Gestor de Marketing',
-    company: 'Olimac / Olimac Express',
+    role: 'Gestor de Marketing B2B (Tráfego Pago / Catálogos)',
+    company: 'Olimac',
     period: 'Jan/2024 – Mai/2024',
     type: 'Recife, PE',
     description:
@@ -293,7 +293,7 @@ export const EXPERIENCE_DATA: ExperienceItem[] = [
   },
   {
     id: 'exp-qyon',
-    role: 'Gerente Comercial & Rotinas Administrativas de ERP',
+    role: 'Gerente Comercial & Agente de Registro (AGR)',
     company: 'Qyon Multinacional',
     period: 'Jan/2022 – Mai/2024',
     type: 'Remoto / Recife, PE',
@@ -309,9 +309,9 @@ export const EXPERIENCE_DATA: ExperienceItem[] = [
   },
   {
     id: 'exp-unifbv',
-    role: 'Bacharelado em Design (UX/UI, Ergonomia Cognitiva & Comunicação Visual)',
+    role: 'Bacharelado em Design',
     company: 'Faculdade Boa Viagem (UniFBV)',
-    period: 'Recife, PE',
+    period: 'Formação Superior',
     type: 'Formação Acadêmica Superior',
     description:
       'Formação sólida com ênfase em design centrado no usuário, metodologia projetual, ergonomia cognitiva, semiótica e arquitetura da informação para sistemas digitais e interfaces de prestígio.',

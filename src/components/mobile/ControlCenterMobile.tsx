@@ -131,12 +131,12 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
           onClose()
         }
       }}
-      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-3xl p-4 flex flex-row items-center justify-center select-none animate-in fade-in duration-200 overflow-y-auto"
+      className="fixed inset-0 z-50 bg-black/65 backdrop-blur-3xl pt-3 px-3.5 pb-8 flex flex-row items-start justify-center overflow-y-auto select-none animate-in fade-in duration-200"
     >
       {/* 1. Container Central + Barra Lateral Direita de Navegação do iOS 18 */}
-      <div className="flex flex-row items-center justify-center gap-3 w-full max-w-[395px] mx-auto">
-        {/* Painel Central com largura máxima de 340px */}
-        <div className="w-[320px] sm:w-[340px] shrink-0 flex flex-col gap-3.5">
+      <div className="flex flex-row items-start justify-center gap-2.5 w-full max-w-[395px] mx-auto">
+        {/* Painel Central colado no topo abaixo da barra de status */}
+        <div className="mt-1 max-w-[340px] w-full flex flex-col gap-3 shrink-0">
           {/* Barra Superior Discreta */}
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center space-x-2">
@@ -682,7 +682,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         </div>
 
         {/* 2. Barra Lateral Direita de Navegação (iOS 18 Paging Rail) */}
-        <div className="flex flex-col items-center gap-3 py-3.5 px-1 rounded-full bg-white/[0.08] backdrop-blur-2xl border border-white/10 shadow-2xl shrink-0 select-none">
+        <div className="mt-8 flex flex-col items-center gap-3 py-3 px-1 rounded-full bg-white/[0.08] backdrop-blur-2xl border border-white/10 shadow-2xl shrink-0 select-none">
           {/* Ícone 1 (✦ / Início): ativa a tela principal de controles */}
           <button
             type="button"

@@ -701,6 +701,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
               </h3>
 
               <div className="space-y-3.5 border-l-2 border-zinc-200 dark:border-white/10 pl-3.5 ml-1">
+                {/* 1º (2026 – Atual): Infinit Tecnologia */}
                 <div>
                   <span className="text-[10px] font-mono font-bold text-amber-600 dark:text-amber-400">
                     2026 — ATUAL
@@ -713,30 +714,72 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                   </p>
                 </div>
 
+                {/* 2º (Jul/2025 – Dez/2025): Unigames */}
+                <div>
+                  <span className="text-[10px] font-mono font-bold text-purple-600 dark:text-purple-400">
+                    JUL/2025 — DEZ/2025
+                  </span>
+                  <h4 className="text-xs font-bold text-black dark:text-white">
+                    Unigames • Consultor de Conteúdo & Customer Seller (CRM / CX)
+                  </h4>
+                  <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-0.5">
+                    CRM, CX (Customer Experience) e vendas diretas com alta conversão e retenção em canais digitais.
+                  </p>
+                </div>
+
+                {/* 3º (Jan/2025 – Jun/2025): Wolf Agency */}
                 <div>
                   <span className="text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400">
                     JAN/2025 — JUN/2025
                   </span>
                   <h4 className="text-xs font-bold text-black dark:text-white">
-                    Wolf Agency • Sócio-Proprietário & Diretor de Mídia
+                    Wolf Agency • Sócio-Fundador & Diretor de Mídia/Performance
                   </h4>
                   <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-0.5">
                     Fundação da agência, gestão de tráfego de escala com ROAS &gt; 185%, elaboração de contratos comerciais e produção audiovisual.
                   </p>
                 </div>
 
+                {/* 4º (Jun/2024 – Dez/2024): Quintal dos Primos */}
                 <div>
-                  <span className="text-[10px] font-mono font-bold text-purple-600 dark:text-purple-400">
-                    JUL/2025 — DEZ/2025
+                  <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                    JUN/2024 — DEZ/2024
                   </span>
                   <h4 className="text-xs font-bold text-black dark:text-white">
-                    Unigames • Consultor de Conteúdo & Customer Seller
+                    Quintal dos Primos • Gerente Geral & Gestor de Marketing (PDV / iFood)
                   </h4>
                   <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-0.5">
-                    CRM, CX (Customer Experience) e vendas diretas com alta retenção em canais digitais.
+                    Operação e otimização iFood, desenvolvimento de Sistema de PDV proprietário, fechamento de caixa e vídeos Food Appeal.
                   </p>
                 </div>
 
+                {/* 5º (Jan/2024 – Mai/2024): Olimac */}
+                <div>
+                  <span className="text-[10px] font-mono font-bold text-orange-600 dark:text-orange-400">
+                    JAN/2024 — MAI/2024
+                  </span>
+                  <h4 className="text-xs font-bold text-black dark:text-white">
+                    Olimac • Gestor de Marketing B2B (Tráfego Pago / Catálogos)
+                  </h4>
+                  <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-0.5">
+                    Campanhas Google Ads & Meta Ads para prospecção B2B, diagramação de catálogos técnicos e vídeos de máquinas industriais.
+                  </p>
+                </div>
+
+                {/* 6º (Jan/2022 – Mai/2024): Qyon Multinacional */}
+                <div>
+                  <span className="text-[10px] font-mono font-bold text-indigo-600 dark:text-indigo-400">
+                    JAN/2022 — MAI/2024
+                  </span>
+                  <h4 className="text-xs font-bold text-black dark:text-white">
+                    Qyon Multinacional • Gerente Comercial & Agente de Registro (AGR)
+                  </h4>
+                  <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-0.5">
+                    Operação corporativa com ERPs em nuvem, validação e emissão de Certificados Digitais ICP-Brasil e treinamentos corporativos.
+                  </p>
+                </div>
+
+                {/* 7º (Formação): Faculdade Boa Viagem (UniFBV) */}
                 <div>
                   <span className="text-[10px] font-mono font-bold text-pink-600 dark:text-pink-400">
                     FORMAÇÃO SUPERIOR

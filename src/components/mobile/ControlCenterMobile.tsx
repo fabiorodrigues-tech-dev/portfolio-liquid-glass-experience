@@ -27,8 +27,8 @@ interface ControlCenterMobileProps {
   onClose: () => void
   theme: ThemeMode
   onToggleTheme: () => void
-  accentColor: AccentColor
-  onChangeAccent: (color: AccentColor) => void
+  accentColor?: AccentColor
+  onChangeAccent?: (color: AccentColor) => void
   isFocusMode: boolean
   onToggleFocusMode: () => void
   isSoundEffectsEnabled?: boolean
@@ -38,7 +38,8 @@ interface ControlCenterMobileProps {
   soundVolume: number
   onChangeVolume: (vol: number) => void
   onSkipTrack: () => void
-  onOpenExpandedPlayer: () => void
+  onPrevTrack?: () => void
+  onNextTrack?: () => void
 }
 
 type ActiveTab = 'main' | 'media' | 'connections'
@@ -64,7 +65,8 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
   soundVolume,
   onChangeVolume,
   onSkipTrack,
-  onOpenExpandedPlayer,
+  onPrevTrack,
+  onNextTrack,
 }) => {
   // Active tab state for iOS 18 pagination ('main' | 'media' | 'connections')
   const [activeTab, setActiveTab] = useState<ActiveTab>('main')
@@ -96,6 +98,24 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
   const triggerHaptic = () => {
     if (isSoundEffectsEnabled) {
       playHapticClick()
+    }
+  }
+
+  const prevTrack = () => {
+    triggerHaptic()
+    if (onPrevTrack) {
+      onPrevTrack()
+    } else {
+      onSkipTrack()
+    }
+  }
+
+  const nextTrack = () => {
+    triggerHaptic()
+    if (onNextTrack) {
+      onNextTrack()
+    } else {
+      onSkipTrack()
     }
   }
 
@@ -362,8 +382,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation()
-                      triggerHaptic()
-                      onSkipTrack()
+                      prevTrack()
                     }}
                     className="w-7 h-7 rounded-full flex items-center justify-center text-white/75 hover:text-white active:scale-90 transition-transform cursor-pointer"
                     title="Retroceder"
@@ -382,9 +401,9 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     title={isPlayingMusic ? 'Pausar' : 'Reproduzir'}
                   >
                     {isPlayingMusic ? (
-                      <Pause className="w-3.5 h-3.5 fill-black" />
+                      <Pause className="w-3.5 h-3.5 fill-black text-black" />
                     ) : (
-                      <Play className="w-3.5 h-3.5 fill-black ml-0.5" />
+                      <Play className="w-3.5 h-3.5 fill-black text-black ml-0.5" />
                     )}
                   </button>
 
@@ -392,8 +411,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation()
-                      triggerHaptic()
-                      onSkipTrack()
+                      nextTrack()
                     }}
                     className="w-7 h-7 rounded-full flex items-center justify-center text-white/75 hover:text-white active:scale-90 transition-transform cursor-pointer"
                     title="Avançar"
@@ -591,10 +609,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
             <div className="flex items-center justify-center gap-9 my-1">
               <button
                 type="button"
-                onClick={() => {
-                  triggerHaptic()
-                  onSkipTrack()
-                }}
+                onClick={prevTrack}
                 className="text-white/80 hover:text-white active:scale-90 transition-transform cursor-pointer"
                 title="Retroceder"
                 aria-label="Retroceder"
@@ -608,23 +623,20 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   triggerHaptic()
                   onTogglePlayMusic()
                 }}
-                className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg cursor-pointer"
+                className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 active:scale-90 transition-all shadow-lg cursor-pointer"
                 title={isPlayingMusic ? 'Pausar' : 'Reproduzir'}
                 aria-label={isPlayingMusic ? 'Pausar' : 'Reproduzir'}
               >
                 {isPlayingMusic ? (
-                  <Pause className="w-6 h-6 fill-current" />
+                  <Pause className="w-6 h-6 fill-current text-black" />
                 ) : (
-                  <Play className="w-6 h-6 fill-current ml-0.5" />
+                  <Play className="w-6 h-6 fill-current text-black ml-0.5" />
                 )}
               </button>
 
               <button
                 type="button"
-                onClick={() => {
-                  triggerHaptic()
-                  onSkipTrack()
-                }}
+                onClick={nextTrack}
                 className="text-white/80 hover:text-white active:scale-90 transition-transform cursor-pointer"
                 title="Avançar"
                 aria-label="Avançar"
@@ -651,20 +663,10 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               <Volume2 className="w-4 h-4 text-white/40" />
             </div>
 
-            {/* 6. Cápsula AirPlay na Base */}
-            <div className="mx-auto">
-              <button
-                type="button"
-                onClick={() => {
-                  triggerHaptic()
-                  onOpenExpandedPlayer()
-                }}
-                className="px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center gap-2 text-[11px] font-medium text-white/80 cursor-pointer active:scale-95 transition-all"
-                title="AirPlay & Dispositivos"
-              >
-                <Radio className="w-3.5 h-3.5" />
-                <span>AirPlay</span>
-              </button>
+            {/* 6. Rótulo AirPlay Estático na Base */}
+            <div className="mx-auto mt-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 flex items-center gap-2 text-[11px] font-medium text-white/80 select-none pointer-events-none">
+              <Radio className="w-3.5 h-3.5" />
+              <span>AirPlay • Alto-falante do iPhone</span>
             </div>
           </div>
         )}

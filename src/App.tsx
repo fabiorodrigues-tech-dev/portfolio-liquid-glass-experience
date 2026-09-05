@@ -59,6 +59,7 @@ export function App() {
   const [soundVolume, setSoundVolume] = useState(70)
   const [isSoundMuted, setIsSoundMuted] = useState(false)
   const [skipTrigger, setSkipTrigger] = useState(0)
+  const [prevTrigger, setPrevTrigger] = useState(0)
 
 
   // Synchronize document dark class & local storage
@@ -142,6 +143,10 @@ export function App() {
 
   const skipTrack = () => {
     setSkipTrigger((prev) => prev + 1)
+  }
+
+  const prevTrack = () => {
+    setPrevTrigger((prev) => prev + 1)
   }
 
   // Global keyboard shortcuts (Cmd+K, Tab switching with keys 1-4, Esc)
@@ -269,6 +274,7 @@ export function App() {
           soundVolume={soundVolume}
           onChangeVolume={setSoundVolume}
           onSkipTrack={skipTrack}
+          onPrevTrack={prevTrack}
           soundEffectsEnabled={isSoundEffectsEnabled}
           onToggleSoundEffects={toggleSoundEffects}
           onSelectProject={setSelectedProject}
@@ -290,6 +296,7 @@ export function App() {
         volume={soundVolume}
         isMuted={isSoundMuted}
         skipTrigger={skipTrigger}
+        prevTrigger={prevTrigger}
         onStateChange={setIsPlayingMusic}
       />
     </>

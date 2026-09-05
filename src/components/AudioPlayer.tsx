@@ -5,6 +5,7 @@ interface AudioPlayerProps {
   volume: number // 0 to 100
   isMuted: boolean
   skipTrigger: number
+  prevTrigger?: number
   onStateChange?: (isPlaying: boolean) => void
 }
 
@@ -20,6 +21,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
   volume,
   isMuted,
   skipTrigger,
+  prevTrigger = 0,
   onStateChange,
 }) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null)
@@ -157,6 +159,24 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
       )
     }
   }, [skipTrigger])
+
+  // Handle Prev / Rewind track
+  useEffect(() => {
+    if (prevTrigger === 0) return
+    if (playerRef.current && typeof playerRef.current.getCurrentTime === 'function') {
+      try {
+        const currentTime = playerRef.current.getCurrentTime() || 0
+        playerRef.current.seekTo(Math.max(0, currentTime - 30), true)
+      } catch {
+        // Fallback
+      }
+    } else if (iframeRef.current?.contentWindow) {
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func: 'seekTo', args: [0, true] }),
+        '*'
+      )
+    }
+  }, [prevTrigger])
 
   return (
     <div className="fixed -bottom-96 -left-96 w-1 h-1 opacity-0 pointer-events-none overflow-hidden z-[-1]">

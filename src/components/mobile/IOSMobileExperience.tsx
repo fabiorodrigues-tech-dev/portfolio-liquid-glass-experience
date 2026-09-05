@@ -3,17 +3,9 @@ import {
   CloudSun,
   MapPin,
   ExternalLink,
-  X,
   FolderGit2,
   Send,
   ArrowUpRight,
-  Volume2,
-  VolumeX,
-  Play,
-  Pause,
-  SkipForward,
-  SkipBack,
-  Music,
   Check,
   Copy,
   Mail,
@@ -41,6 +33,7 @@ interface IOSMobileExperienceProps {
   soundVolume: number
   onChangeVolume: (vol: number) => void
   onSkipTrack: () => void
+  onPrevTrack?: () => void
   soundEffectsEnabled?: boolean
   onToggleSoundEffects?: () => void
   onSelectProject?: (project: Project) => void
@@ -60,6 +53,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
   soundVolume,
   onChangeVolume,
   onSkipTrack,
+  onPrevTrack,
   soundEffectsEnabled = true,
   onToggleSoundEffects,
 }) => {
@@ -68,7 +62,6 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
 
   // Modals & Overlays
   const [isControlCenterOpen, setIsControlCenterOpen] = useState(false)
-  const [isExpandedPlayerOpen, setIsExpandedPlayerOpen] = useState(false)
 
   // Real-time iPhone clock & date
   const [currentTime, setCurrentTime] = useState<string>('19:30')
@@ -1281,134 +1274,8 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         soundVolume={soundVolume}
         onChangeVolume={onChangeVolume}
         onSkipTrack={onSkipTrack}
-        onOpenExpandedPlayer={() => setIsExpandedPlayerOpen(true)}
+        onPrevTrack={onPrevTrack}
       />
-
-      {/* ========================================================================= */}
-      {/* 6. PLAYER DE MÚSICA EXPANDIDO ESTILO iOS (PRINT 60ab514e)                  */}
-      {/* ========================================================================= */}
-      {isExpandedPlayerOpen && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-3xl p-5 flex flex-col justify-center items-center animate-in fade-in zoom-in-95 duration-200">
-          <div className="w-full max-w-sm rounded-[36px] bg-[#1c1c1e]/95 backdrop-blur-2xl border border-white/20 p-6 shadow-2xl space-y-5 text-white relative">
-            {/* Header com Grabber & Fechar */}
-            <div className="flex items-center justify-between pb-1">
-              <div className="w-6" />
-              <div className="w-10 h-1 rounded-full bg-white/30" />
-              <button
-                type="button"
-                onClick={() => {
-                  triggerHaptic()
-                  setIsExpandedPlayerOpen(false)
-                }}
-                className="w-7 h-7 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white cursor-pointer active:scale-90 transition-all"
-                title="Minimizar Player"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
-            {/* Capa Artística em Alta Resolução */}
-            <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-gradient-to-tr from-indigo-900 via-purple-800 to-pink-700 p-6 flex flex-col items-center justify-center shadow-xl border border-white/15">
-              <div className={`w-28 h-28 rounded-full border-4 border-white/20 flex items-center justify-center bg-black/40 shadow-inner ${isPlayingMusic ? 'animate-spin' : ''}`} style={{ animationDuration: '8s' }}>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-pink-500 flex items-center justify-center">
-                  <Music className="w-5 h-5 text-white" />
-                </div>
-              </div>
-              <span className="mt-4 text-[11px] font-mono font-bold tracking-widest text-white/80 uppercase">
-                Fábio Rodrigues Studio
-              </span>
-            </div>
-
-            {/* Título da Faixa */}
-            <div className="text-center">
-              <h3 className="text-lg font-bold tracking-tight text-white">
-                Lofi Chillout
-              </h3>
-              <p className="text-xs text-zinc-400 mt-0.5">
-                Fábio Rodrigues Playlist • YouTube 2OVsnsqBpp8
-              </p>
-            </div>
-
-            {/* Barra de Scrubber */}
-            <div className="space-y-1.5">
-              <div className="h-1.5 w-full bg-white/20 rounded-full overflow-hidden relative">
-                <div
-                  className="h-full bg-white rounded-full"
-                  style={{ width: isPlayingMusic ? '45%' : '20%' }}
-                />
-              </div>
-              <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400">
-                <span>01:24</span>
-                <span>-02:21</span>
-              </div>
-            </div>
-
-            {/* Controles de Reprodução */}
-            <div className="flex items-center justify-around py-1">
-              <button
-                type="button"
-                onClick={() => {
-                  triggerHaptic()
-                  onSkipTrack()
-                }}
-                className="w-10 h-10 rounded-full flex items-center justify-center text-white/80 hover:text-white active:scale-90 transition-transform cursor-pointer"
-                title="Faixa Anterior"
-              >
-                <SkipBack className="w-6 h-6" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  triggerHaptic()
-                  onTogglePlayMusic()
-                }}
-                className="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center shadow-lg active:scale-95 transition-transform cursor-pointer"
-                title={isPlayingMusic ? 'Pausar' : 'Reproduzir'}
-              >
-                {isPlayingMusic ? (
-                  <Pause className="w-7 h-7 fill-black" />
-                ) : (
-                  <Play className="w-7 h-7 fill-black ml-1" />
-                )}
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  triggerHaptic()
-                  onSkipTrack()
-                }}
-                className="w-10 h-10 rounded-full flex items-center justify-center text-white/80 hover:text-white active:scale-90 transition-transform cursor-pointer"
-                title="Próxima Faixa"
-              >
-                <SkipForward className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Controle de Volume Horizontal */}
-            <div className="flex items-center space-x-3 pt-2">
-              <VolumeX className="w-4 h-4 text-zinc-400" />
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={soundVolume}
-                onChange={(e) => onChangeVolume(Number(e.target.value))}
-                className="w-full accent-white cursor-pointer h-1.5 bg-white/20 rounded-full"
-              />
-              <Volume2 className="w-4 h-4 text-zinc-400" />
-            </div>
-
-            {/* Rota de Áudio AirPlay */}
-            <div className="text-center pt-1">
-              <span className="text-[10px] font-mono text-zinc-400">
-                AirPlay // Alto-falante do iPhone
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

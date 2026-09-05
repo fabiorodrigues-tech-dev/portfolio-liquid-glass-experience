@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import {
   Sun,
   Moon,
+  Volume,
   Volume1,
   Volume2,
   VolumeX,
@@ -16,12 +17,30 @@ import {
   ArrowUpRight,
   FolderOpen,
   Wifi,
-  Lock,
   Airplay,
 } from 'lucide-react'
 import { GithubIcon, LinkedinIcon, WhatsAppIcon, InstagramIcon } from '../icons/SocialIcons'
 import type { ThemeMode, AccentColor } from '../../types'
 import { playHapticClick } from '../../lib/soundEffects'
+
+// Ícone Oficial de Bloqueio de Rotação do iOS (Retângulo/tela central com seta curva circular ao redor)
+const OrientationLockIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.6"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    {/* Retângulo representando a tela */}
+    <rect x="8.5" y="6" width="7" height="12" rx="1.5" />
+    {/* Seta curva circular ao redor */}
+    <path d="M 12 3.2 A 8.8 8.8 0 1 1 5.8 7.2" />
+    <polyline points="2.8 7 5.8 7.2 6.2 4.2" />
+  </svg>
+)
 
 interface ControlCenterMobileProps {
   isOpen: boolean
@@ -194,7 +213,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
           onClose()
         }
       }}
-      className="fixed inset-0 z-50 bg-black/55 dark:bg-black/70 backdrop-blur-3xl px-5 pt-12 pb-16 flex flex-col justify-start items-center overflow-y-auto overflow-x-hidden select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 bg-black/55 dark:bg-black/70 backdrop-blur-3xl px-3 min-[390px]:px-4 pt-8 min-[390px]:pt-10 pb-14 flex flex-col justify-start items-center overflow-y-auto overflow-x-hidden select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
     >
       {/* 1. Botão de Fechar no Canto Superior Direito com bom respiro */}
       <button
@@ -267,28 +286,28 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         </button>
       </div>
 
-      {/* 3. Grid em Simetria Perfeita iOS */}
-      <div className="w-full max-w-[340px] mx-auto flex flex-col gap-3.5">
+      {/* 3. Grid em Escala Autêntica iOS 26 (~92-94% da largura da tela) */}
+      <div className="w-full max-w-[395px] pr-8 min-[400px]:pr-9 mx-auto flex flex-col gap-3.5 min-[400px]:gap-4">
         {/* ========================================================================= */}
         {/* PÁGINA 1: ✦ CONTROLES PRINCIPAIS (TELA PRINCIPAL)                         */}
         {/* ========================================================================= */}
         {activeTab === 'main' && (
-          <div className="w-full max-w-[330px] flex flex-col gap-3.5 mx-auto animate-in fade-in slide-in-from-left-4 duration-300">
+          <div className="w-full flex flex-col gap-3.5 min-[400px]:gap-4 mx-auto animate-in fade-in slide-in-from-left-4 duration-300">
             {/* LINHA 1: Cluster de Conectividade (Esquerda) + Card de Mídia (Direita) */}
-            <div className="w-full grid grid-cols-2 gap-3.5 h-[148px] max-w-[330px] mx-auto">
+            <div className="w-full grid grid-cols-2 gap-3.5 min-[400px]:gap-4 h-[162px] min-[400px]:h-[170px] mx-auto">
               {/* Cluster de Conectividade (Bandeja com 4 pastilhas individuais) */}
               <div
                 style={liquidGlass}
-                className="apple-liquid-glass h-[148px] rounded-[26px] p-2.5 grid grid-cols-2 gap-2.5 place-items-center select-none shadow-xl"
+                className="apple-liquid-glass h-[162px] min-[400px]:h-[170px] rounded-[28px] p-3 grid grid-cols-2 gap-3 place-items-center select-none shadow-xl"
               >
                 {/* Pastilha 1 (Recife / Status Online): Fundo próprio e sombra interna */}
                 <div
-                  className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-400/30 flex items-center justify-center relative shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] active:scale-95 transition-all duration-200"
+                  className="w-[54px] h-[54px] min-[400px]:w-[58px] min-[400px]:h-[58px] rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-400/30 flex items-center justify-center relative shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] active:scale-95 transition-all duration-200"
                   title="Recife, PE • BR (Status: Online)"
                 >
-                  <MapPin className="w-5 h-5 text-emerald-400" />
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 absolute top-1.5 right-1.5 animate-ping" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 absolute top-1.5 right-1.5" />
+                  <MapPin className="w-6 h-6 text-emerald-400" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 absolute top-2 right-2 animate-ping" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 absolute top-2 right-2" />
                 </div>
 
                 {/* Pastilha 2 (Conexões / Wi-Fi) */}
@@ -298,25 +317,25 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     triggerHaptic()
                     setActiveTab('connections')
                   }}
-                  className="w-12 h-12 rounded-full bg-sky-500/20 text-sky-400 border border-sky-400/30 flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
+                  className="w-[54px] h-[54px] min-[400px]:w-[58px] min-[400px]:h-[58px] rounded-full bg-sky-500/20 text-sky-400 border border-sky-400/30 flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
                   title="Conexões e Redes (Wi-Fi 6 • Conectado)"
                   aria-label="Conexões e Redes"
                 >
-                  <Wifi className="w-5 h-5 text-sky-400" />
+                  <Wifi className="w-6 h-6 text-sky-400" />
                 </button>
 
                 {/* Pastilha 3 (Tema Dia/Noite) */}
                 <button
                   type="button"
                   onClick={handleThemeToggle}
-                  className="w-12 h-12 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
+                  className="w-[54px] h-[54px] min-[400px]:w-[58px] min-[400px]:h-[58px] rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
                   title={isDark ? 'Modo Noite (Alternar para Dia)' : 'Modo Dia (Alternar para Noite)'}
                   aria-label={isDark ? 'Modo Noite' : 'Modo Dia'}
                 >
                   {isDark ? (
-                    <Sun className="w-5 h-5 text-amber-300" />
+                    <Sun className="w-6 h-6 text-amber-300" />
                   ) : (
-                    <Moon className="w-5 h-5 text-amber-300" />
+                    <Moon className="w-6 h-6 text-amber-300" />
                   )}
                 </button>
 
@@ -327,7 +346,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     triggerHaptic()
                     onToggleSoundEffects?.()
                   }}
-                  className={`w-12 h-12 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] ${
+                  className={`w-[54px] h-[54px] min-[400px]:w-[58px] min-[400px]:h-[58px] rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] ${
                     isSoundEffectsEnabled
                       ? 'bg-purple-500/25 text-purple-300 border border-purple-400/30'
                       : 'bg-white/10 text-white/40 border border-white/10'
@@ -335,42 +354,42 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   title={isSoundEffectsEnabled ? 'Efeitos Sonoros Ativos' : 'Efeitos Sonoros Mutados'}
                   aria-label="Efeitos Sonoros"
                 >
-                  <Sparkles className="w-5 h-5" />
+                  <Sparkles className="w-6 h-6" />
                 </button>
               </div>
 
-              {/* Card de Mídia: Mesma Altura (148px), mesmo raio (26px) e padding consistente */}
+              {/* Card de Mídia: Mesma Altura (162-170px), mesmo raio (28px) e padding consistente */}
               <div
                 style={liquidGlass}
                 onClick={() => {
                   triggerHaptic()
                   setActiveTab('media')
                 }}
-                className="apple-liquid-glass h-[148px] rounded-[26px] p-3 flex flex-col justify-between text-white cursor-pointer group active:scale-[0.98] transition-all duration-200 select-none shadow-xl"
+                className="apple-liquid-glass h-[162px] min-[400px]:h-[170px] rounded-[28px] p-3.5 flex flex-col justify-between text-white cursor-pointer group active:scale-[0.98] transition-all duration-200 select-none shadow-xl"
                 title="Abrir reprodutor de áudio"
               >
                 {/* Topo: Capa e Título */}
-                <div className="flex items-center space-x-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center shadow-md shrink-0 relative overflow-hidden">
-                    <Music className={`w-4 h-4 text-white ${isPlayingMusic ? 'animate-pulse' : ''}`} />
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center shadow-md shrink-0 relative overflow-hidden">
+                    <Music className={`w-5 h-5 text-white ${isPlayingMusic ? 'animate-pulse' : ''}`} />
                   </div>
                   <div className="overflow-hidden min-w-0 flex-1">
-                    <span className="text-[9px] font-medium uppercase tracking-wider text-white/60 block truncate">
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-white/60 block truncate">
                       Música Ambiente
                     </span>
-                    <h3 className="text-xs font-bold text-white truncate mt-0.5">
+                    <h3 className="text-xs min-[400px]:text-sm font-bold text-white truncate mt-0.5">
                       Lofi Chillout
                     </h3>
                   </div>
                 </div>
 
                 {/* Equalizador animado minimalista do iOS */}
-                <div className="flex items-center justify-center gap-1 my-0.5">
-                  <span className={`w-1 bg-white/70 rounded-full transition-all ${isPlayingMusic ? 'h-3 animate-pulse' : 'h-1.5'}`} />
-                  <span className={`w-1 bg-white/90 rounded-full transition-all ${isPlayingMusic ? 'h-5 animate-pulse delay-75' : 'h-2'}`} />
-                  <span className={`w-1 bg-white/70 rounded-full transition-all ${isPlayingMusic ? 'h-4 animate-pulse delay-150' : 'h-1.5'}`} />
-                  <span className={`w-1 bg-white/90 rounded-full transition-all ${isPlayingMusic ? 'h-6 animate-pulse delay-100' : 'h-2.5'}`} />
-                  <span className={`w-1 bg-white/70 rounded-full transition-all ${isPlayingMusic ? 'h-3 animate-pulse delay-200' : 'h-1.5'}`} />
+                <div className="flex items-center justify-center gap-1.5 my-0.5">
+                  <span className={`w-1 bg-white/70 rounded-full transition-all ${isPlayingMusic ? 'h-3.5 animate-pulse' : 'h-1.5'}`} />
+                  <span className={`w-1 bg-white/90 rounded-full transition-all ${isPlayingMusic ? 'h-6 animate-pulse delay-75' : 'h-2'}`} />
+                  <span className={`w-1 bg-white/70 rounded-full transition-all ${isPlayingMusic ? 'h-4.5 animate-pulse delay-150' : 'h-1.5'}`} />
+                  <span className={`w-1 bg-white/90 rounded-full transition-all ${isPlayingMusic ? 'h-7 animate-pulse delay-100' : 'h-2.5'}`} />
+                  <span className={`w-1 bg-white/70 rounded-full transition-all ${isPlayingMusic ? 'h-3.5 animate-pulse delay-200' : 'h-1.5'}`} />
                 </div>
 
                 {/* Controles de Reprodução */}
@@ -381,10 +400,10 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       e.stopPropagation()
                       prevTrack()
                     }}
-                    className="w-7 h-7 rounded-full flex items-center justify-center text-white/75 hover:text-white active:scale-90 transition-transform cursor-pointer"
+                    className="w-8 h-8 rounded-full flex items-center justify-center text-white/75 hover:text-white active:scale-90 transition-transform cursor-pointer"
                     title="Retroceder"
                   >
-                    <SkipBack className="w-3.5 h-3.5 fill-current" />
+                    <SkipBack className="w-4 h-4 fill-current" />
                   </button>
 
                   <button
@@ -394,13 +413,13 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       triggerHaptic()
                       onTogglePlayMusic()
                     }}
-                    className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center active:scale-90 transition-transform cursor-pointer shadow-md"
+                    className="w-9 h-9 rounded-full bg-white text-black flex items-center justify-center active:scale-90 transition-transform cursor-pointer shadow-md"
                     title={isPlayingMusic ? 'Pausar' : 'Reproduzir'}
                   >
                     {isPlayingMusic ? (
-                      <Pause className="w-3.5 h-3.5 fill-black text-black" />
+                      <Pause className="w-4 h-4 fill-black text-black" />
                     ) : (
-                      <Play className="w-3.5 h-3.5 fill-black text-black ml-0.5" />
+                      <Play className="w-4 h-4 fill-black text-black ml-0.5" />
                     )}
                   </button>
 
@@ -410,22 +429,22 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       e.stopPropagation()
                       nextTrack()
                     }}
-                    className="w-7 h-7 rounded-full flex items-center justify-center text-white/75 hover:text-white active:scale-90 transition-transform cursor-pointer"
+                    className="w-8 h-8 rounded-full flex items-center justify-center text-white/75 hover:text-white active:scale-90 transition-transform cursor-pointer"
                     title="Avançar"
                   >
-                    <SkipForward className="w-3.5 h-3.5 fill-current" />
+                    <SkipForward className="w-4 h-4 fill-current" />
                   </button>
                 </div>
               </div>
             </div>
 
             {/* LINHA 2: Foco & Atalhos (Esquerda) + Sliders Verticais ~2.7:1 (Direita) */}
-            <div className="w-full grid grid-cols-2 gap-3.5 h-[148px] max-w-[330px] mx-auto">
+            <div className="w-full grid grid-cols-2 gap-3.5 min-[400px]:gap-4 h-[162px] min-[400px]:h-[170px] mx-auto">
               {/* Lado Esquerdo: 2 Quadrados Superiores + Pílula Horizontal de Foco */}
-              <div className="flex flex-col justify-between h-[148px]">
+              <div className="flex flex-col justify-between h-[162px] min-[400px]:h-[170px]">
                 {/* 2 Quadrados Superiores (Bloqueio de Rotação + Espelhar Tela) */}
-                <div className="grid grid-cols-2 gap-2.5 h-[68px]">
-                  {/* Botão: Bloqueio de Orientação */}
+                <div className="grid grid-cols-2 gap-3 h-[74px] min-[400px]:h-[78px]">
+                  {/* Botão: Bloqueio de Orientação Oficial (Tela com Seta Curva Circular) */}
                   <button
                     type="button"
                     onClick={() => {
@@ -433,18 +452,18 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       setIsOrientationLocked((prev) => !prev)
                     }}
                     style={liquidGlass}
-                    className={`apple-liquid-glass rounded-[20px] flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-md ${
+                    className={`apple-liquid-glass rounded-[22px] min-[400px]:rounded-[24px] flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-md ${
                       isOrientationLocked
                         ? 'text-red-400 bg-red-500/20 border-red-400/30'
-                        : 'text-white/80 hover:text-white'
+                        : 'text-white/85 hover:text-white'
                     }`}
                     title={isOrientationLocked ? 'Bloqueio de Orientação: Ativado' : 'Bloqueio de Orientação: Desativado'}
                     aria-label="Bloqueio de Orientação"
                   >
-                    <Lock className="w-5 h-5" />
+                    <OrientationLockIcon className="w-6 h-6" />
                   </button>
 
-                  {/* Botão: Espelhar Tela (AirPlay) */}
+                  {/* Botão: AirPlay Oficial (lucide-react Airplay) */}
                   <button
                     type="button"
                     onClick={() => {
@@ -452,11 +471,11 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       setActiveTab('media')
                     }}
                     style={liquidGlass}
-                    className="apple-liquid-glass rounded-[20px] flex items-center justify-center text-white/80 hover:text-white cursor-pointer active:scale-95 transition-all duration-200 shadow-md"
+                    className="apple-liquid-glass rounded-[22px] min-[400px]:rounded-[24px] flex items-center justify-center text-white/85 hover:text-white cursor-pointer active:scale-95 transition-all duration-200 shadow-md"
                     title="Espelhar Tela (AirPlay)"
                     aria-label="Espelhar Tela"
                   >
-                    <Airplay className="w-5 h-5" />
+                    <Airplay className="w-6 h-6" strokeWidth={1.6} />
                   </button>
                 </div>
 
@@ -468,7 +487,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     onToggleFocusMode()
                   }}
                   style={liquidGlass}
-                  className={`apple-liquid-glass w-full h-[68px] rounded-[22px] px-3.5 flex items-center gap-3 cursor-pointer active:scale-[0.98] transition-all duration-200 shadow-md ${
+                  className={`apple-liquid-glass w-full h-[76px] min-[400px]:h-[80px] rounded-[24px] px-4 flex items-center gap-3.5 cursor-pointer active:scale-[0.98] transition-all duration-200 shadow-md ${
                     isFocusMode
                       ? 'border-indigo-400/40 bg-indigo-500/25'
                       : 'hover:brightness-110'
@@ -477,28 +496,28 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   aria-label="Modo Foco"
                 >
                   <div
-                    className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                    className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all ${
                       isFocusMode
                         ? 'bg-indigo-500 text-white shadow-md'
                         : 'bg-white/10 text-white/70'
                     }`}
                   >
-                    <Moon className="w-4.5 h-4.5" />
+                    <Moon className="w-5 h-5" />
                   </div>
                   <div className="flex flex-col text-left overflow-hidden">
-                    <span className="text-xs font-bold text-white tracking-wide leading-tight">
+                    <span className="text-[13.5px] font-bold text-white tracking-wide leading-tight">
                       Foco
                     </span>
-                    <span className="text-[10px] text-white/50 leading-tight mt-0.5 font-medium">
+                    <span className="text-[11px] text-white/50 leading-tight mt-0.5 font-medium">
                       {isFocusMode ? 'Ativado' : 'Desativado'}
                     </span>
                   </div>
                 </button>
               </div>
 
-              {/* Lado Direito: Sliders Verticais (Aspect Ratio alongado ~2.7:1 - w-[54px] x h-[148px]) */}
-              <div className="flex items-center justify-between gap-2.5 h-[148px] w-full">
-                {/* Slider de Brilho */}
+              {/* Lado Direito: Sliders Verticais (Aspect Ratio alongado ~2.7:1 - w-[60-66px] x h-[162-170px]) */}
+              <div className="flex items-center justify-between gap-3 h-[162px] min-[400px]:h-[170px] w-full">
+                {/* Slider de Brilho: Ícone Sun fino (strokeWidth=1.5) acompanhando o nível de preenchimento */}
                 <div
                   onPointerDownCapture={(e) => {
                     try {
@@ -522,17 +541,22 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     isDraggingBrightnessRef.current = false
                   }}
                   style={liquidGlass}
-                  className="apple-liquid-glass relative flex-1 h-[148px] rounded-[28px] overflow-hidden flex flex-col justify-end select-none shadow-xl cursor-pointer"
+                  className="apple-liquid-glass relative flex-1 h-[162px] min-[400px]:h-[170px] rounded-[32px] overflow-hidden flex flex-col justify-end select-none shadow-xl cursor-pointer"
                   title="Brilho da Tela"
                 >
                   {/* Preenchimento inferior */}
                   <div
-                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-[28px]"
+                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-[32px]"
                     style={{ height: `${brightness}%` }}
                   />
-                  {/* Ícone posicionado na parte inferior com mix-blend-difference */}
-                  <div className="absolute inset-x-0 bottom-3.5 flex items-center justify-center pointer-events-none mix-blend-difference text-white">
-                    <Sun className="w-5 h-5 stroke-[2.2]" />
+                  {/* Ícone Sun mais fino (strokeWidth=1.5) acompanhando dinamicamente o nível de preenchimento */}
+                  <div
+                    style={{
+                      bottom: `clamp(14px, calc(${brightness}% - 14px), calc(100% - 40px))`,
+                    }}
+                    className="absolute inset-x-0 flex items-center justify-center pointer-events-none mix-blend-difference text-white transition-all duration-75"
+                  >
+                    <Sun className="w-6 h-6 stroke-[1.5]" />
                   </div>
                   <input
                     type="range"
@@ -549,7 +573,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   />
                 </div>
 
-                {/* Slider de Volume */}
+                {/* Slider de Volume: Ícone Speaker Fill sólido (sem ondas) acompanhando o nível de preenchimento */}
                 <div
                   onPointerDownCapture={(e) => {
                     try {
@@ -573,22 +597,25 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     isDraggingVolumeRef.current = false
                   }}
                   style={liquidGlass}
-                  className="apple-liquid-glass relative flex-1 h-[148px] rounded-[28px] overflow-hidden flex flex-col justify-end select-none shadow-xl cursor-pointer"
+                  className="apple-liquid-glass relative flex-1 h-[162px] min-[400px]:h-[170px] rounded-[32px] overflow-hidden flex flex-col justify-end select-none shadow-xl cursor-pointer"
                   title="Volume do Som"
                 >
                   {/* Preenchimento inferior */}
                   <div
-                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-[28px]"
+                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-[32px]"
                     style={{ height: `${volume}%` }}
                   />
-                  {/* Ícone dinâmico posicionado na parte inferior com mix-blend-difference */}
-                  <div className="absolute inset-x-0 bottom-3.5 flex items-center justify-center pointer-events-none mix-blend-difference text-white">
+                  {/* Ícone estilo Speaker Fill minimalista (fill="currentColor") acompanhando dinamicamente o nível */}
+                  <div
+                    style={{
+                      bottom: `clamp(14px, calc(${volume}% - 14px), calc(100% - 40px))`,
+                    }}
+                    className="absolute inset-x-0 flex items-center justify-center pointer-events-none mix-blend-difference text-white transition-all duration-75"
+                  >
                     {volume === 0 ? (
-                      <VolumeX className="w-5 h-5 stroke-[2.2]" />
-                    ) : volume < 50 ? (
-                      <Volume1 className="w-5 h-5 stroke-[2.2]" />
+                      <VolumeX className="w-6 h-6 stroke-[1.5]" fill="currentColor" />
                     ) : (
-                      <Volume2 className="w-5 h-5 stroke-[2.2]" />
+                      <Volume className="w-6 h-6 stroke-[1.5]" fill="currentColor" />
                     )}
                   </div>
                   <input
@@ -604,8 +631,8 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               </div>
             </div>
 
-            {/* LINHA 3: Grade Uniforme de Ícones Circulares Abaixo (Mesmo tamanho 56px, gap-3 consistente) */}
-            <div className="w-full grid grid-cols-4 gap-3 max-w-[330px] mx-auto place-items-center">
+            {/* LINHA 3: Grade Uniforme de Ícones Circulares Abaixo (~60-64px, gap uniforme) */}
+            <div className="w-full grid grid-cols-4 gap-3.5 min-[400px]:gap-4 mx-auto place-items-center">
               {/* LinkedIn */}
               <a
                 href="https://www.linkedin.com/in/fabiorodrigues-dev/"
@@ -613,11 +640,11 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 rel="noreferrer"
                 onClick={triggerHaptic}
                 style={liquidGlass}
-                className="apple-liquid-glass w-14 h-14 rounded-full flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all duration-200 shadow-md hover:brightness-110"
+                className="apple-liquid-glass w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all duration-200 shadow-md hover:brightness-110"
                 title="LinkedIn Oficial"
                 aria-label="LinkedIn"
               >
-                <LinkedinIcon className="w-5 h-5 fill-current" />
+                <LinkedinIcon className="w-6 h-6 fill-current" />
               </a>
 
               {/* WhatsApp */}
@@ -627,11 +654,11 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 rel="noreferrer"
                 onClick={triggerHaptic}
                 style={liquidGlass}
-                className="apple-liquid-glass w-14 h-14 rounded-full flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all duration-200 shadow-md hover:brightness-110"
+                className="apple-liquid-glass w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all duration-200 shadow-md hover:brightness-110"
                 title="WhatsApp (+55 (81) 99185-1507)"
                 aria-label="WhatsApp"
               >
-                <WhatsAppIcon className="w-5 h-5 fill-current" />
+                <WhatsAppIcon className="w-6 h-6 fill-current" />
               </a>
 
               {/* GitHub */}
@@ -641,11 +668,11 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 rel="noreferrer"
                 onClick={triggerHaptic}
                 style={liquidGlass}
-                className="apple-liquid-glass w-14 h-14 rounded-full flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all duration-200 shadow-md hover:brightness-110"
+                className="apple-liquid-glass w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all duration-200 shadow-md hover:brightness-110"
                 title="GitHub (Octocat)"
                 aria-label="GitHub"
               >
-                <GithubIcon className="w-5 h-5 fill-current" />
+                <GithubIcon className="w-6 h-6 fill-current" />
               </a>
 
               {/* Instagram */}
@@ -655,11 +682,11 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 rel="noreferrer"
                 onClick={triggerHaptic}
                 style={liquidGlass}
-                className="apple-liquid-glass w-14 h-14 rounded-full flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all duration-200 shadow-md hover:brightness-110"
+                className="apple-liquid-glass w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all duration-200 shadow-md hover:brightness-110"
                 title="Instagram (@f.a.rodrigues)"
                 aria-label="Instagram"
               >
-                <InstagramIcon className="w-5 h-5" />
+                <InstagramIcon className="w-6 h-6" />
               </a>
             </div>
           </div>

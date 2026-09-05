@@ -72,7 +72,32 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
   const volume = soundVolume
   const setVolume = onChangeVolume
 
-  const isDark = theme === 'dark'
+  const [isDark, setIsDark] = useState<boolean>(() => {
+    if (typeof document !== 'undefined') {
+      return document.documentElement.classList.contains('dark')
+    }
+    return theme === 'dark'
+  })
+
+  // Sync theme changes from props
+  useEffect(() => {
+    setIsDark(theme === 'dark')
+  }, [theme])
+
+  const handleThemeToggle = () => {
+    triggerHaptic()
+    const nextDark = !isDark
+    setIsDark(nextDark)
+    if (nextDark) {
+      document.documentElement.classList.add('dark')
+      localStorage.setItem('macos_theme', 'dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+      localStorage.setItem('macos_theme', 'light')
+    }
+    onToggleTheme()
+  }
+
   const isDraggingBrightnessRef = useRef(false)
   const isDraggingVolumeRef = useRef(false)
 
@@ -131,7 +156,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
           onClose()
         }
       }}
-      className="fixed inset-0 z-50 bg-black/65 backdrop-blur-3xl pt-3 px-3.5 pb-8 flex flex-row items-start justify-center overflow-y-auto select-none animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 bg-black/50 dark:bg-black/65 backdrop-blur-3xl p-4 pt-10 flex flex-col justify-start items-center overflow-y-auto select-none animate-in fade-in duration-200"
     >
       {/* 1. Container Central + Barra Lateral Direita de Navegação do iOS 18 */}
       <div className="flex flex-row items-start justify-center gap-2.5 w-full max-w-[395px] mx-auto">
@@ -327,17 +352,19 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     <Eye className="w-5 h-5" />
                   </button>
 
-                  {/* Botão 6: Alternador Tema Dia/Noite */}
+                  {/* Botão 6: Alternador Tema Dia/Noite (Modo Noite / Modo Dia) */}
                   <button
                     type="button"
-                    onClick={() => {
-                      triggerHaptic()
-                      onToggleTheme()
-                    }}
+                    onClick={handleThemeToggle}
                     className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shadow-sm"
-                    title={`Alternar Tema (${isDark ? 'Noite' : 'Dia'})`}
+                    title={isDark ? 'Modo Noite' : 'Modo Dia'}
+                    aria-label={isDark ? 'Modo Noite' : 'Modo Dia'}
                   >
-                    {isDark ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+                    {isDark ? (
+                      <Sun className="w-5 h-5 text-amber-400" />
+                    ) : (
+                      <Moon className="w-5 h-5 text-sky-400" />
+                    )}
                   </button>
                 </div>
 

@@ -914,7 +914,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             <div className="space-y-2.5">
               {/* Canal 1: WhatsApp */}
               <a
-                href="https://wa.me/5581989920040"
+                href="https://wa.me/5581991851507"
                 target="_blank"
                 rel="noreferrer"
                 onClick={triggerHaptic}
@@ -929,7 +929,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                       WhatsApp Comercial
                     </h3>
                     <p className="text-[11px] text-zinc-600 dark:text-zinc-400">
-                      +55 81 98992-0040
+                      +55 (81) 99185-1507
                     </p>
                   </div>
                 </div>

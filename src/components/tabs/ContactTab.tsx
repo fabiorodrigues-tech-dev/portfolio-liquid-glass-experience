@@ -256,7 +256,7 @@ export const ContactTab: React.FC<ContactTabProps> = () => {
 
           {/* Card 4: WhatsApp Comercial */}
           <a
-            href="https://wa.me/5581989920040"
+            href="https://wa.me/5581991851507"
             target="_blank"
             rel="noreferrer"
             className="bg-white/95 border border-black/20 shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-black/40 hover:shadow-md rounded-2xl p-4 mb-3.5 last:mb-0 transition-all flex items-center justify-between dark:bg-black/20 dark:border-white/10 dark:shadow-none group"
@@ -270,7 +270,7 @@ export const ContactTab: React.FC<ContactTabProps> = () => {
                   WhatsApp Comercial
                 </h3>
                 <p className="text-xs text-zinc-600 dark:text-zinc-400">
-                  +55 81 98992-0040
+                  +55 (81) 99185-1507
                 </p>
               </div>
             </div>

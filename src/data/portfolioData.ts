@@ -1,5 +1,26 @@
 import type { ExperienceItem, Project, SkillCategory } from '../types'
 
+export const PROFILE_LINKS = {
+  whatsapp: 'https://wa.me/5581991851507',
+  whatsappDisplay: '+55 (81) 99185-1507',
+  phone: '+55 (81) 99185-1507',
+  email: 'fabioandre777@gmail.com',
+  github: 'https://github.com/fabiorodrigues-tech-dev',
+  linkedin: 'https://www.linkedin.com/in/fabiorodrigues-dev/',
+  instagram: 'https://www.instagram.com/f.a.rodrigues/',
+  drive: 'https://drive.google.com/drive/folders/1rl-SPjOi4tisk2tACb2RcKKAmo6OmBrw',
+}
+
+export const ABOUT_DATA = {
+  name: 'Fábio Rodrigues',
+  title: 'Full Stack & Creative Technologist',
+  location: 'Recife, PE • Brasil',
+  phone: '+55 (81) 99185-1507',
+  whatsappUrl: 'https://wa.me/5581991851507',
+  email: 'fabioandre777@gmail.com',
+  status: 'Disponível para contratação e projetos corporativos',
+}
+
 export const PROJECTS_DATA: Project[] = [
   {
     id: 'nova-enterprise',

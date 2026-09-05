@@ -56,3 +56,14 @@ npm install
 
 # 4. Inicie o servidor de desenvolvimento
 npm run dev
+```
+
+---
+
+### 📬 Contato Comercial & Canais Oficiais
+
+- **WhatsApp Comercial:** [+55 (81) 99185-1507](https://wa.me/5581991851507)
+- **E-mail Direto:** [fabioandre777@gmail.com](mailto:fabioandre777@gmail.com)
+- **LinkedIn:** [fabiorodrigues-dev](https://www.linkedin.com/in/fabiorodrigues-dev/)
+- **GitHub:** [fabiorodrigues-tech-dev](https://github.com/fabiorodrigues-tech-dev)
+- **Google Drive Oficial (Portfólios & CVs):** [Acessar Pasta](https://drive.google.com/drive/folders/1rl-SPjOi4tisk2tACb2RcKKAmo6OmBrw)

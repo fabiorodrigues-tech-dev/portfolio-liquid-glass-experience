@@ -3,13 +3,13 @@ import {
   Sun,
   Moon,
   Volume2,
+  VolumeX,
   Play,
   Pause,
   SkipForward,
   SkipBack,
   Eye,
   MapPin,
-  X,
   Music,
   Radio,
   Sparkles,
@@ -57,6 +57,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
   isFocusMode,
   onToggleFocusMode,
   isSoundEffectsEnabled = true,
+  onToggleSoundEffects,
   isPlayingMusic,
   onTogglePlayMusic,
   soundVolume,
@@ -163,10 +164,10 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
           onClose()
         }
       }}
-      className="fixed inset-0 z-50 bg-black/50 dark:bg-black/65 backdrop-blur-3xl p-4 pt-10 flex flex-col justify-start items-center overflow-y-auto select-none animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 bg-black/50 dark:bg-black/65 backdrop-blur-3xl p-4 pt-8 flex flex-col justify-start items-center overflow-y-auto overflow-x-hidden select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
     >
-      {/* 1. Barra Lateral Flutuante na Borda Direita (Conforme print real 0d3966ab) */}
-      <div className="fixed right-2.5 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-5 py-3 px-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/10 select-none">
+      {/* 2. Barra Lateral Direita Flutuante 100% Livre e Translúcida (Sem calha nem fundo) */}
+      <div className="absolute right-2 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-5 py-2 select-none">
         {/* Ícone 1: Controles (✦) */}
         <button
           type="button"
@@ -175,7 +176,9 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
             setActiveTab('main')
           }}
           className={`p-1.5 transition-all cursor-pointer ${
-            activeTab === 'main' ? 'text-white scale-110' : 'text-white/40 hover:text-white/70'
+            activeTab === 'main'
+              ? 'text-white scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]'
+              : 'text-white/35 hover:text-white/70'
           }`}
           title="Controles Principais (✦)"
           aria-label="Controles Principais"
@@ -191,7 +194,9 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
             setActiveTab('media')
           }}
           className={`p-1.5 transition-all cursor-pointer ${
-            activeTab === 'media' ? 'text-white scale-110' : 'text-white/40 hover:text-white/70'
+            activeTab === 'media'
+              ? 'text-white scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]'
+              : 'text-white/35 hover:text-white/70'
           }`}
           title="Mídia e Reprodução (🎵)"
           aria-label="Mídia e Reprodução"
@@ -207,7 +212,9 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
             setActiveTab('connections')
           }}
           className={`p-1.5 transition-all cursor-pointer ${
-            activeTab === 'connections' ? 'text-white scale-110' : 'text-white/40 hover:text-white/70'
+            activeTab === 'connections'
+              ? 'text-white scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]'
+              : 'text-white/35 hover:text-white/70'
           }`}
           title="Conexões e Links (📡)"
           aria-label="Conexões e Links"
@@ -216,28 +223,25 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         </button>
       </div>
 
-      {/* Container Central dos Controles (largura 340px) */}
-      <div className="mt-1 max-w-[340px] w-full flex flex-col gap-3">
-        {/* Barra Superior Discreta */}
-        <div className="flex items-center justify-between px-1">
-          <div className="flex items-center space-x-2">
-            <AppleControlCenterIcon className="w-4 h-4 text-white/90" />
-            <span className="text-xs font-semibold tracking-wide text-white/90">
-              {activeTab === 'main' && 'Central de Controle'}
-              {activeTab === 'media' && 'Mídia e Som'}
-              {activeTab === 'connections' && 'Conexões e Links'}
-            </span>
-          </div>
+      {/* 3. Grid em Simetria Perfeita (largura exata de 325px centralizada) */}
+      <div className="w-full max-w-[325px] mx-auto flex flex-col gap-3">
+        {/* Cabeçalho Sutil Oficial do iOS */}
+        <div className="flex justify-between items-center mb-3 text-white/80 px-1">
+          <span className="text-xs font-semibold tracking-wide flex items-center gap-1.5">
+            <AppleControlCenterIcon className="w-4 h-4" />
+            <span>Central de Controle</span>
+          </span>
           <button
             type="button"
             onClick={() => {
               triggerHaptic()
               onClose()
             }}
-            className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 flex items-center justify-center text-white cursor-pointer transition-all border border-white/10"
+            className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-xs text-white cursor-pointer active:scale-95 transition-all"
             title="Fechar"
+            aria-label="Fechar"
           >
-            <X className="w-3.5 h-3.5" />
+            ✕
           </button>
         </div>
 
@@ -246,45 +250,91 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         {/* ========================================================================= */}
         {activeTab === 'main' && (
           <div className="flex flex-col gap-3.5 animate-in fade-in slide-in-from-left-4 duration-300">
-            {/* Linha 1 (Topo): Dois Quadrados (Status Recife & Música Compacto) */}
-            <div className="w-full grid grid-cols-2 gap-3.5 h-[135px]">
-              {/* Esquerda: Quadrado de Status Recife */}
+            {/* Linha 1: Bloco de Status Recife (4 botões circulares) + Bloco de Música */}
+            <div className="w-full grid grid-cols-2 gap-3.5 h-[155px]">
+              {/* Esquerda: Bloco de Status Recife (rounded-[26px] com 4 botões circulares simétricos) */}
               <div
                 style={LIQUID_GLASS_STYLE}
-                className="h-[135px] rounded-[26px] border border-white/15 p-3.5 flex flex-col justify-between text-white select-none"
+                className="h-[155px] rounded-[26px] border border-white/15 p-3 grid grid-cols-2 gap-2.5 place-items-center select-none"
               >
-                <div className="flex items-center justify-between">
-                  <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center relative">
-                    <MapPin className="w-4 h-4 text-emerald-400" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 absolute top-1.5 right-1.5 animate-pulse" />
-                  </div>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    Online
-                  </span>
+                {/* Botão 1: Recife / Localização e Status Online */}
+                <div
+                  className="w-12 h-12 rounded-full bg-emerald-500/25 text-emerald-400 border border-emerald-500/35 flex items-center justify-center relative shadow-sm"
+                  title="Recife, PE • BR (Status: Online)"
+                >
+                  <MapPin className="w-5 h-5 text-emerald-400" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 absolute top-2 right-2 animate-ping" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 absolute top-2 right-2" />
                 </div>
-                <div>
-                  <span className="text-[10px] font-medium text-white/60 block">
-                    Localização Atual
-                  </span>
-                  <h3 className="text-xs font-bold text-white truncate mt-0.5">
-                    Recife, PE • BR
-                  </h3>
-                </div>
+
+                {/* Botão 2: Alternador Tema Dia/Noite */}
+                <button
+                  type="button"
+                  onClick={handleThemeToggle}
+                  className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shadow-sm"
+                  title={isDark ? 'Modo Noite (Alternar para Dia)' : 'Modo Dia (Alternar para Noite)'}
+                  aria-label={isDark ? 'Modo Noite' : 'Modo Dia'}
+                >
+                  {isDark ? (
+                    <Sun className="w-5 h-5 text-amber-400" />
+                  ) : (
+                    <Moon className="w-5 h-5 text-sky-400" />
+                  )}
+                </button>
+
+                {/* Botão 3: Modo Foco (Ocultar Dock) */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    triggerHaptic()
+                    onToggleFocusMode()
+                  }}
+                  className={`w-12 h-12 rounded-full border flex items-center justify-center cursor-pointer active:scale-95 transition-all shadow-sm ${
+                    isFocusMode
+                      ? 'bg-indigo-500/30 text-indigo-300 border-indigo-400/40'
+                      : 'bg-white/10 hover:bg-white/20 border-white/15 text-white'
+                  }`}
+                  title="Modo Foco (Ocultar Dock)"
+                >
+                  <Eye className="w-5 h-5" />
+                </button>
+
+                {/* Botão 4: Efeitos Sonoros / Cliques Hápticos */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    triggerHaptic()
+                    onToggleSoundEffects?.()
+                  }}
+                  className={`w-12 h-12 rounded-full border flex items-center justify-center cursor-pointer active:scale-95 transition-all shadow-sm ${
+                    isSoundEffectsEnabled
+                      ? 'bg-white/10 hover:bg-white/20 border-white/15 text-white'
+                      : 'bg-red-500/20 text-red-300 border-red-400/30'
+                  }`}
+                  title={isSoundEffectsEnabled ? 'Efeitos Sonoros Ativos' : 'Efeitos Sonoros Mutados'}
+                >
+                  {isSoundEffectsEnabled ? (
+                    <Volume2 className="w-5 h-5" />
+                  ) : (
+                    <VolumeX className="w-5 h-5" />
+                  )}
+                </button>
               </div>
 
-              {/* Direita: Quadrado de Música Compacto */}
+              {/* Direita: Bloco de Música com arte e controles */}
               <div
                 style={LIQUID_GLASS_STYLE}
                 onClick={() => {
                   triggerHaptic()
                   setActiveTab('media')
                 }}
-                className="h-[135px] rounded-[26px] border border-white/15 p-3.5 flex flex-col justify-between text-white cursor-pointer group active:scale-[0.98] transition-all select-none"
+                className="h-[155px] rounded-[26px] border border-white/15 p-3.5 flex flex-col justify-between text-white cursor-pointer group active:scale-[0.98] transition-all select-none"
                 title="Abrir reprodutor de áudio"
               >
+                {/* Topo: Capa e Título */}
                 <div className="flex items-center space-x-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center shadow-md shrink-0">
-                    <Music className={`w-4 h-4 text-white ${isPlayingMusic ? 'animate-pulse' : ''}`} />
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center shadow-md shrink-0 relative overflow-hidden">
+                    <Music className={`w-4.5 h-4.5 text-white ${isPlayingMusic ? 'animate-pulse' : ''}`} />
                   </div>
                   <div className="overflow-hidden min-w-0 flex-1">
                     <span className="text-[9px] font-medium uppercase tracking-wider text-white/60 block truncate">
@@ -296,7 +346,17 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between px-1 pt-1">
+                {/* Equalizador animado minimalista do iOS */}
+                <div className="flex items-center justify-center gap-1 my-1">
+                  <span className={`w-1 bg-white/70 rounded-full transition-all ${isPlayingMusic ? 'h-3 animate-pulse' : 'h-1.5'}`} />
+                  <span className={`w-1 bg-white/90 rounded-full transition-all ${isPlayingMusic ? 'h-5 animate-pulse delay-75' : 'h-2'}`} />
+                  <span className={`w-1 bg-white/70 rounded-full transition-all ${isPlayingMusic ? 'h-4 animate-pulse delay-150' : 'h-1.5'}`} />
+                  <span className={`w-1 bg-white/90 rounded-full transition-all ${isPlayingMusic ? 'h-6 animate-pulse delay-100' : 'h-2.5'}`} />
+                  <span className={`w-1 bg-white/70 rounded-full transition-all ${isPlayingMusic ? 'h-3 animate-pulse delay-200' : 'h-1.5'}`} />
+                </div>
+
+                {/* Controles de Reprodução */}
+                <div className="flex items-center justify-between px-1">
                   <button
                     type="button"
                     onClick={(e) => {
@@ -343,10 +403,10 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               </div>
             </div>
 
-            {/* Linha 2 (Corpo): Grade de Ações Rápidas (Esquerda) + Sliders Verticais (Direita) */}
+            {/* Linha 2: 4 Botões Circulares de Redes (Esquerda) + 2 Sliders Verticais (Direita) */}
             <div className="w-full grid grid-cols-2 gap-3.5 h-[155px]">
-              {/* Lado Esquerdo: Grade de Ações Rápidas (6 botões redondos de 48px) */}
-              <div className="grid grid-cols-2 gap-2 place-items-center h-[155px]">
+              {/* Lado Esquerdo: 4 Botões Circulares de Redes (LinkedIn, WhatsApp, GitHub, Instagram em w-12 h-12) */}
+              <div className="grid grid-cols-2 gap-2.5 place-items-center h-[155px]">
                 {/* Botão 1: LinkedIn */}
                 <a
                   href="https://www.linkedin.com/in/fabiorodrigues-dev/"
@@ -398,43 +458,9 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 >
                   <InstagramIcon className="w-5 h-5" />
                 </a>
-
-                {/* Botão 5: Modo Foco */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    triggerHaptic()
-                    onToggleFocusMode()
-                  }}
-                  style={LIQUID_GLASS_STYLE}
-                  className={`w-12 h-12 rounded-full border border-white/15 flex items-center justify-center cursor-pointer active:scale-95 transition-all shadow-sm ${
-                    isFocusMode
-                      ? '!bg-indigo-500/30 text-indigo-300 !border-indigo-400/40 shadow-sm'
-                      : 'text-white hover:brightness-110'
-                  }`}
-                  title="Modo Foco (Ocultar Dock)"
-                >
-                  <Eye className="w-5 h-5" />
-                </button>
-
-                {/* Botão 6: Alternador Tema Dia/Noite */}
-                <button
-                  type="button"
-                  onClick={handleThemeToggle}
-                  style={LIQUID_GLASS_STYLE}
-                  className="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center text-white cursor-pointer active:scale-95 transition-all shadow-sm hover:brightness-110"
-                  title={isDark ? 'Modo Noite' : 'Modo Dia'}
-                  aria-label={isDark ? 'Modo Noite' : 'Modo Dia'}
-                >
-                  {isDark ? (
-                    <Sun className="w-5 h-5 text-amber-400" />
-                  ) : (
-                    <Moon className="w-5 h-5 text-sky-400" />
-                  )}
-                </button>
               </div>
 
-              {/* Lado Direito: Os dois sliders verticais em cápsula fina com Liquid Glass Real */}
+              {/* Lado Direito: Os dois sliders verticais emparelhados em altura (72px x 150px) */}
               <div className="flex items-center justify-center gap-2.5 h-[155px]">
                 {/* Slider de Brilho */}
                 <div

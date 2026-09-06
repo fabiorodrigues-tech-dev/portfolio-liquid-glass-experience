@@ -509,11 +509,11 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
             </div>
 
             {/* LINHA 2: Foco & Atalhos (Esquerda) + Sliders Verticais ~2.7:1 (Direita) */}
-            <div className="w-full grid grid-cols-2 gap-3.5 min-[400px]:gap-4 h-[162px] min-[400px]:h-[170px] mx-auto">
+            <div className="w-full grid grid-cols-2 gap-3.5 min-[400px]:gap-4 h-[160px] mx-auto">
               {/* Lado Esquerdo: 2 Quadrados Superiores + Pílula Horizontal de Foco */}
               <div className="flex flex-col justify-between h-[160px] w-full">
                 {/* 2 Botões Circulares Superiores (Bloqueio de Rotação + Espelhar Tela) */}
-                <div className="grid grid-cols-2 gap-3.5 place-items-center h-[102px]">
+                <div className="grid grid-cols-2 gap-3.5 place-items-center h-[94px]">
                   {/* Botão: Bloqueio de Orientação Oficial (Cadeado com Seta Curva Circular — Destaque quando ativo) */}
                   <button
                     type="button"
@@ -521,7 +521,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       triggerHaptic()
                       setIsOrientationLocked((prev) => !prev)
                     }}
-                    className={`w-[60px] h-[60px] rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 ${
+                    className={`w-[62px] h-[62px] rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 ${
                       isOrientationLocked
                         ? 'bg-white text-[#ff3b30] border border-white/40 shadow-[0_2px_14px_rgba(255,59,48,0.35)]'
                         : 'bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.3)] text-white/85 hover:text-white'
@@ -539,7 +539,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       triggerHaptic()
                       setActiveTab('media')
                     }}
-                    className="w-[60px] h-[60px] rounded-full bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.3)] flex items-center justify-center text-white/85 hover:text-white cursor-pointer active:scale-95 transition-all duration-200"
+                    className="w-[62px] h-[62px] rounded-full bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.3)] flex items-center justify-center text-white/85 hover:text-white cursor-pointer active:scale-95 transition-all duration-200"
                     title="Espelhar Tela (AirPlay)"
                     aria-label="Espelhar Tela"
                   >
@@ -547,26 +547,26 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   </button>
                 </div>
 
-                {/* Botão FOCO Redesenhado (Cápsula horizontal esguia de linha única oficial da Apple) */}
+                {/* Botão FOCO Redesenhado (Cápsula horizontal confortável com ícone ampliado) */}
                 <button
                   type="button"
                   onClick={() => {
                     triggerHaptic()
                     onToggleFocusMode()
                   }}
-                  className={`h-11 w-full rounded-full border px-3.5 flex items-center justify-between select-none active:scale-95 transition-all cursor-pointer ${
+                  className={`h-[52px] w-full rounded-full border px-4 flex items-center justify-between select-none active:scale-95 transition-all cursor-pointer shadow-[0_10px_30px_rgba(0,0,0,0.25)] ${
                     isFocusMode 
-                      ? 'bg-indigo-600/30 border-indigo-400/40 text-white' 
-                      : 'bg-white/10 hover:bg-white/15 border-white/10 text-white/90'
+                      ? 'bg-indigo-600/35 border-indigo-400/50 text-white shadow-[0_0_20px_rgba(99,102,241,0.35)]' 
+                      : 'bg-white/[0.12] dark:bg-white/[0.09] hover:bg-white/15 backdrop-blur-3xl border-white/20 dark:border-white/10 text-white/90'
                   }`}
                   title="Modo Foco: Oculta o Dock e minimiza distrações"
                   aria-label="Modo Foco"
                 >
-                  <div className="flex items-center gap-2.5">
-                    <Moon className={`w-4 h-4 ${isFocusMode ? 'text-indigo-400 fill-indigo-400' : 'text-white/80'}`} />
-                    <span className="text-xs font-semibold tracking-tight">Foco</span>
+                  <div className="flex items-center gap-3">
+                    <Moon className={`w-5 h-5 transition-colors ${isFocusMode ? 'text-indigo-400 fill-indigo-400' : 'text-white/85'}`} />
+                    <span className="text-[13px] sm:text-sm font-semibold tracking-tight">Foco</span>
                   </div>
-                  <span className="text-white/40 text-xs">⌄</span>
+                  <span className="text-white/40 text-sm font-medium">⌄</span>
                 </button>
               </div>
 

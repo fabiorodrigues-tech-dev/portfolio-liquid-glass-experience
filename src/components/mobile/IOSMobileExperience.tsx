@@ -1163,99 +1163,103 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         }`}
         aria-label="Navegação móvel oficial em Squircles de Apps"
       >
-        {/* 1. Início: App Safari (Gradiente azul com bússola náutica branca e agulha vermelha) */}
+        {/* 1. Início: App Safari */}
         <button
           type="button"
           onClick={() => handleTabSelect('inicio')}
-          className="w-12 h-12 rounded-[13px] bg-gradient-to-b from-[#3ea5f5] via-[#007aff] to-[#0051d5] shadow-md flex items-center justify-center relative cursor-pointer active:scale-95 transition-transform overflow-visible border border-white/20"
+          className="relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
           title="Início (Safari)"
           aria-label="Início"
         >
-          <svg viewBox="0 0 36 36" className="w-8 h-8 drop-shadow-sm" fill="none">
-            <circle cx="18" cy="18" r="14" stroke="rgba(255,255,255,0.65)" strokeWidth="1" strokeDasharray="1.5 2.5" />
-            <circle cx="18" cy="18" r="15" stroke="white" strokeWidth="1.2" />
-            <polygon points="18,5 21,18 18,16 15,18" fill="#ff3b30" transform="rotate(45 18 18)" />
-            <polygon points="18,31 21,18 18,20 15,18" fill="#ffffff" transform="rotate(45 18 18)" />
-            <circle cx="18" cy="18" r="1.5" fill="#ffffff" />
-            <circle cx="18" cy="18" r="0.75" fill="#0051d5" />
-          </svg>
+          <img
+            src={isDark ? '/icons/dock/safari-dark.png' : '/icons/dock/safari-light.png'}
+            alt="Safari"
+            className="w-13 h-13 rounded-[15px] object-cover shadow-md transition-all select-none pointer-events-none"
+            loading="eager"
+            decoding="async"
+          />
           {activeTab === 'inicio' && (
-            <span className="w-1 h-1 rounded-full bg-white/90 absolute -bottom-1.5 left-1/2 -translate-x-1/2 shadow-sm" />
+            <span className="w-1 h-1 rounded-full bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
         </button>
 
-        {/* 2. Projetos: App Finder (Rosto azul bipartido oficial do Finder da Apple) */}
+        {/* 2. Projetos: App Arquivos / Files */}
         <button
           type="button"
           onClick={() => handleTabSelect('projetos')}
-          className="w-12 h-12 rounded-[13px] bg-gradient-to-b from-[#e3f2fd] to-[#90caf9] p-0.5 shadow-md flex items-center justify-center relative cursor-pointer active:scale-95 transition-transform overflow-visible border border-white/20"
-          title="Projetos (Finder)"
+          className="relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
+          title="Projetos (Arquivos)"
           aria-label="Projetos"
         >
           <img
-            src="/finder.png"
-            alt="Finder"
-            className="w-10 h-10 object-contain drop-shadow-sm select-none pointer-events-none rounded-[10px]"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none'
-            }}
+            src={isDark ? '/icons/dock/files-dark.png' : '/icons/dock/files-light.png'}
+            alt="Arquivos"
+            className="w-13 h-13 rounded-[15px] object-cover shadow-md transition-all select-none pointer-events-none"
+            loading="eager"
+            decoding="async"
           />
           {activeTab === 'projetos' && (
-            <span className="w-1 h-1 rounded-full bg-white/90 absolute -bottom-1.5 left-1/2 -translate-x-1/2 shadow-sm" />
+            <span className="w-1 h-1 rounded-full bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
         </button>
 
-        {/* 3. Sobre: App Contatos (Fundo prateado/cinza com silhueta de perfil branca em relevo) */}
+        {/* 3. Sobre: App Contatos */}
         <button
           type="button"
           onClick={() => handleTabSelect('sobre')}
-          className="w-12 h-12 rounded-[13px] bg-gradient-to-b from-[#8e8e93] via-[#636366] to-[#48484a] shadow-md flex items-center justify-center relative cursor-pointer active:scale-95 transition-transform overflow-visible border border-white/20"
+          className="relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
           title="Sobre Mim (Contatos)"
           aria-label="Sobre Mim"
         >
-          <div className="absolute right-1 top-2 bottom-2 w-1 flex flex-col justify-between py-0.5 opacity-80 pointer-events-none">
-            <span className="w-1 h-1.5 rounded-l-sm bg-amber-400" />
-            <span className="w-1 h-1.5 rounded-l-sm bg-sky-400" />
-            <span className="w-1 h-1.5 rounded-l-sm bg-rose-400" />
-          </div>
-          <svg viewBox="0 0 28 28" className="w-7 h-7 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]" fill="currentColor">
-            <circle cx="13" cy="9" r="4.5" />
-            <path d="M5 22c0-4.4 3.6-7 8-7s8 2.6 8 7v1H5v-1z" />
-          </svg>
+          <img
+            src={isDark ? '/icons/dock/contacts-dark.png' : '/icons/dock/contacts-light.png'}
+            alt="Contatos"
+            className="w-13 h-13 rounded-[15px] object-cover shadow-md transition-all select-none pointer-events-none"
+            loading="eager"
+            decoding="async"
+          />
           {activeTab === 'sobre' && (
-            <span className="w-1 h-1 rounded-full bg-white/90 absolute -bottom-1.5 left-1/2 -translate-x-1/2 shadow-sm" />
+            <span className="w-1 h-1 rounded-full bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
         </button>
 
-        {/* 4. Habilidades: App Ajustes (Fundo cinza escuro com engrenagens metálicas da Apple) */}
+        {/* 4. Habilidades: App Ajustes / Settings */}
         <button
           type="button"
           onClick={() => handleTabSelect('habilidades')}
-          className="w-12 h-12 rounded-[13px] bg-gradient-to-b from-[#636366] via-[#3a3a3c] to-[#1c1c1e] shadow-md flex items-center justify-center relative cursor-pointer active:scale-95 transition-transform overflow-visible border border-white/20"
+          className="relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
           title="Habilidades & Stack (Ajustes)"
           aria-label="Habilidades"
         >
-          <svg viewBox="0 0 32 32" className="w-7 h-7 text-zinc-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]" fill="currentColor">
-            <path d="M29.18 14.32l-2.61-.43a11.23 11.23 0 00-.91-2.2l1.55-2.18a1.13 1.13 0 00-.15-1.46l-2.07-2.07a1.13 1.13 0 00-1.46-.15l-2.18 1.55a11.23 11.23 0 00-2.2-.91l-.43-2.61A1.13 1.13 0 0017.6 2h-3.2a1.13 1.13 0 00-1.12.94l-.43 2.61a11.23 11.23 0 00-2.2.91L8.47 4.91a1.13 1.13 0 00-1.46.15L4.94 7.13a1.13 1.13 0 00-.15 1.46l1.55 2.18a11.23 11.23 0 00-.91 2.2l-2.61.43A1.13 1.13 0 002 14.52v3.2a1.13 1.13 0 00.94 1.12l2.61.43c.25.77.56 1.51.91 2.2l-1.55 2.18a1.13 1.13 0 00.15 1.46l2.07 2.07a1.13 1.13 0 001.46.15l2.18-1.55c.69.35 1.43.66 2.2.91l.43 2.61A1.13 1.13 0 0014.4 30h3.2a1.13 1.13 0 001.12-.94l.43-2.61a11.23 11.23 0 002.2-.91l2.18 1.55a1.13 1.13 0 001.46-.15l2.07-2.07a1.13 1.13 0 00.15-1.46l-1.55-2.18c.35-.69.66-1.43.91-2.2l2.61-.43A1.13 1.13 0 0030 17.72v-3.2a1.13 1.13 0 00-.82-1.2zM16 21a5 5 0 110-10 5 5 0 010 10z" />
-          </svg>
+          <img
+            src={isDark ? '/icons/dock/settings-dark.png' : '/icons/dock/settings-light.png'}
+            alt="Ajustes"
+            className="w-13 h-13 rounded-[15px] object-cover shadow-md transition-all select-none pointer-events-none"
+            loading="eager"
+            decoding="async"
+          />
           {activeTab === 'habilidades' && (
-            <span className="w-1 h-1 rounded-full bg-white/90 absolute -bottom-1.5 left-1/2 -translate-x-1/2 shadow-sm" />
+            <span className="w-1 h-1 rounded-full bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
         </button>
 
-        {/* 5. Contato: App Mensagens/WhatsApp (Gradiente verde oficial com balão branco) */}
+        {/* 5. Contato: App Mensagens / Messages */}
         <button
           type="button"
           onClick={() => handleTabSelect('contato')}
-          className="w-12 h-12 rounded-[13px] bg-gradient-to-b from-[#34c759] via-[#30d158] to-[#248a3d] shadow-md flex items-center justify-center relative cursor-pointer active:scale-95 transition-transform overflow-visible border border-white/20"
+          className="relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
           title="Contato (Mensagens)"
           aria-label="Contato"
         >
-          <svg viewBox="0 0 28 28" className="w-7 h-7 text-white drop-shadow-sm" fill="currentColor">
-            <path d="M14 4C8.48 4 4 8.03 4 13c0 2.76 1.38 5.23 3.55 6.84L7 24l4.58-1.49C12.44 22.8 13.2 23 14 23c5.52 0 10-4.03 10-9s-4.48-10-10-10z" />
-          </svg>
+          <img
+            src={isDark ? '/icons/dock/messages-dark.png' : '/icons/dock/messages-light.png'}
+            alt="Mensagens"
+            className="w-13 h-13 rounded-[15px] object-cover shadow-md transition-all select-none pointer-events-none"
+            loading="eager"
+            decoding="async"
+          />
           {activeTab === 'contato' && (
-            <span className="w-1 h-1 rounded-full bg-white/90 absolute -bottom-1.5 left-1/2 -translate-x-1/2 shadow-sm" />
+            <span className="w-1 h-1 rounded-full bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
         </button>
       </nav>

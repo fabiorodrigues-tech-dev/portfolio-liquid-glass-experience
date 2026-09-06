@@ -15,6 +15,7 @@ import {
   Wifi,
 } from 'lucide-react'
 import { GithubIcon, LinkedinIcon, WhatsAppIcon, InstagramIcon } from '../icons/SocialIcons'
+import { CircularVisualizer } from '../audio/CircularVisualizer'
 import type { ThemeMode, AccentColor } from '../../types'
 import { playHapticClick } from '../../lib/soundEffects'
 
@@ -791,42 +792,18 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         {/* ========================================================================= */}
         {activeTab === 'media' && (
           <div className="w-full max-w-[340px] min-[400px]:max-w-[348px] h-[72vh] max-h-[570px] mx-auto translate-x-2 min-[400px]:translate-x-2.5 mt-12 min-[400px]:mt-16 rounded-[38px] bg-white/[0.12] backdrop-blur-3xl border border-white/20 p-6 shadow-2xl flex flex-col justify-between select-none text-white animate-in fade-in zoom-in-95 duration-200">
-            {/* 1. Arte de Capa Grande Quadrada com Animação Ativa */}
-            <div
-              className={`relative w-full aspect-square rounded-[24px] bg-gradient-to-tr from-purple-600 via-indigo-600 to-blue-500 shadow-xl flex items-center justify-center overflow-hidden border transition-all duration-700 mb-3 ${
-                isPlayingMusic
-                  ? 'scale-[1.02] shadow-[0_0_45px_rgba(147,51,234,0.5)] border-white/30'
-                  : 'scale-100 shadow-lg border-white/10'
-              }`}
-            >
-              <Music
-                className={`w-16 h-16 text-white/25 absolute transition-all duration-500 ${
-                  isPlayingMusic ? 'scale-110 opacity-30' : 'opacity-60'
-                }`}
-              />
+            {/* 1. Arte de Capa com Visualizador de Áudio Circular (Tuneform) */}
+            <div className="relative w-full aspect-square flex items-center justify-center p-6 my-2">
+              {/* 1. O Anel Radial de Barras de Espectro (Fundo) */}
+              <CircularVisualizer isPlaying={isPlayingMusic} />
 
-              {/* Barras de Equalizador da Apple no Centro da Capa */}
-              <div className="relative z-10 flex items-end gap-1.5 h-10 select-none pointer-events-none">
-                <span
-                  className={`w-1.5 bg-white rounded-full transition-all duration-300 ${
-                    isPlayingMusic ? 'h-8 animate-[pulse_0.6s_ease-in-out_infinite]' : 'h-2'
-                  }`}
-                />
-                <span
-                  className={`w-1.5 bg-white rounded-full transition-all duration-300 delay-100 ${
-                    isPlayingMusic ? 'h-10 animate-[pulse_0.4s_ease-in-out_infinite]' : 'h-3'
-                  }`}
-                />
-                <span
-                  className={`w-1.5 bg-white rounded-full transition-all duration-300 delay-200 ${
-                    isPlayingMusic ? 'h-6 animate-[pulse_0.7s_ease-in-out_infinite]' : 'h-2'
-                  }`}
-                />
-                <span
-                  className={`w-1.5 bg-white rounded-full transition-all duration-300 delay-150 ${
-                    isPlayingMusic ? 'h-9 animate-[pulse_0.5s_ease-in-out_infinite]' : 'h-2.5'
-                  }`}
-                />
+              {/* 2. A Capa Central com Cantos Arredondados */}
+              <div
+                className={`relative z-10 w-[72%] aspect-square rounded-[22px] bg-gradient-to-tr from-purple-700 via-indigo-600 to-blue-500 shadow-2xl flex items-center justify-center overflow-hidden border border-white/20 transition-transform duration-500 ${
+                  isPlayingMusic ? 'scale-105' : 'scale-100'
+                }`}
+              >
+                <Music className="w-12 h-12 text-white/80" />
               </div>
             </div>
 

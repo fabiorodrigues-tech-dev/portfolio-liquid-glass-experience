@@ -229,29 +229,34 @@ export const MobileDock: React.FC<MobileDockProps> = ({
       }`}
       aria-label="Navegação móvel oficial em Squircles de Apps"
     >
-      {icons.map((icon) => (
-        <button
-          key={icon.id}
-          type="button"
-          onClick={() => onSelectTab(icon.id)}
-          className="relative flex flex-col items-center justify-center cursor-pointer"
-          title={icon.label}
-          aria-label={icon.label}
-        >
-          <div className="w-[52px] h-[52px] sm:w-[54px] sm:h-[54px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
-            <img
-              src={icon.src}
-              alt={icon.label}
-              className="w-full h-full object-contain select-none"
-              loading="eager"
-              decoding="async"
-            />
-          </div>
-          {activeTab === icon.id && (
-            <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
-          )}
-        </button>
-      ))}
+      {icons.map((icon) => {
+        const isContacts = icon.id === 'sobre'
+        const scaleClass = isDark ? (isContacts ? 'scale-[1.14]' : 'scale-[1.10]') : 'scale-100'
+
+        return (
+          <button
+            key={icon.id}
+            type="button"
+            onClick={() => onSelectTab(icon.id)}
+            className="relative flex flex-col items-center justify-center cursor-pointer"
+            title={icon.label}
+            aria-label={icon.label}
+          >
+            <div className="w-[52px] h-[52px] sm:w-[54px] sm:h-[54px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
+              <img
+                src={icon.src}
+                alt={icon.label}
+                className={`w-full h-full object-cover transition-all select-none ${scaleClass}`}
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            {activeTab === icon.id && (
+              <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
+            )}
+          </button>
+        )
+      })}
     </nav>
   )
 }

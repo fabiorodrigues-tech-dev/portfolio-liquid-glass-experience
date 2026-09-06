@@ -18,6 +18,7 @@ import {
 import { GithubIcon, WhatsAppIcon } from '../icons/SocialIcons'
 import { AppleControlCenterIcon } from '../icons/ControlCenterIcon'
 import { ControlCenterMobile } from './ControlCenterMobile'
+import { MobileDock } from '../Dock'
 import type { ThemeMode, Project, AccentColor } from '../../types'
 import { playHapticClick } from '../../lib/soundEffects'
 
@@ -1157,122 +1158,12 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       {/* ========================================================================= */}
       {/* 4. DOCK INFERIOR EM AUTÊNTICO LIQUID GLASS COM SQUIRCLES DE APPS (iOS)    */}
       {/* ========================================================================= */}
-      <nav
-        className={`fixed bottom-2 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-24px)] max-w-[380px] h-[84px] px-3.5 rounded-[36px] bg-white/20 dark:bg-white/[0.12] backdrop-blur-3xl backdrop-saturate-200 border border-white/35 dark:border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.35)] flex items-center justify-around select-none transition-all duration-300 ${
-          isFocusMode ? 'translate-y-28 opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
-        }`}
-        aria-label="Navegação móvel oficial em Squircles de Apps"
-      >
-        {/* 1. Início: Safari */}
-        <button
-          type="button"
-          onClick={() => handleTabSelect('inicio')}
-          className="relative flex flex-col items-center justify-center cursor-pointer"
-          title="Início (Safari)"
-          aria-label="Início"
-        >
-          <div className="w-[52px] h-[52px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
-            <img
-              src={isDark ? '/icons/dock/safari-dark.png' : '/icons/dock/safari-light.png'}
-              alt="Safari"
-              className="w-full h-full object-contain select-none pointer-events-none"
-              loading="eager"
-              decoding="async"
-            />
-          </div>
-          {activeTab === 'inicio' && (
-            <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
-          )}
-        </button>
-
-        {/* 2. Projetos: Arquivos (Files) */}
-        <button
-          type="button"
-          onClick={() => handleTabSelect('projetos')}
-          className="relative flex flex-col items-center justify-center cursor-pointer"
-          title="Projetos (Arquivos)"
-          aria-label="Projetos"
-        >
-          <div className="w-[52px] h-[52px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
-            <img
-              src={isDark ? '/icons/dock/files-dark.png' : '/icons/dock/files-light.png'}
-              alt="Arquivos"
-              className="w-full h-full object-contain select-none pointer-events-none"
-              loading="eager"
-              decoding="async"
-            />
-          </div>
-          {activeTab === 'projetos' && (
-            <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
-          )}
-        </button>
-
-        {/* 3. Sobre: Contatos (Contacts) */}
-        <button
-          type="button"
-          onClick={() => handleTabSelect('sobre')}
-          className="relative flex flex-col items-center justify-center cursor-pointer"
-          title="Sobre Mim (Contatos)"
-          aria-label="Sobre Mim"
-        >
-          <div className="w-[52px] h-[52px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
-            <img
-              src={isDark ? '/icons/dock/contacts-dark.png' : '/icons/dock/contacts-light.png'}
-              alt="Sobre"
-              className="w-full h-full object-contain scale-[0.91] transition-all select-none pointer-events-none"
-              loading="eager"
-              decoding="async"
-            />
-          </div>
-          {activeTab === 'sobre' && (
-            <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
-          )}
-        </button>
-
-        {/* 4. Habilidades: Ajustes (Settings) */}
-        <button
-          type="button"
-          onClick={() => handleTabSelect('habilidades')}
-          className="relative flex flex-col items-center justify-center cursor-pointer"
-          title="Habilidades & Stack (Ajustes)"
-          aria-label="Habilidades"
-        >
-          <div className="w-[52px] h-[52px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
-            <img
-              src={isDark ? '/icons/dock/settings-dark.png' : '/icons/dock/settings-light.png'}
-              alt="Ajustes"
-              className="w-full h-full object-contain select-none pointer-events-none"
-              loading="eager"
-              decoding="async"
-            />
-          </div>
-          {activeTab === 'habilidades' && (
-            <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
-          )}
-        </button>
-
-        {/* 5. Contato: Mensagens (Messages) */}
-        <button
-          type="button"
-          onClick={() => handleTabSelect('contato')}
-          className="relative flex flex-col items-center justify-center cursor-pointer"
-          title="Contato (Mensagens)"
-          aria-label="Contato"
-        >
-          <div className="w-[52px] h-[52px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
-            <img
-              src={isDark ? '/icons/dock/messages-dark.png' : '/icons/dock/messages-light.png'}
-              alt="Mensagens"
-              className="w-full h-full object-contain select-none pointer-events-none"
-              loading="eager"
-              decoding="async"
-            />
-          </div>
-          {activeTab === 'contato' && (
-            <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
-          )}
-        </button>
-      </nav>
+      <MobileDock
+        activeTab={activeTab}
+        onSelectTab={handleTabSelect}
+        isDark={isDark}
+        isFocusMode={isFocusMode}
+      />
 
       {/* ========================================================================= */}
       {/* 5. CENTRAL DE CONTROLE NATIVA iOS (COMPONENTE EXCLUSIVO ControlCenterMobile) */}

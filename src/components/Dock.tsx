@@ -180,3 +180,79 @@ export const Dock: React.FC<DockProps> = ({
     </div>
   )
 }
+
+export interface MobileDockProps {
+  activeTab: 'inicio' | 'projetos' | 'sobre' | 'habilidades' | 'contato'
+  onSelectTab: (tab: 'inicio' | 'projetos' | 'sobre' | 'habilidades' | 'contato') => void
+  isDark: boolean
+  isFocusMode?: boolean
+}
+
+export const MobileDock: React.FC<MobileDockProps> = ({
+  activeTab,
+  onSelectTab,
+  isDark,
+  isFocusMode = false,
+}) => {
+  const icons = [
+    {
+      id: 'inicio' as const,
+      label: 'Início (Safari)',
+      src: isDark ? '/icons/dock/safari-dark.png' : '/icons/dock/safari-light.png',
+    },
+    {
+      id: 'projetos' as const,
+      label: 'Projetos (Arquivos)',
+      src: isDark ? '/icons/dock/files-dark.png' : '/icons/dock/files-light.png',
+    },
+    {
+      id: 'sobre' as const,
+      label: 'Sobre (Contatos)',
+      src: isDark ? '/icons/dock/contacts-dark.png' : '/icons/dock/contacts-light.png',
+    },
+    {
+      id: 'habilidades' as const,
+      label: 'Habilidades (Ajustes)',
+      src: isDark ? '/icons/dock/settings-dark.png' : '/icons/dock/settings-light.png',
+    },
+    {
+      id: 'contato' as const,
+      label: 'Contato (Mensagens)',
+      src: isDark ? '/icons/dock/messages-dark.png' : '/icons/dock/messages-light.png',
+    },
+  ]
+
+  return (
+    <nav
+      className={`fixed bottom-2 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-24px)] max-w-[380px] h-[84px] px-3.5 rounded-[36px] bg-white/20 dark:bg-white/[0.12] backdrop-blur-3xl backdrop-saturate-200 border border-white/35 dark:border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.35)] flex items-center justify-around select-none transition-all duration-300 ${
+        isFocusMode ? 'translate-y-28 opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
+      }`}
+      aria-label="Navegação móvel oficial em Squircles de Apps"
+    >
+      {icons.map((icon) => (
+        <button
+          key={icon.id}
+          type="button"
+          onClick={() => onSelectTab(icon.id)}
+          className="relative flex flex-col items-center justify-center cursor-pointer"
+          title={icon.label}
+          aria-label={icon.label}
+        >
+          <div className="w-[52px] h-[52px] sm:w-[54px] sm:h-[54px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
+            <img
+              src={icon.src}
+              alt={icon.label}
+              className="w-full h-full object-contain select-none"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+          {activeTab === icon.id && (
+            <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
+          )}
+        </button>
+      ))}
+    </nav>
+  )
+}
+

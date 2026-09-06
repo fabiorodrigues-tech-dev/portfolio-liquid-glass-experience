@@ -513,7 +513,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               {/* Lado Esquerdo: 2 Quadrados Superiores + Pílula Horizontal de Foco */}
               <div className="flex flex-col justify-between h-[160px] w-full">
                 {/* 2 Botões Circulares Superiores (Bloqueio de Rotação + Espelhar Tela) */}
-                <div className="grid grid-cols-2 gap-3.5 place-items-center h-[94px]">
+                <div className="grid grid-cols-2 gap-3.5 place-items-center h-[90px]">
                   {/* Botão: Bloqueio de Orientação Oficial (Cadeado com Seta Curva Circular — Destaque quando ativo) */}
                   <button
                     type="button"
@@ -547,23 +547,58 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   </button>
                 </div>
 
-                {/* Botão FOCO (Cápsula horizontal com ícone ampliado e layout limpo) */}
+                {/* Botão FOCO Oficial do iOS 26 (Cápsula nativa com disco circular para a lua à esquerda + "Foco ⬍") */}
                 <button
                   type="button"
                   onClick={() => {
                     triggerHaptic()
                     onToggleFocusMode()
                   }}
-                  className={`h-[52px] w-full rounded-full border px-4 flex items-center justify-center gap-2.5 sm:gap-3 select-none active:scale-95 transition-all cursor-pointer shadow-[0_10px_30px_rgba(0,0,0,0.25)] ${
+                  className={`h-[56px] w-full rounded-full border p-1.5 flex items-center justify-start select-none active:scale-[0.98] transition-all cursor-pointer shadow-[0_10px_30px_rgba(0,0,0,0.25)] ${
                     isFocusMode 
                       ? 'bg-indigo-600/35 border-indigo-400/50 text-white shadow-[0_0_20px_rgba(99,102,241,0.35)]' 
-                      : 'bg-white/[0.12] dark:bg-white/[0.09] hover:bg-white/15 backdrop-blur-3xl border-white/20 dark:border-white/10 text-white/90'
+                      : 'bg-white/[0.14] dark:bg-white/[0.09] hover:bg-white/15 backdrop-blur-3xl border border-white/25 dark:border-white/10 text-white/90'
                   }`}
                   title="Modo Foco: Oculta o Dock e minimiza distrações"
                   aria-label="Modo Foco"
                 >
-                  <Moon className={`w-6 h-6 transition-transform duration-200 ${isFocusMode ? 'text-indigo-400 fill-indigo-400 scale-105' : 'text-white/85'}`} />
-                  <span className="text-sm font-semibold tracking-tight">Foco</span>
+                  {/* Disco circular esquerdo que abriga o ícone da Lua preenchida */}
+                  <div
+                    className={`w-[44px] h-[44px] rounded-full flex items-center justify-center shrink-0 transition-all duration-200 ${
+                      isFocusMode
+                        ? 'bg-indigo-500 text-white shadow-md'
+                        : 'bg-white/15 dark:bg-white/[0.12] text-white shadow-sm'
+                    }`}
+                  >
+                    {/* Ícone da Lua Apple: Sólido preenchido em branco, orientação e formato idênticos ao SF Symbol moon.fill */}
+                    <Moon
+                      className="w-[22px] h-[22px] rotate-45 shrink-0"
+                      fill="white"
+                      stroke="none"
+                      strokeWidth={0}
+                    />
+                  </div>
+
+                  {/* Rótulo "Foco" e Seletor Vertical Apple (chevron.up.chevron.down) */}
+                  <div className="flex items-center gap-1.5 ml-2.5">
+                    <span className="text-[14px] sm:text-[15px] font-semibold tracking-tight text-white">
+                      Foco
+                    </span>
+                    {/* Duplo chevron de seleção do iOS */}
+                    <svg
+                      viewBox="0 0 10 16"
+                      className="w-2.5 h-3.5 text-white/60 shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M2 6L5 2L8 6" />
+                      <path d="M2 10L5 14L8 10" />
+                    </svg>
+                  </div>
                 </button>
               </div>
 

@@ -181,7 +181,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       <header className="fixed top-0 left-0 right-0 h-10 px-4 flex items-center justify-between z-40 select-none bg-transparent">
         {/* Esquerda: Relógio em tempo real ("19:30") */}
         <div className="flex items-center">
-          <span className="ios-header-contour-label text-xs font-semibold tracking-tight text-zinc-950 dark:text-white transition-colors drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+          <span className="text-xs font-semibold tracking-tight text-zinc-950 dark:text-white transition-colors">
             {currentTime}
           </span>
         </div>

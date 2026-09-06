@@ -467,21 +467,16 @@ html:not(.dark) div[class*="h-px"] {
   }
 }
 
-/* CONTORNO SUAVE E ELEGANTE EM PRETO (APENAS MODO DIA) */
+/* CABEÇALHOS DAS ABAS NO MODO DIA (Tipografia Nativa Apple sem contornos pesados) */
 html:not(.dark) .ios-header-contour-title {
-  color: #ffffff !important;
-  -webkit-text-stroke: 0.65px rgba(0, 0, 0, 0.65) !important;
-  text-shadow: 
-    0 1px 3px rgba(0, 0, 0, 0.55),
-    0 3px 12px rgba(0, 0, 0, 0.25),
-    0 0 1px rgba(0, 0, 0, 0.8) !important;
+  color: #09090b !important;
+  -webkit-text-stroke: 0 !important;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8) !important;
 }
 
 html:not(.dark) .ios-header-contour-label {
-  color: #ffffff !important;
-  -webkit-text-stroke: 0.4px rgba(0, 0, 0, 0.6) !important;
-  text-shadow: 
-    0 1px 2px rgba(0, 0, 0, 0.65),
-    0 0 1px rgba(0, 0, 0, 0.75) !important;
+  color: #3f3f46 !important;
+  -webkit-text-stroke: 0 !important;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7) !important;
 }
 

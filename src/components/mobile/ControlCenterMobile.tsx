@@ -511,8 +511,8 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
 
             {/* LINHA 2: Foco & Atalhos (Esquerda) + Sliders Verticais ~2.7:1 (Direita) */}
             <div className="w-full grid grid-cols-2 gap-3.5 min-[400px]:gap-4 h-[160px] mx-auto">
-              {/* Lado Esquerdo: 2 Quadrados Superiores + Pílula Horizontal de Foco */}
-              <div className="flex flex-col justify-between h-[160px] w-full">
+              {/* Lado Esquerdo: 2 Quadrados Superiores + Pílula Horizontal de Foco (pb-2 para espaçamento equidistante acima e abaixo) */}
+              <div className="flex flex-col justify-between h-[160px] w-full pb-2">
                 {/* 2 Botões Circulares Superiores (Bloqueio de Rotação + Espelhar Tela) */}
                 <div className="grid grid-cols-2 gap-3.5 place-items-center h-[90px]">
                   {/* Botão: Bloqueio de Orientação Oficial (Cadeado com Seta Curva Circular — Destaque quando ativo) */}

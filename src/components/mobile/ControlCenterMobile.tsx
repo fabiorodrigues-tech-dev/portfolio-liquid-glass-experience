@@ -547,14 +547,14 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   </button>
                 </div>
 
-                {/* Botão FOCO Redesenhado (Cápsula horizontal confortável com ícone ampliado) */}
+                {/* Botão FOCO (Cápsula horizontal com ícone ampliado e layout limpo) */}
                 <button
                   type="button"
                   onClick={() => {
                     triggerHaptic()
                     onToggleFocusMode()
                   }}
-                  className={`h-[52px] w-full rounded-full border px-4 flex items-center justify-between select-none active:scale-95 transition-all cursor-pointer shadow-[0_10px_30px_rgba(0,0,0,0.25)] ${
+                  className={`h-[52px] w-full rounded-full border px-4 flex items-center justify-center gap-2.5 sm:gap-3 select-none active:scale-95 transition-all cursor-pointer shadow-[0_10px_30px_rgba(0,0,0,0.25)] ${
                     isFocusMode 
                       ? 'bg-indigo-600/35 border-indigo-400/50 text-white shadow-[0_0_20px_rgba(99,102,241,0.35)]' 
                       : 'bg-white/[0.12] dark:bg-white/[0.09] hover:bg-white/15 backdrop-blur-3xl border-white/20 dark:border-white/10 text-white/90'
@@ -562,11 +562,8 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   title="Modo Foco: Oculta o Dock e minimiza distrações"
                   aria-label="Modo Foco"
                 >
-                  <div className="flex items-center gap-3">
-                    <Moon className={`w-5 h-5 transition-colors ${isFocusMode ? 'text-indigo-400 fill-indigo-400' : 'text-white/85'}`} />
-                    <span className="text-[13px] sm:text-sm font-semibold tracking-tight">Foco</span>
-                  </div>
-                  <span className="text-white/40 text-sm font-medium">⌄</span>
+                  <Moon className={`w-6 h-6 transition-transform duration-200 ${isFocusMode ? 'text-indigo-400 fill-indigo-400 scale-105' : 'text-white/85'}`} />
+                  <span className="text-sm font-semibold tracking-tight">Foco</span>
                 </button>
               </div>
 

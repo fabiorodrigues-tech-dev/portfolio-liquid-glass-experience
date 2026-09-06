@@ -118,16 +118,6 @@ interface ControlCenterMobileProps {
 
 type ActiveTab = 'main' | 'media' | 'connections'
 
-// Especificação técnica Liquid Glass fiel ao iOS: blur(30px) saturate(180%)
-const getLiquidGlassStyle = (isDark: boolean): React.CSSProperties => ({
-  backgroundColor: isDark ? 'rgba(12, 14, 23, 0.45)' : 'rgba(255, 255, 255, 0.45)',
-  backdropFilter: 'blur(30px) saturate(180%)',
-  WebkitBackdropFilter: 'blur(30px) saturate(180%)',
-  border: isDark ? '1px solid rgba(255, 255, 255, 0.15)' : '1px solid rgba(255, 255, 255, 0.30)',
-  boxShadow: 'inset 0 1px 1px 0 rgba(255, 255, 255, 0.25), 0 8px 32px rgba(0, 0, 0, 0.25)',
-  transition: 'all 250ms cubic-bezier(0.16, 1, 0.3, 1)',
-})
-
 export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
   isOpen,
   onClose,
@@ -238,8 +228,6 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
 
   if (!isOpen) return null
 
-  const liquidGlass = getLiquidGlassStyle(isDark)
-
   // Pointer drag handler for vertical brightness slider
   const handleBrightnessPointer = (e: React.PointerEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -267,7 +255,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
           onClose()
         }
       }}
-      className="fixed inset-0 z-50 bg-black/40 backdrop-blur-3xl backdrop-saturate-200 p-4 pt-10 flex flex-col justify-start items-center select-none overflow-y-auto overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 bg-black/45 backdrop-blur-[45px] backdrop-saturate-[2.2] p-4 pt-12 flex flex-col justify-start items-center select-none overflow-y-auto overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
     >
       {/* 1. Botão de Fechar no Canto Superior Direito com bom respiro */}
       <button
@@ -283,71 +271,73 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         ✕
       </button>
 
-      {/* 2. Barra Lateral Direita Flutuante (TRANCADA / INALTERADA) */}
-      <div className="absolute right-2 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-5 py-2 select-none">
-        {/* Ícone 1: Controles (✦) */}
-        <button
-          type="button"
-          onClick={() => {
-            triggerHaptic()
-            setActiveTab('main')
-          }}
-          className={`p-1.5 transition-all cursor-pointer ${
-            activeTab === 'main'
-              ? 'text-white scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]'
-              : 'text-white/35 hover:text-white/70'
-          }`}
-          title="Controles Principais (✦)"
-          aria-label="Controles Principais"
-        >
-          <Sparkles className="w-5 h-5" />
-        </button>
+      {/* Container Central da Central de Controle com Trilho Lateral Integrado */}
+      <div className="relative w-full max-w-[395px] min-[400px]:max-w-[405px] mx-auto my-auto flex items-center justify-center">
+        {/* Trilho Lateral de Ícones (✦, 🎵, 📡) Perfeitamente Centralizado na Altura dos Controles */}
+        <div className="absolute -right-2 min-[400px]:-right-1 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-5 py-2 select-none">
+          {/* Ícone 1: Controles (✦) */}
+          <button
+            type="button"
+            onClick={() => {
+              triggerHaptic()
+              setActiveTab('main')
+            }}
+            className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer active:scale-90 ${
+              activeTab === 'main'
+                ? 'text-white scale-110 drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]'
+                : 'text-white/40 hover:text-white/70'
+            }`}
+            title="Controles Principais (✦)"
+            aria-label="Controles Principais"
+          >
+            <Sparkles className="w-5 h-5" />
+          </button>
 
-        {/* Ícone 2: Mídia (🎵) */}
-        <button
-          type="button"
-          onClick={() => {
-            triggerHaptic()
-            setActiveTab('media')
-          }}
-          className={`p-1.5 transition-all cursor-pointer ${
-            activeTab === 'media'
-              ? 'text-white scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]'
-              : 'text-white/35 hover:text-white/70'
-          }`}
-          title="Mídia e Reprodução (🎵)"
-          aria-label="Mídia e Reprodução"
-        >
-          <Music className="w-5 h-5" />
-        </button>
+          {/* Ícone 2: Mídia (🎵) */}
+          <button
+            type="button"
+            onClick={() => {
+              triggerHaptic()
+              setActiveTab('media')
+            }}
+            className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer active:scale-90 ${
+              activeTab === 'media'
+                ? 'text-white scale-110 drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]'
+                : 'text-white/40 hover:text-white/70'
+            }`}
+            title="Mídia e Reprodução (🎵)"
+            aria-label="Mídia e Reprodução"
+          >
+            <Music className="w-5 h-5" />
+          </button>
 
-        {/* Ícone 3: Conexões (📡) */}
-        <button
-          type="button"
-          onClick={() => {
-            triggerHaptic()
-            setActiveTab('connections')
-          }}
-          className={`p-1.5 transition-all cursor-pointer ${
+          {/* Ícone 3: Conexões (📡) */}
+          <button
+            type="button"
+            onClick={() => {
+              triggerHaptic()
+              setActiveTab('connections')
+            }}
+            className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer active:scale-90 ${
+              activeTab === 'connections'
+                ? 'text-white scale-110 drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]'
+                : 'text-white/40 hover:text-white/70'
+            }`}
+            title="Conexões e Links (📡)"
+            aria-label="Conexões e Links"
+          >
+            <Radio className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* 3. Grid em Escala Autêntica iOS 26 */}
+        <div
+          className={`w-full flex flex-col ${
             activeTab === 'connections'
-              ? 'text-white scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]'
-              : 'text-white/35 hover:text-white/70'
+              ? 'justify-center items-center pr-8 min-[400px]:pr-9'
+              : 'pr-8 min-[400px]:pr-9 gap-3.5 min-[400px]:gap-4'
           }`}
-          title="Conexões e Links (📡)"
-          aria-label="Conexões e Links"
         >
-          <Radio className="w-5 h-5" />
-        </button>
-      </div>
-
-      {/* 3. Grid em Escala Autêntica iOS 26 (~92-94% da largura da tela) */}
-      <div
-        className={`w-full max-w-[395px] mx-auto flex flex-col ${
-          activeTab === 'connections'
-            ? 'my-auto justify-center items-center'
-            : 'pr-8 min-[400px]:pr-9 gap-3.5 min-[400px]:gap-4'
-        }`}
-      >
         {/* ========================================================================= */}
         {/* PÁGINA 1: ✦ CONTROLES PRINCIPAIS (TELA PRINCIPAL)                         */}
         {/* ========================================================================= */}
@@ -357,8 +347,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
             <div className="w-full grid grid-cols-2 gap-3.5 min-[400px]:gap-4 h-[162px] min-[400px]:h-[170px] mx-auto">
               {/* Cluster de Conectividade (Bandeja com 4 pastilhas individuais) */}
               <div
-                style={liquidGlass}
-                className="apple-liquid-glass h-[162px] min-[400px]:h-[170px] rounded-[28px] p-3 grid grid-cols-2 gap-3 place-items-center select-none shadow-xl"
+                className="rounded-[36px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all h-[162px] min-[400px]:h-[170px] p-3 grid grid-cols-2 gap-3 place-items-center select-none"
               >
                 {/* Pastilha 1 (Recife / Status Online): Fundo próprio e sombra interna */}
                 <div
@@ -418,14 +407,13 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 </button>
               </div>
 
-              {/* Card de Mídia: Mesma Altura (162-170px), mesmo raio (28px) e padding consistente */}
+              {/* Card de Mídia: Mesma Altura (162-170px), mesmo raio (36px) e padding consistente */}
               <div
-                style={liquidGlass}
                 onClick={() => {
                   triggerHaptic()
                   setActiveTab('media')
                 }}
-                className="apple-liquid-glass h-[162px] min-[400px]:h-[170px] rounded-[28px] p-3.5 flex flex-col justify-between text-white cursor-pointer group active:scale-[0.98] transition-all duration-200 select-none shadow-xl"
+                className="rounded-[36px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all h-[162px] min-[400px]:h-[170px] p-3.5 flex flex-col justify-between text-white cursor-pointer group active:scale-[0.98] select-none"
                 title="Abrir reprodutor de áudio"
               >
                 {/* Topo: Capa e Título */}
@@ -542,15 +530,10 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       triggerHaptic()
                       setIsOrientationLocked((prev) => !prev)
                     }}
-                    style={
-                      isOrientationLocked
-                        ? { backgroundColor: '#ffffff', color: '#ff3b30' }
-                        : liquidGlass
-                    }
-                    className={`w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-md ${
+                    className={`w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 ${
                       isOrientationLocked
                         ? 'bg-white text-[#ff3b30] border border-white/40 shadow-[0_2px_14px_rgba(255,59,48,0.35)]'
-                        : 'apple-liquid-glass text-white/85 hover:text-white'
+                        : 'bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.3)] text-white/85 hover:text-white'
                     }`}
                     title={isOrientationLocked ? 'Bloqueio de Orientação: Ativado' : 'Bloqueio de Orientação: Desativado'}
                     aria-label="Bloqueio de Orientação"
@@ -565,8 +548,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       triggerHaptic()
                       setActiveTab('media')
                     }}
-                    style={liquidGlass}
-                    className="apple-liquid-glass w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center text-white/85 hover:text-white cursor-pointer active:scale-95 transition-all duration-200 shadow-md"
+                    className="w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.3)] flex items-center justify-center text-white/85 hover:text-white cursor-pointer active:scale-95 transition-all duration-200"
                     title="Espelhar Tela (AirPlay)"
                     aria-label="Espelhar Tela"
                   >
@@ -581,11 +563,10 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     triggerHaptic()
                     onToggleFocusMode()
                   }}
-                  style={liquidGlass}
-                  className={`apple-liquid-glass w-full h-[76px] min-[400px]:h-[80px] rounded-[24px] px-4 flex items-center gap-3.5 cursor-pointer active:scale-[0.98] transition-all duration-200 shadow-md ${
+                  className={`w-full h-[76px] min-[400px]:h-[80px] rounded-[28px] backdrop-blur-3xl border shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all px-4 flex items-center gap-3.5 cursor-pointer active:scale-[0.98] ${
                     isFocusMode
-                      ? 'border-indigo-400/40 bg-indigo-500/25'
-                      : 'hover:brightness-110'
+                      ? 'border-indigo-400/40 bg-indigo-500/30 text-white'
+                      : 'bg-white/[0.14] dark:bg-white/[0.09] border-white/25 dark:border-white/10 hover:brightness-110'
                   }`}
                   title="Modo Foco: Oculta o Dock e minimiza distrações"
                   aria-label="Modo Foco"
@@ -635,7 +616,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   onPointerCancelCapture={() => {
                     isDraggingBrightnessRef.current = false
                   }}
-                  className="relative w-[76px] h-[160px] rounded-[34px] bg-white/[0.12] backdrop-blur-2xl border border-white/15 overflow-hidden flex flex-col justify-end select-none shadow-lg cursor-pointer"
+                  className="relative w-[76px] h-[160px] rounded-[34px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 overflow-hidden flex flex-col justify-end shadow-xl select-none cursor-pointer"
                   title="Brilho da Tela"
                 >
                   {/* Preenchimento inferior */}
@@ -690,7 +671,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   onPointerCancelCapture={() => {
                     isDraggingVolumeRef.current = false
                   }}
-                  className="relative w-[76px] h-[160px] rounded-[34px] bg-white/[0.12] backdrop-blur-2xl border border-white/15 overflow-hidden flex flex-col justify-end select-none shadow-lg cursor-pointer"
+                  className="relative w-[76px] h-[160px] rounded-[34px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 overflow-hidden flex flex-col justify-end shadow-xl select-none cursor-pointer"
                   title="Volume do Som"
                 >
                   {/* Preenchimento inferior */}
@@ -732,8 +713,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 target="_blank"
                 rel="noreferrer"
                 onClick={triggerHaptic}
-                style={liquidGlass}
-                className="apple-liquid-glass w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all duration-200 shadow-md hover:brightness-110"
+                className="w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all hover:brightness-110"
                 title="LinkedIn Oficial"
                 aria-label="LinkedIn"
               >
@@ -746,8 +726,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 target="_blank"
                 rel="noreferrer"
                 onClick={triggerHaptic}
-                style={liquidGlass}
-                className="apple-liquid-glass w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all duration-200 shadow-md hover:brightness-110"
+                className="w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all hover:brightness-110"
                 title="WhatsApp (+55 (81) 99185-1507)"
                 aria-label="WhatsApp"
               >
@@ -760,8 +739,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 target="_blank"
                 rel="noreferrer"
                 onClick={triggerHaptic}
-                style={liquidGlass}
-                className="apple-liquid-glass w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all duration-200 shadow-md hover:brightness-110"
+                className="w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all hover:brightness-110"
                 title="GitHub (Octocat)"
                 aria-label="GitHub"
               >
@@ -774,8 +752,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 target="_blank"
                 rel="noreferrer"
                 onClick={triggerHaptic}
-                style={liquidGlass}
-                className="apple-liquid-glass w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all duration-200 shadow-md hover:brightness-110"
+                className="w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex items-center justify-center text-white/90 cursor-pointer active:scale-95 transition-all hover:brightness-110"
                 title="Instagram (@f.a.rodrigues)"
                 aria-label="Instagram"
               >
@@ -789,7 +766,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         {/* PÁGINA 2: 🎵 PLAYER DE ÁUDIO EXPANDIDO (MÍDIA - Conforme print 616cff)     */}
         {/* ========================================================================= */}
         {activeTab === 'media' && (
-          <div className="w-full max-w-[340px] min-[400px]:max-w-[348px] h-[72vh] max-h-[570px] mx-auto translate-x-2 min-[400px]:translate-x-2.5 mt-12 min-[400px]:mt-16 rounded-[38px] backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 p-6 shadow-2xl flex flex-col justify-between select-none text-white animate-in fade-in zoom-in-95 duration-200">
+          <div className="w-full max-w-[340px] min-[400px]:max-w-[348px] h-[72vh] max-h-[570px] mx-auto rounded-[38px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] p-6 flex flex-col justify-between select-none text-white animate-in fade-in zoom-in-95 duration-200">
             {/* 1. Arte de Capa com Visualizador de Áudio Circular (Tuneform) */}
             <div className="relative w-full aspect-square flex items-center justify-center p-6 my-2">
               {/* 1. O Anel Radial de Barras de Espectro (Fundo) */}
@@ -902,8 +879,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               target="_blank"
               rel="noreferrer"
               onClick={triggerHaptic}
-              style={liquidGlass}
-              className="apple-liquid-glass rounded-[22px] border border-white/15 px-4 py-3.5 min-[390px]:py-4 flex items-center justify-between text-white transition-all active:scale-[0.98] group shadow-lg hover:brightness-110"
+              className="rounded-[24px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] px-4 py-3.5 min-[390px]:py-4 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
               title="Acessar Google Drive Oficial com Todos os Portfólios e CVs"
             >
               <div className="flex items-center space-x-3.5 overflow-hidden">
@@ -933,8 +909,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               target="_blank"
               rel="noreferrer"
               onClick={triggerHaptic}
-              style={liquidGlass}
-              className="apple-liquid-glass rounded-[22px] border border-white/15 px-4 py-3 min-[390px]:py-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
+              className="rounded-[24px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] px-4 py-3 min-[390px]:py-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
               title="Repositórios GitHub"
             >
               <div className="flex items-center space-x-3.5 overflow-hidden">
@@ -959,8 +934,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               target="_blank"
               rel="noreferrer"
               onClick={triggerHaptic}
-              style={liquidGlass}
-              className="apple-liquid-glass rounded-[22px] border border-white/15 px-4 py-3 min-[390px]:py-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
+              className="rounded-[24px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] px-4 py-3 min-[390px]:py-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
               title="LinkedIn Profissional"
             >
               <div className="flex items-center space-x-3.5 overflow-hidden">
@@ -985,8 +959,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               target="_blank"
               rel="noreferrer"
               onClick={triggerHaptic}
-              style={liquidGlass}
-              className="apple-liquid-glass rounded-[22px] border border-white/15 px-4 py-3 min-[390px]:py-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
+              className="rounded-[24px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] px-4 py-3 min-[390px]:py-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
               title="Instagram Oficial"
             >
               <div className="flex items-center space-x-3.5 overflow-hidden">
@@ -1011,8 +984,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               target="_blank"
               rel="noreferrer"
               onClick={triggerHaptic}
-              style={liquidGlass}
-              className="apple-liquid-glass rounded-[22px] border border-white/15 px-4 py-3 min-[390px]:py-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
+              className="rounded-[24px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] px-4 py-3 min-[390px]:py-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
               title="WhatsApp Comercial"
             >
               <div className="flex items-center space-x-3.5 overflow-hidden">
@@ -1033,6 +1005,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
           </div>
         )}
       </div>
+    </div>
     </div>
   )
 }

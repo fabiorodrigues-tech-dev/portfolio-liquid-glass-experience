@@ -178,10 +178,10 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       {/* ========================================================================= */}
       {/* 2. BARRA DE STATUS DO TOPO ULTRALIMPA (SEM DYNAMIC ISLAND - REQUISITO 1)  */}
       {/* ========================================================================= */}
-      <header className="fixed top-0 left-0 right-0 z-40 px-5 pt-3 pb-2 flex items-center justify-between select-none backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border-b border-white/30 dark:border-white/15">
+      <header className="fixed top-0 left-0 right-0 h-10 px-4 flex items-center justify-between z-40 select-none bg-transparent">
         {/* Esquerda: Relógio em tempo real ("19:30") */}
         <div className="flex items-center">
-          <span className="font-semibold text-sm tracking-tight text-[#09090b] dark:text-white">
+          <span className="text-xs font-semibold tracking-tight text-[#09090b] dark:text-white drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
             {currentTime}
           </span>
         </div>
@@ -194,7 +194,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
               triggerHaptic()
               setIsControlCenterOpen(true)
             }}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-[#09090b] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 active:scale-90 transition-all cursor-pointer"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-[#09090b] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 active:scale-90 transition-all cursor-pointer drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
             title="Abrir Central de Controle"
             aria-label="Central de Controle"
           >
@@ -204,19 +204,19 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       </header>
 
       {/* ========================================================================= */}
-      {/* 3. NAVEGAÇÃO POR ABAS EM TELA CHEIA (PADDING OTIMIZADO: pb-28)            */}
+      {/* 3. NAVEGAÇÃO POR ABAS EM TELA CHEIA (PADDING OTIMIZADO: pt-11 pb-28)      */}
       {/* ========================================================================= */}
       <main
         id="mobile-scroll-container"
-        className="relative z-10 w-full h-full pt-14 pb-28 overflow-y-auto scroll-smooth px-4 space-y-4"
+        className="relative z-10 w-full h-full pt-11 pb-28 overflow-y-auto scroll-smooth px-4 space-y-3.5"
       >
         {/* ----------------------------------------------------------------------- */}
         {/* ABA 01: INÍCIO (Widgets de Clima, Foto de Perfil & Apresentação)        */}
         {/* ----------------------------------------------------------------------- */}
         {activeTab === 'inicio' && (
-          <div className="space-y-4 pt-2 animate-in fade-in duration-200">
+          <div className="space-y-3.5 animate-in fade-in duration-200">
             {/* Grid Superior de Widgets */}
-            <section className="grid grid-cols-2 gap-3">
+            <section className="grid grid-cols-2 gap-3.5">
               {/* Widget 1: Clima (Recife 25°) */}
               <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[24px] p-4 flex flex-col justify-between select-none relative overflow-hidden group">
                 <div className="flex items-start justify-between">
@@ -345,7 +345,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         {/* ABA 02: PROJETOS (Feed Vertical Completo no Padrão App Store "Hoje")   */}
         {/* ----------------------------------------------------------------------- */}
         {activeTab === 'projetos' && (
-          <div className="space-y-4 pt-2 animate-in fade-in duration-200">
+          <div className="space-y-3.5 animate-in fade-in duration-200">
             <div className="px-1">
               <span className="block text-[11px] font-mono tracking-wider uppercase font-semibold text-zinc-700 dark:text-white/60 drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)] dark:drop-shadow-none">
                 {currentDateFormatted || 'DOMINGO, 6 DE SETEMBRO'}
@@ -631,7 +631,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         {/* ABA 03: SOBRE (Trajetória, UniFBV, Fundação Wolf Agency e Dev vs MKT)   */}
         {/* ----------------------------------------------------------------------- */}
         {activeTab === 'sobre' && (
-          <div className="space-y-4 pt-2 animate-in fade-in duration-200">
+          <div className="space-y-3.5 animate-in fade-in duration-200">
             <div className="px-1">
               <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 font-mono">
                 Biografia & Filosofia
@@ -806,7 +806,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         {/* ABA 04: HABILIDADES (Stack Dev com Angular/Antigravity, Audiovisual)    */}
         {/* ----------------------------------------------------------------------- */}
         {activeTab === 'habilidades' && (
-          <div className="space-y-4 pt-2 animate-in fade-in duration-200">
+          <div className="space-y-3.5 animate-in fade-in duration-200">
             <div className="px-1">
               <span className="text-[11px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 font-mono">
                 Matriz de Competências
@@ -949,7 +949,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         {/* ABA 05: CONTATO (Formulário Funcional & 4 Canais Oficiais)              */}
         {/* ----------------------------------------------------------------------- */}
         {activeTab === 'contato' && (
-          <div className="space-y-4 pt-2 animate-in fade-in duration-200">
+          <div className="space-y-3.5 animate-in fade-in duration-200">
             <div className="px-1">
               <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
                 Comunicação Direta

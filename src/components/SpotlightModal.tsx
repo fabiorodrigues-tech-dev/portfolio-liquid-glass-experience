@@ -118,17 +118,17 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center pt-24 bg-black/30 backdrop-blur-sm animate-in fade-in duration-150 max-md:pt-14 max-md:px-3"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-24 bg-black/25 backdrop-blur-md animate-in fade-in duration-150 max-md:pt-14 max-md:px-3"
       onClick={onClose}
     >
-      {/* Spotlight Window - Frosted Glass Container */}
+      {/* Spotlight Window - Translucent Liquid Glass Container */}
       <div
-        className="w-full max-w-xl rounded-2xl bg-[#f5f6fa]/95 dark:bg-[#0c0d14]/95 backdrop-blur-2xl p-3 shadow-2xl animate-in zoom-in-95 duration-150 overflow-hidden border border-black/15 dark:border-white/15"
+        className="w-full max-w-xl rounded-2xl bg-white/50 dark:bg-[#0c0e17]/55 backdrop-blur-3xl backdrop-saturate-200 p-3.5 shadow-[0_30px_90px_rgba(0,0,0,0.45),inset_0_1px_1px_rgba(255,255,255,0.4)] animate-in zoom-in-95 duration-150 overflow-hidden border border-white/40 dark:border-white/15"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="flex items-center space-x-3 px-3 py-2.5 rounded-xl bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10">
-          <Search className="w-5 h-5 text-[#007aff]" />
+        <div className="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl bg-black/[0.04] dark:bg-white/[0.08] backdrop-blur-xl border border-black/10 dark:border-white/15 shadow-inner">
+          <Search className="w-5 h-5 text-[#007aff] shrink-0" />
           <input
             type="text"
             value={query}
@@ -170,8 +170,8 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
                   onMouseEnter={() => setSelectedIndex(idx)}
                   className={`w-full flex items-center justify-between p-2 rounded-xl text-left transition-all ${
                     isSelected
-                      ? 'bg-[#007aff] text-white shadow-sm'
-                      : 'hover:bg-black/5 dark:hover:bg-white/10 text-zinc-900 dark:text-white'
+                      ? 'bg-[#007aff]/90 text-white shadow-md backdrop-blur-sm'
+                      : 'hover:bg-black/5 dark:hover:bg-white/[0.08] text-zinc-900 dark:text-white'
                   }`}
                 >
                   <div className="flex items-center space-x-2.5 truncate">
@@ -179,7 +179,7 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
                       className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
                         isSelected
                           ? 'bg-white/20 text-white'
-                          : 'bg-black/5 dark:bg-white/10 text-[#007aff]'
+                          : 'bg-black/5 dark:bg-white/[0.08] text-[#007aff]'
                       }`}
                     >
                       <IconComp className="w-4 h-4" />
@@ -190,7 +190,7 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
                       </div>
                       <div
                         className={`text-[11px] truncate ${
-                          isSelected ? 'text-white/85' : 'text-zinc-600 dark:text-zinc-400'
+                          isSelected ? 'text-white/90' : 'text-zinc-600 dark:text-zinc-400'
                         }`}
                       >
                         {item.subtitle}
@@ -203,7 +203,7 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
                       className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
                         isSelected
                           ? 'bg-white/20 text-white'
-                          : 'bg-black/5 dark:bg-white/10 text-zinc-600 dark:text-zinc-400'
+                          : 'bg-black/5 dark:bg-white/[0.08] text-zinc-600 dark:text-zinc-400'
                       }`}
                     >
                       {item.category}

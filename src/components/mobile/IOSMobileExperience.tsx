@@ -347,10 +347,10 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         {activeTab === 'projetos' && (
           <div className="space-y-4 pt-2 animate-in fade-in duration-200">
             <div className="px-1">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 font-mono">
-                {currentDateFormatted || '4 DE SETEMBRO'}
+              <span className="block text-[11px] font-mono tracking-wider uppercase font-semibold text-zinc-700 dark:text-white/60 drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)] dark:drop-shadow-none">
+                {currentDateFormatted || 'DOMINGO, 6 DE SETEMBRO'}
               </span>
-              <h2 className="text-2xl font-black tracking-tight text-[#09090b] dark:text-white">
+              <h2 className="text-2xl sm:text-3xl font-black font-display tracking-tight text-zinc-950 dark:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.12)] dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] transition-colors">
                 Hoje • Projetos em Destaque
               </h2>
             </div>

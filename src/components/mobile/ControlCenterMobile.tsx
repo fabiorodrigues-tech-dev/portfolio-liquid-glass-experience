@@ -267,7 +267,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
           onClose()
         }
       }}
-      className="fixed inset-0 z-50 bg-black/55 dark:bg-black/70 backdrop-blur-3xl px-3 min-[390px]:px-4 pt-8 min-[390px]:pt-10 pb-14 flex flex-col justify-start items-center overflow-y-auto overflow-x-hidden select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 bg-black/40 backdrop-blur-3xl backdrop-saturate-200 p-4 pt-10 flex flex-col justify-start items-center select-none overflow-y-auto overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
     >
       {/* 1. Botão de Fechar no Canto Superior Direito com bom respiro */}
       <button
@@ -610,8 +610,8 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 </button>
               </div>
 
-              {/* Lado Direito: Sliders Verticais Mais Esguios e Arredondados (rounded-full) */}
-              <div className="flex items-center justify-center gap-3.5 min-[400px]:gap-4 h-[162px] min-[400px]:h-[170px] w-full mx-auto">
+              {/* Lado Direito: Sliders Verticais Mais Robustos (w-[76px] h-[160px] rounded-[34px]) */}
+              <div className="flex items-center justify-center gap-2.5 min-[400px]:gap-3 h-[160px] w-full mx-auto">
                 {/* Slider de Brilho: Ícone Sun fino (strokeWidth=1.5) acompanhando o nível de preenchimento */}
                 <div
                   onPointerDownCapture={(e) => {
@@ -635,13 +635,12 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   onPointerCancelCapture={() => {
                     isDraggingBrightnessRef.current = false
                   }}
-                  style={liquidGlass}
-                  className="apple-liquid-glass relative w-[50px] min-[400px]:w-[54px] h-[162px] min-[400px]:h-[170px] rounded-full overflow-hidden flex flex-col justify-end select-none shadow-xl cursor-pointer"
+                  className="relative w-[76px] h-[160px] rounded-[34px] bg-white/[0.12] backdrop-blur-2xl border border-white/15 overflow-hidden flex flex-col justify-end select-none shadow-lg cursor-pointer"
                   title="Brilho da Tela"
                 >
                   {/* Preenchimento inferior */}
                   <div
-                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-full"
+                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-[34px]"
                     style={{ height: `${brightness}%` }}
                   />
                   {/* Ícone Sun mais fino (strokeWidth=1.5) acompanhando dinamicamente o nível de preenchimento */}
@@ -691,13 +690,12 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   onPointerCancelCapture={() => {
                     isDraggingVolumeRef.current = false
                   }}
-                  style={liquidGlass}
-                  className="apple-liquid-glass relative w-[50px] min-[400px]:w-[54px] h-[162px] min-[400px]:h-[170px] rounded-full overflow-hidden flex flex-col justify-end select-none shadow-xl cursor-pointer"
+                  className="relative w-[76px] h-[160px] rounded-[34px] bg-white/[0.12] backdrop-blur-2xl border border-white/15 overflow-hidden flex flex-col justify-end select-none shadow-lg cursor-pointer"
                   title="Volume do Som"
                 >
                   {/* Preenchimento inferior */}
                   <div
-                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-full"
+                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-[34px]"
                     style={{ height: `${volume}%` }}
                   />
                   {/* Ícone estilo Speaker Fill minimalista (fill="currentColor") acompanhando dinamicamente o nível */}

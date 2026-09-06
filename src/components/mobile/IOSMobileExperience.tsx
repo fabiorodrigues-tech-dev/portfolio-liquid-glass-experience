@@ -1167,17 +1167,19 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         <button
           type="button"
           onClick={() => handleTabSelect('inicio')}
-          className="w-[54px] h-[54px] sm:w-[56px] sm:h-[56px] relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
+          className="relative flex flex-col items-center justify-center cursor-pointer"
           title="Início (Safari)"
           aria-label="Início"
         >
-          <img
-            src={isDark ? '/icons/dock/safari-dark.png' : '/icons/dock/safari-light.png'}
-            alt="Safari"
-            className="w-full h-full rounded-[14px] object-cover shadow-md transition-all select-none pointer-events-none"
-            loading="eager"
-            decoding="async"
-          />
+          <div className="w-[52px] h-[52px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
+            <img
+              src={isDark ? '/icons/dock/safari-dark.png' : '/icons/dock/safari-light.png'}
+              alt="Safari"
+              className="w-full h-full object-contain select-none pointer-events-none"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
           {activeTab === 'inicio' && (
             <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
@@ -1187,17 +1189,19 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         <button
           type="button"
           onClick={() => handleTabSelect('projetos')}
-          className="w-[54px] h-[54px] sm:w-[56px] sm:h-[56px] relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
+          className="relative flex flex-col items-center justify-center cursor-pointer"
           title="Projetos (Arquivos)"
           aria-label="Projetos"
         >
-          <img
-            src={isDark ? '/icons/dock/files-dark.png' : '/icons/dock/files-light.png'}
-            alt="Arquivos"
-            className="w-full h-full rounded-[14px] object-cover shadow-md transition-all select-none pointer-events-none"
-            loading="eager"
-            decoding="async"
-          />
+          <div className="w-[52px] h-[52px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
+            <img
+              src={isDark ? '/icons/dock/files-dark.png' : '/icons/dock/files-light.png'}
+              alt="Arquivos"
+              className="w-full h-full object-contain select-none pointer-events-none"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
           {activeTab === 'projetos' && (
             <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
@@ -1207,17 +1211,19 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         <button
           type="button"
           onClick={() => handleTabSelect('sobre')}
-          className="w-[54px] h-[54px] sm:w-[56px] sm:h-[56px] relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
+          className="relative flex flex-col items-center justify-center cursor-pointer"
           title="Sobre Mim (Contatos)"
           aria-label="Sobre Mim"
         >
-          <img
-            src={isDark ? '/icons/dock/contacts-dark.png' : '/icons/dock/contacts-light.png'}
-            alt="Contatos"
-            className="w-full h-full rounded-[14px] object-cover shadow-md transition-all select-none pointer-events-none"
-            loading="eager"
-            decoding="async"
-          />
+          <div className="w-[52px] h-[52px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
+            <img
+              src={isDark ? '/icons/dock/contacts-dark.png' : '/icons/dock/contacts-light.png'}
+              alt="Sobre"
+              className="w-full h-full object-contain scale-[0.91] transition-all select-none pointer-events-none"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
           {activeTab === 'sobre' && (
             <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
@@ -1227,17 +1233,19 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         <button
           type="button"
           onClick={() => handleTabSelect('habilidades')}
-          className="w-[54px] h-[54px] sm:w-[56px] sm:h-[56px] relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
+          className="relative flex flex-col items-center justify-center cursor-pointer"
           title="Habilidades & Stack (Ajustes)"
           aria-label="Habilidades"
         >
-          <img
-            src={isDark ? '/icons/dock/settings-dark.png' : '/icons/dock/settings-light.png'}
-            alt="Ajustes"
-            className="w-full h-full rounded-[14px] object-cover shadow-md transition-all select-none pointer-events-none"
-            loading="eager"
-            decoding="async"
-          />
+          <div className="w-[52px] h-[52px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
+            <img
+              src={isDark ? '/icons/dock/settings-dark.png' : '/icons/dock/settings-light.png'}
+              alt="Ajustes"
+              className="w-full h-full object-contain select-none pointer-events-none"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
           {activeTab === 'habilidades' && (
             <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
@@ -1247,17 +1255,19 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         <button
           type="button"
           onClick={() => handleTabSelect('contato')}
-          className="w-[54px] h-[54px] sm:w-[56px] sm:h-[56px] relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
+          className="relative flex flex-col items-center justify-center cursor-pointer"
           title="Contato (Mensagens)"
           aria-label="Contato"
         >
-          <img
-            src={isDark ? '/icons/dock/messages-dark.png' : '/icons/dock/messages-light.png'}
-            alt="Mensagens"
-            className="w-full h-full rounded-[14px] object-cover shadow-md transition-all select-none pointer-events-none"
-            loading="eager"
-            decoding="async"
-          />
+          <div className="w-[52px] h-[52px] rounded-[14px] overflow-hidden flex items-center justify-center shadow-md select-none transition-transform active:scale-90">
+            <img
+              src={isDark ? '/icons/dock/messages-dark.png' : '/icons/dock/messages-light.png'}
+              alt="Mensagens"
+              className="w-full h-full object-contain select-none pointer-events-none"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
           {activeTab === 'contato' && (
             <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}

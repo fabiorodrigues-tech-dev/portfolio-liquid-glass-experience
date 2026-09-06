@@ -1,3 +1,4 @@
+// Dock macOS Desktop (Nota: A Dock oficial móvel com Safari, Files, Contatos, Settings e Messages está em IOSMobileExperience.tsx)
 import React from 'react'
 import {
   Terminal,

@@ -311,20 +311,54 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
           </div>
         </div>
 
-        {/* Ambient Music Player (YouTube ID: 2OVsnsqBpp8) */}
+        {/* Ambient Music Player (YouTube ID: NJf4A2gjZok) */}
         <div className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl p-2.5 mb-2 space-y-2">
           {/* Player Header & Controls */}
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2.5 overflow-hidden">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-500 via-pink-500 to-rose-500 text-white flex items-center justify-center shrink-0 shadow-sm">
-                <Music className={`w-4 h-4 ${isPlayingMusic ? 'animate-bounce' : ''}`} />
+            <div className="flex items-center space-x-2.5 overflow-hidden flex-1 min-w-0 pr-2">
+              {/* Capa com gradiente roxo/azul e animação ativa */}
+              <div
+                className={`relative w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-blue-500 flex items-center justify-center shrink-0 overflow-hidden border transition-all duration-700 ${
+                  isPlayingMusic
+                    ? 'scale-[1.05] shadow-[0_0_22px_rgba(147,51,234,0.55)] border-white/30'
+                    : 'scale-100 shadow-sm border-white/10'
+                }`}
+              >
+                <Music
+                  className={`w-4 h-4 text-white/20 absolute transition-all duration-500 ${
+                    isPlayingMusic ? 'scale-110 opacity-30' : 'opacity-60'
+                  }`}
+                />
+                {/* Barras de equalizador animadas no centro da capa */}
+                <div className="relative z-10 flex items-end gap-0.5 h-4 select-none pointer-events-none">
+                  <span
+                    className={`w-0.5 bg-white rounded-full transition-all duration-300 ${
+                      isPlayingMusic ? 'h-3 animate-[pulse_0.6s_ease-in-out_infinite]' : 'h-1'
+                    }`}
+                  />
+                  <span
+                    className={`w-0.5 bg-white rounded-full transition-all duration-300 delay-100 ${
+                      isPlayingMusic ? 'h-4 animate-[pulse_0.4s_ease-in-out_infinite]' : 'h-1.5'
+                    }`}
+                  />
+                  <span
+                    className={`w-0.5 bg-white rounded-full transition-all duration-300 delay-200 ${
+                      isPlayingMusic ? 'h-2.5 animate-[pulse_0.7s_ease-in-out_infinite]' : 'h-1'
+                    }`}
+                  />
+                  <span
+                    className={`w-0.5 bg-white rounded-full transition-all duration-300 delay-150 ${
+                      isPlayingMusic ? 'h-3.5 animate-[pulse_0.5s_ease-in-out_infinite]' : 'h-1.5'
+                    }`}
+                  />
+                </div>
               </div>
-              <div className="overflow-hidden">
+              <div className="overflow-hidden min-w-0">
                 <div className="text-[11.5px] font-bold text-zinc-900 dark:text-white truncate">
-                  Música Ambiente
+                  MIDNIGHT // CHILL PHONK
                 </div>
                 <div className="text-[9.5px] text-zinc-600 dark:text-zinc-400 truncate font-medium">
-                  YouTube • 2OVsnsqBpp8
+                  Nemi FM • Atmospheric Nightdrive
                 </div>
               </div>
             </div>

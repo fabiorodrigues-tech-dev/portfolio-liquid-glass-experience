@@ -54,7 +54,7 @@ export function App() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isFocusMode, setIsFocusMode] = useState(false)
 
-  // YouTube Ambient Audio State (YouTube ID: 2OVsnsqBpp8)
+  // YouTube Ambient Audio State (YouTube ID: NJf4A2gjZok - MIDNIGHT // CHILL PHONK)
   const [isPlayingMusic, setIsPlayingMusic] = useState(false)
   const [soundVolume, setSoundVolume] = useState(70)
   const [isSoundMuted, setIsSoundMuted] = useState(false)

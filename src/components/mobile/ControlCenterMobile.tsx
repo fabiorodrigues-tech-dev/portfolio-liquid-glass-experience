@@ -6,10 +6,6 @@ import {
   Volume1,
   Volume2,
   VolumeX,
-  Play,
-  Pause,
-  SkipForward,
-  SkipBack,
   MapPin,
   Music,
   Radio,
@@ -17,28 +13,85 @@ import {
   ArrowUpRight,
   FolderOpen,
   Wifi,
-  Airplay,
 } from 'lucide-react'
 import { GithubIcon, LinkedinIcon, WhatsAppIcon, InstagramIcon } from '../icons/SocialIcons'
 import type { ThemeMode, AccentColor } from '../../types'
 import { playHapticClick } from '../../lib/soundEffects'
 
-// Ícone Oficial de Bloqueio de Rotação do iOS (Retângulo/tela central com seta curva circular ao redor)
-const OrientationLockIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' }) => (
+// Ícone Oficial de Bloqueio de Rotação do iOS (Cadeado central com seta circular no sentido horário — Conforme print de referência)
+const RotationLockIcon: React.FC<{ className?: string; isLocked?: boolean }> = ({
+  className = 'w-6 h-6',
+  isLocked = false,
+}) => {
+  const c = isLocked ? '#ff3b30' : 'currentColor'
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={{ color: c }}>
+      {/* Seta circular no sentido horário */}
+      <path
+        d="M 13.8 19.8 A 8.2 8.2 0 1 1 20.2 11.8"
+        stroke={c}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <polygon points="17.2,11.2 20.2,14.8 23,11.2" fill={c} />
+      {/* Cadeado centralizado */}
+      <rect x="9" y="11.5" width="6" height="5.2" rx="1.2" fill={c} />
+      <path
+        d="M 10.2 11.5 V 9.6 A 1.8 1.8 0 0 1 13.8 9.6 V 11.5"
+        stroke={c}
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+// Ícone Oficial de Espelhamento de Tela (AirPlay Screen Mirroring — Conforme print de referência)
+const ScreenMirroringIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' }) => (
   <svg
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.6"
+    strokeWidth="1.7"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
   >
-    {/* Retângulo representando a tela */}
-    <rect x="8.5" y="6" width="7" height="12" rx="1.5" />
-    {/* Seta curva circular ao redor */}
-    <path d="M 12 3.2 A 8.8 8.8 0 1 1 5.8 7.2" />
-    <polyline points="2.8 7 5.8 7.2 6.2 4.2" />
+    {/* Tela traseira translúcida */}
+    <path
+      d="M 6.5 14 H 5.5 A 2 2 0 0 1 3.5 12 V 6 A 2 2 0 0 1 5.5 4 H 14.5 A 2 2 0 0 1 16.5 6 V 8"
+      strokeOpacity="0.55"
+    />
+    {/* Tela dianteira destacada */}
+    <rect x="8" y="8" width="12.5" height="10" rx="2.4" />
+  </svg>
+)
+
+// Ícones Oficiais de Reprodução de Mídia do iOS (Conforme print de referência Apple)
+const AppleBackwardIcon: React.FC<{ className?: string }> = ({ className = 'w-5 h-5' }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M11 5.5L3.5 12L11 18.5V5.5Z" />
+    <path d="M20.5 5.5L13 12L20.5 18.5V5.5Z" />
+  </svg>
+)
+
+const AppleForwardIcon: React.FC<{ className?: string }> = ({ className = 'w-5 h-5' }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M3.5 5.5L11 12L3.5 18.5V5.5Z" />
+    <path d="M13 5.5L20.5 12L13 18.5V5.5Z" />
+  </svg>
+)
+
+const ApplePlayIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M7 5L19.5 12L7 19V5Z" />
+  </svg>
+)
+
+const ApplePauseIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <rect x="5.5" y="4.5" width="4.2" height="15" rx="1.5" />
+    <rect x="14.3" y="4.5" width="4.2" height="15" rx="1.5" />
   </svg>
 )
 
@@ -287,7 +340,13 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
       </div>
 
       {/* 3. Grid em Escala Autêntica iOS 26 (~92-94% da largura da tela) */}
-      <div className="w-full max-w-[395px] pr-8 min-[400px]:pr-9 mx-auto flex flex-col gap-3.5 min-[400px]:gap-4">
+      <div
+        className={`w-full max-w-[395px] mx-auto flex flex-col ${
+          activeTab === 'connections'
+            ? 'my-auto justify-center items-center'
+            : 'pr-8 min-[400px]:pr-9 gap-3.5 min-[400px]:gap-4'
+        }`}
+      >
         {/* ========================================================================= */}
         {/* PÁGINA 1: ✦ CONTROLES PRINCIPAIS (TELA PRINCIPAL)                         */}
         {/* ========================================================================= */}
@@ -370,15 +429,43 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               >
                 {/* Topo: Capa e Título */}
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center shadow-md shrink-0 relative overflow-hidden">
-                    <Music className={`w-5 h-5 text-white ${isPlayingMusic ? 'animate-pulse' : ''}`} />
+                  <div
+                    className={`relative w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-blue-500 flex items-center justify-center shrink-0 overflow-hidden border transition-all duration-700 ${
+                      isPlayingMusic
+                        ? 'scale-[1.05] shadow-[0_0_20px_rgba(147,51,234,0.6)] border-white/40'
+                        : 'scale-100 shadow-md border-white/10'
+                    }`}
+                  >
+                    {/* Barras de equalizador compactas dentro da capa */}
+                    <div className="flex items-end gap-0.5 h-4 select-none pointer-events-none">
+                      <span
+                        className={`w-0.5 bg-white rounded-full transition-all duration-300 ${
+                          isPlayingMusic ? 'h-3 animate-[pulse_0.6s_ease-in-out_infinite]' : 'h-1'
+                        }`}
+                      />
+                      <span
+                        className={`w-0.5 bg-white rounded-full transition-all duration-300 delay-100 ${
+                          isPlayingMusic ? 'h-4 animate-[pulse_0.4s_ease-in-out_infinite]' : 'h-1.5'
+                        }`}
+                      />
+                      <span
+                        className={`w-0.5 bg-white rounded-full transition-all duration-300 delay-200 ${
+                          isPlayingMusic ? 'h-2.5 animate-[pulse_0.7s_ease-in-out_infinite]' : 'h-1'
+                        }`}
+                      />
+                      <span
+                        className={`w-0.5 bg-white rounded-full transition-all duration-300 delay-150 ${
+                          isPlayingMusic ? 'h-3.5 animate-[pulse_0.5s_ease-in-out_infinite]' : 'h-1.5'
+                        }`}
+                      />
+                    </div>
                   </div>
                   <div className="overflow-hidden min-w-0 flex-1">
                     <span className="text-[10px] font-medium uppercase tracking-wider text-white/60 block truncate">
-                      Música Ambiente
+                      Nemi FM • Atmospheric Nightdrive
                     </span>
                     <h3 className="text-xs min-[400px]:text-sm font-bold text-white truncate mt-0.5">
-                      Lofi Chillout
+                      MIDNIGHT // CHILL PHONK
                     </h3>
                   </div>
                 </div>
@@ -392,18 +479,19 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   <span className={`w-1 bg-white/70 rounded-full transition-all ${isPlayingMusic ? 'h-3.5 animate-pulse delay-200' : 'h-1.5'}`} />
                 </div>
 
-                {/* Controles de Reprodução */}
-                <div className="flex items-center justify-between px-1">
+                {/* Controles Oficiais de Reprodução do iOS (Conforme print de referência) */}
+                <div className="flex items-center justify-between px-2 pt-0.5">
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation()
                       prevTrack()
                     }}
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-white/75 hover:text-white active:scale-90 transition-transform cursor-pointer"
-                    title="Retroceder"
+                    className="w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white active:scale-90 transition-all cursor-pointer"
+                    title="Retroceder (Voltar)"
+                    aria-label="Voltar"
                   >
-                    <SkipBack className="w-4 h-4 fill-current" />
+                    <AppleBackwardIcon className="w-5 h-5" />
                   </button>
 
                   <button
@@ -413,13 +501,14 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       triggerHaptic()
                       onTogglePlayMusic()
                     }}
-                    className="w-9 h-9 rounded-full bg-white text-black flex items-center justify-center active:scale-90 transition-transform cursor-pointer shadow-md"
+                    className="w-9 h-9 rounded-full flex items-center justify-center text-white hover:scale-110 active:scale-90 transition-all cursor-pointer"
                     title={isPlayingMusic ? 'Pausar' : 'Reproduzir'}
+                    aria-label={isPlayingMusic ? 'Pausar' : 'Reproduzir'}
                   >
                     {isPlayingMusic ? (
-                      <Pause className="w-4 h-4 fill-black text-black" />
+                      <ApplePauseIcon className="w-6 h-6" />
                     ) : (
-                      <Play className="w-4 h-4 fill-black text-black ml-0.5" />
+                      <ApplePlayIcon className="w-6 h-6 ml-0.5" />
                     )}
                   </button>
 
@@ -429,10 +518,11 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       e.stopPropagation()
                       nextTrack()
                     }}
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-white/75 hover:text-white active:scale-90 transition-transform cursor-pointer"
-                    title="Avançar"
+                    className="w-8 h-8 rounded-full flex items-center justify-center text-white/50 hover:text-white active:scale-90 transition-all cursor-pointer"
+                    title="Avançar (Next)"
+                    aria-label="Avançar"
                   >
-                    <SkipForward className="w-4 h-4 fill-current" />
+                    <AppleForwardIcon className="w-5 h-5" />
                   </button>
                 </div>
               </div>
@@ -442,28 +532,32 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
             <div className="w-full grid grid-cols-2 gap-3.5 min-[400px]:gap-4 h-[162px] min-[400px]:h-[170px] mx-auto">
               {/* Lado Esquerdo: 2 Quadrados Superiores + Pílula Horizontal de Foco */}
               <div className="flex flex-col justify-between h-[162px] min-[400px]:h-[170px]">
-                {/* 2 Quadrados Superiores (Bloqueio de Rotação + Espelhar Tela) */}
-                <div className="grid grid-cols-2 gap-3 h-[74px] min-[400px]:h-[78px]">
-                  {/* Botão: Bloqueio de Orientação Oficial (Tela com Seta Curva Circular) */}
+                {/* 2 Botões Circulares Superiores (Bloqueio de Rotação + Espelhar Tela) */}
+                <div className="grid grid-cols-2 gap-3.5 min-[400px]:gap-4 place-items-center h-[74px] min-[400px]:h-[78px]">
+                  {/* Botão: Bloqueio de Orientação Oficial (Cadeado com Seta Curva Circular — Destaque quando ativo) */}
                   <button
                     type="button"
                     onClick={() => {
                       triggerHaptic()
                       setIsOrientationLocked((prev) => !prev)
                     }}
-                    style={liquidGlass}
-                    className={`apple-liquid-glass rounded-[22px] min-[400px]:rounded-[24px] flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-md ${
+                    style={
                       isOrientationLocked
-                        ? 'text-red-400 bg-red-500/20 border-red-400/30'
-                        : 'text-white/85 hover:text-white'
+                        ? { backgroundColor: '#ffffff', color: '#ff3b30' }
+                        : liquidGlass
+                    }
+                    className={`w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-md ${
+                      isOrientationLocked
+                        ? 'bg-white text-[#ff3b30] border border-white/40 shadow-[0_2px_14px_rgba(255,59,48,0.35)]'
+                        : 'apple-liquid-glass text-white/85 hover:text-white'
                     }`}
                     title={isOrientationLocked ? 'Bloqueio de Orientação: Ativado' : 'Bloqueio de Orientação: Desativado'}
                     aria-label="Bloqueio de Orientação"
                   >
-                    <OrientationLockIcon className="w-6 h-6" />
+                    <RotationLockIcon className="w-6 h-6" isLocked={isOrientationLocked} />
                   </button>
 
-                  {/* Botão: AirPlay Oficial (lucide-react Airplay) */}
+                  {/* Botão: AirPlay Oficial (Espelhar Tela — Conforme print de referência) */}
                   <button
                     type="button"
                     onClick={() => {
@@ -471,11 +565,11 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       setActiveTab('media')
                     }}
                     style={liquidGlass}
-                    className="apple-liquid-glass rounded-[22px] min-[400px]:rounded-[24px] flex items-center justify-center text-white/85 hover:text-white cursor-pointer active:scale-95 transition-all duration-200 shadow-md"
+                    className="apple-liquid-glass w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center text-white/85 hover:text-white cursor-pointer active:scale-95 transition-all duration-200 shadow-md"
                     title="Espelhar Tela (AirPlay)"
                     aria-label="Espelhar Tela"
                   >
-                    <Airplay className="w-6 h-6" strokeWidth={1.6} />
+                    <ScreenMirroringIcon className="w-6 h-6" />
                   </button>
                 </div>
 
@@ -515,8 +609,8 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 </button>
               </div>
 
-              {/* Lado Direito: Sliders Verticais (Aspect Ratio alongado ~2.7:1 - w-[60-66px] x h-[162-170px]) */}
-              <div className="flex items-center justify-between gap-3 h-[162px] min-[400px]:h-[170px] w-full">
+              {/* Lado Direito: Sliders Verticais Mais Esguios e Arredondados (rounded-full) */}
+              <div className="flex items-center justify-center gap-3.5 min-[400px]:gap-4 h-[162px] min-[400px]:h-[170px] w-full mx-auto">
                 {/* Slider de Brilho: Ícone Sun fino (strokeWidth=1.5) acompanhando o nível de preenchimento */}
                 <div
                   onPointerDownCapture={(e) => {
@@ -541,22 +635,22 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     isDraggingBrightnessRef.current = false
                   }}
                   style={liquidGlass}
-                  className="apple-liquid-glass relative flex-1 h-[162px] min-[400px]:h-[170px] rounded-[32px] overflow-hidden flex flex-col justify-end select-none shadow-xl cursor-pointer"
+                  className="apple-liquid-glass relative w-[50px] min-[400px]:w-[54px] h-[162px] min-[400px]:h-[170px] rounded-full overflow-hidden flex flex-col justify-end select-none shadow-xl cursor-pointer"
                   title="Brilho da Tela"
                 >
                   {/* Preenchimento inferior */}
                   <div
-                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-[32px]"
+                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-full"
                     style={{ height: `${brightness}%` }}
                   />
                   {/* Ícone Sun mais fino (strokeWidth=1.5) acompanhando dinamicamente o nível de preenchimento */}
                   <div
                     style={{
-                      bottom: `clamp(14px, calc(${brightness}% - 14px), calc(100% - 40px))`,
+                      bottom: `clamp(14px, calc(${brightness}% - 12px), calc(100% - 36px))`,
                     }}
                     className="absolute inset-x-0 flex items-center justify-center pointer-events-none mix-blend-difference text-white transition-all duration-75"
                   >
-                    <Sun className="w-6 h-6 stroke-[1.5]" />
+                    <Sun className="w-5 h-5 stroke-[1.5]" />
                   </div>
                   <input
                     type="range"
@@ -597,25 +691,25 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     isDraggingVolumeRef.current = false
                   }}
                   style={liquidGlass}
-                  className="apple-liquid-glass relative flex-1 h-[162px] min-[400px]:h-[170px] rounded-[32px] overflow-hidden flex flex-col justify-end select-none shadow-xl cursor-pointer"
+                  className="apple-liquid-glass relative w-[50px] min-[400px]:w-[54px] h-[162px] min-[400px]:h-[170px] rounded-full overflow-hidden flex flex-col justify-end select-none shadow-xl cursor-pointer"
                   title="Volume do Som"
                 >
                   {/* Preenchimento inferior */}
                   <div
-                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-[32px]"
+                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-full"
                     style={{ height: `${volume}%` }}
                   />
                   {/* Ícone estilo Speaker Fill minimalista (fill="currentColor") acompanhando dinamicamente o nível */}
                   <div
                     style={{
-                      bottom: `clamp(14px, calc(${volume}% - 14px), calc(100% - 40px))`,
+                      bottom: `clamp(14px, calc(${volume}% - 12px), calc(100% - 36px))`,
                     }}
                     className="absolute inset-x-0 flex items-center justify-center pointer-events-none mix-blend-difference text-white transition-all duration-75"
                   >
                     {volume === 0 ? (
-                      <VolumeX className="w-6 h-6 stroke-[1.5]" fill="currentColor" />
+                      <VolumeX className="w-5 h-5 stroke-[1.5]" fill="currentColor" />
                     ) : (
-                      <Volume className="w-6 h-6 stroke-[1.5]" fill="currentColor" />
+                      <Volume className="w-5 h-5 stroke-[1.5]" fill="currentColor" />
                     )}
                   </div>
                   <input
@@ -696,17 +790,51 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         {/* PÁGINA 2: 🎵 PLAYER DE ÁUDIO EXPANDIDO (MÍDIA - Conforme print 616cff)     */}
         {/* ========================================================================= */}
         {activeTab === 'media' && (
-          <div className="w-[calc(100%-36px)] max-w-[350px] h-[78vh] max-h-[620px] mx-auto rounded-[38px] bg-white/[0.12] backdrop-blur-3xl border border-white/20 p-6 shadow-2xl flex flex-col justify-between select-none text-white animate-in fade-in zoom-in-95 duration-200">
-            {/* 1. Arte de Capa Grande Quadrada */}
-            <div className="w-full aspect-square rounded-[26px] bg-gradient-to-tr from-purple-600 via-indigo-600 to-blue-500 shadow-xl flex items-center justify-center overflow-hidden border border-white/10 mb-3">
-              <Music className={`w-16 h-16 text-white/80 ${isPlayingMusic ? 'animate-pulse' : ''}`} />
+          <div className="w-full max-w-[340px] min-[400px]:max-w-[348px] h-[72vh] max-h-[570px] mx-auto translate-x-2 min-[400px]:translate-x-2.5 mt-12 min-[400px]:mt-16 rounded-[38px] bg-white/[0.12] backdrop-blur-3xl border border-white/20 p-6 shadow-2xl flex flex-col justify-between select-none text-white animate-in fade-in zoom-in-95 duration-200">
+            {/* 1. Arte de Capa Grande Quadrada com Animação Ativa */}
+            <div
+              className={`relative w-full aspect-square rounded-[24px] bg-gradient-to-tr from-purple-600 via-indigo-600 to-blue-500 shadow-xl flex items-center justify-center overflow-hidden border transition-all duration-700 mb-3 ${
+                isPlayingMusic
+                  ? 'scale-[1.02] shadow-[0_0_45px_rgba(147,51,234,0.5)] border-white/30'
+                  : 'scale-100 shadow-lg border-white/10'
+              }`}
+            >
+              <Music
+                className={`w-16 h-16 text-white/25 absolute transition-all duration-500 ${
+                  isPlayingMusic ? 'scale-110 opacity-30' : 'opacity-60'
+                }`}
+              />
+
+              {/* Barras de Equalizador da Apple no Centro da Capa */}
+              <div className="relative z-10 flex items-end gap-1.5 h-10 select-none pointer-events-none">
+                <span
+                  className={`w-1.5 bg-white rounded-full transition-all duration-300 ${
+                    isPlayingMusic ? 'h-8 animate-[pulse_0.6s_ease-in-out_infinite]' : 'h-2'
+                  }`}
+                />
+                <span
+                  className={`w-1.5 bg-white rounded-full transition-all duration-300 delay-100 ${
+                    isPlayingMusic ? 'h-10 animate-[pulse_0.4s_ease-in-out_infinite]' : 'h-3'
+                  }`}
+                />
+                <span
+                  className={`w-1.5 bg-white rounded-full transition-all duration-300 delay-200 ${
+                    isPlayingMusic ? 'h-6 animate-[pulse_0.7s_ease-in-out_infinite]' : 'h-2'
+                  }`}
+                />
+                <span
+                  className={`w-1.5 bg-white rounded-full transition-all duration-300 delay-150 ${
+                    isPlayingMusic ? 'h-9 animate-[pulse_0.5s_ease-in-out_infinite]' : 'h-2.5'
+                  }`}
+                />
+              </div>
             </div>
 
             {/* 2. Informações da Faixa */}
             <div className="flex items-center justify-between">
               <div className="truncate pr-2">
-                <h3 className="font-bold text-base truncate">Lofi Chillout</h3>
-                <p className="text-xs text-white/60 truncate">Fábio Rodrigues • Trilha Sonora</p>
+                <h3 className="font-bold text-base truncate">MIDNIGHT // CHILL PHONK</h3>
+                <p className="text-xs text-white/60 truncate">Nemi FM • Atmospheric Nightdrive</p>
               </div>
               <span className="text-white/40 text-lg cursor-pointer px-1">•••</span>
             </div>
@@ -722,16 +850,16 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               </div>
             </div>
 
-            {/* 4. Controles Grandes de Reprodução */}
-            <div className="flex items-center justify-center gap-9 my-1">
+            {/* 4. Controles Oficiais de Reprodução do iOS (Voltar, Play/Pause Centralizado, Avançar) */}
+            <div className="flex items-center justify-center gap-10 my-1">
               <button
                 type="button"
                 onClick={prevTrack}
-                className="text-white/80 hover:text-white active:scale-90 transition-transform cursor-pointer"
-                title="Retroceder"
-                aria-label="Retroceder"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-white/70 hover:text-white active:scale-90 transition-all cursor-pointer"
+                title="Voltar (Previous)"
+                aria-label="Voltar"
               >
-                <SkipBack className="w-7 h-7 fill-current" />
+                <AppleBackwardIcon className="w-7 h-7" />
               </button>
 
               <button
@@ -740,25 +868,25 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   triggerHaptic()
                   onTogglePlayMusic()
                 }}
-                className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 active:scale-90 transition-all shadow-lg cursor-pointer"
+                className="w-14 h-14 rounded-full flex items-center justify-center text-white hover:scale-110 active:scale-90 transition-all cursor-pointer"
                 title={isPlayingMusic ? 'Pausar' : 'Reproduzir'}
                 aria-label={isPlayingMusic ? 'Pausar' : 'Reproduzir'}
               >
                 {isPlayingMusic ? (
-                  <Pause className="w-6 h-6 fill-current text-black" />
+                  <ApplePauseIcon className="w-9 h-9" />
                 ) : (
-                  <Play className="w-6 h-6 fill-current text-black ml-0.5" />
+                  <ApplePlayIcon className="w-9 h-9 ml-1" />
                 )}
               </button>
 
               <button
                 type="button"
                 onClick={nextTrack}
-                className="text-white/80 hover:text-white active:scale-90 transition-transform cursor-pointer"
-                title="Avançar"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-white/70 hover:text-white active:scale-90 transition-all cursor-pointer"
+                title="Avançar (Next)"
                 aria-label="Avançar"
               >
-                <SkipForward className="w-7 h-7 fill-current" />
+                <AppleForwardIcon className="w-7 h-7" />
               </button>
             </div>
 
@@ -792,7 +920,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         {/* PÁGINA 3: 📡 CONEXÕES E LINKS (DRIVE, GITHUB, LINKEDIN, INSTAGRAM, WPP)    */}
         {/* ========================================================================= */}
         {activeTab === 'connections' && (
-          <div className="w-full max-w-[340px] pl-2 pr-14 flex flex-col gap-2.5 mx-auto animate-in fade-in slide-in-from-right-4 duration-300">
+          <div className="w-[85%] max-w-[340px] flex flex-col gap-3 min-[390px]:gap-3.5 mx-auto animate-in fade-in slide-in-from-right-4 duration-300">
             {/* Card Destaque: Google Drive (Portfólios e CVs) */}
             <a
               href="https://drive.google.com/drive/folders/1rl-SPjOi4tisk2tACb2RcKKAmo6OmBrw"
@@ -800,23 +928,23 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               rel="noreferrer"
               onClick={triggerHaptic}
               style={liquidGlass}
-              className="apple-liquid-glass rounded-[22px] border border-white/15 p-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group shadow-lg hover:brightness-110"
+              className="apple-liquid-glass rounded-[22px] border border-white/15 px-4 py-3.5 min-[390px]:py-4 flex items-center justify-between text-white transition-all active:scale-[0.98] group shadow-lg hover:brightness-110"
               title="Acessar Google Drive Oficial com Todos os Portfólios e CVs"
             >
-              <div className="flex items-center space-x-3 overflow-hidden">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 text-white flex items-center justify-center shadow-md shrink-0">
+              <div className="flex items-center space-x-3.5 overflow-hidden">
+                <div className="w-10 h-10 min-[390px]:w-11 min-[390px]:h-11 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 text-white flex items-center justify-center shadow-md shrink-0">
                   <FolderOpen className="w-5 h-5" />
                 </div>
                 <div className="overflow-hidden">
                   <div className="flex items-center space-x-1.5">
-                    <h4 className="text-xs font-bold text-white truncate">
+                    <h4 className="text-xs min-[390px]:text-[13px] font-bold text-white truncate">
                       Google Drive Oficial
                     </h4>
                     <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-amber-400/30 text-amber-200 border border-amber-400/40">
                       CVs
                     </span>
                   </div>
-                  <p className="text-[10px] text-white/70 truncate mt-0.5">
+                  <p className="text-[10px] min-[390px]:text-[11px] text-white/70 truncate mt-0.5">
                     Todos os Portfólios, Cases e Currículos
                   </p>
                 </div>
@@ -831,18 +959,18 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               rel="noreferrer"
               onClick={triggerHaptic}
               style={liquidGlass}
-              className="apple-liquid-glass rounded-[20px] border border-white/15 p-3 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
+              className="apple-liquid-glass rounded-[22px] border border-white/15 px-4 py-3 min-[390px]:py-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
               title="Repositórios GitHub"
             >
-              <div className="flex items-center space-x-3 overflow-hidden">
-                <div className="w-9 h-9 rounded-xl bg-black/40 border border-white/10 flex items-center justify-center text-white shadow-sm shrink-0">
-                  <GithubIcon className="w-4.5 h-4.5 fill-white" />
+              <div className="flex items-center space-x-3.5 overflow-hidden">
+                <div className="w-10 h-10 rounded-xl bg-black/40 border border-white/10 flex items-center justify-center text-white shadow-sm shrink-0">
+                  <GithubIcon className="w-5 h-5 fill-white" />
                 </div>
                 <div className="overflow-hidden">
-                  <h4 className="text-xs font-bold text-white truncate">
+                  <h4 className="text-xs min-[390px]:text-[13px] font-bold text-white truncate">
                     Perfil GitHub
                   </h4>
-                  <p className="text-[10px] text-white/60 truncate font-mono">
+                  <p className="text-[10px] min-[390px]:text-[11px] text-white/60 truncate font-mono mt-0.5">
                     @fabiorodrigues-tech-dev
                   </p>
                 </div>
@@ -857,18 +985,18 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               rel="noreferrer"
               onClick={triggerHaptic}
               style={liquidGlass}
-              className="apple-liquid-glass rounded-[20px] border border-white/15 p-3 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
+              className="apple-liquid-glass rounded-[22px] border border-white/15 px-4 py-3 min-[390px]:py-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
               title="LinkedIn Profissional"
             >
-              <div className="flex items-center space-x-3 overflow-hidden">
-                <div className="w-9 h-9 rounded-xl bg-[#0A66C2] flex items-center justify-center text-white shadow-sm shrink-0">
-                  <LinkedinIcon className="w-4.5 h-4.5 fill-white" />
+              <div className="flex items-center space-x-3.5 overflow-hidden">
+                <div className="w-10 h-10 rounded-xl bg-[#0A66C2] flex items-center justify-center text-white shadow-sm shrink-0">
+                  <LinkedinIcon className="w-5 h-5 fill-white" />
                 </div>
                 <div className="overflow-hidden">
-                  <h4 className="text-xs font-bold text-white truncate">
+                  <h4 className="text-xs min-[390px]:text-[13px] font-bold text-white truncate">
                     Perfil LinkedIn
                   </h4>
-                  <p className="text-[10px] text-white/60 truncate font-mono">
+                  <p className="text-[10px] min-[390px]:text-[11px] text-white/60 truncate font-mono mt-0.5">
                     /in/fabiorodrigues-dev
                   </p>
                 </div>
@@ -883,18 +1011,18 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               rel="noreferrer"
               onClick={triggerHaptic}
               style={liquidGlass}
-              className="apple-liquid-glass rounded-[20px] border border-white/15 p-3 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
+              className="apple-liquid-glass rounded-[22px] border border-white/15 px-4 py-3 min-[390px]:py-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
               title="Instagram Oficial"
             >
-              <div className="flex items-center space-x-3 overflow-hidden">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-yellow-500 via-pink-600 to-purple-700 flex items-center justify-center text-white shadow-sm shrink-0">
-                  <InstagramIcon className="w-4.5 h-4.5" />
+              <div className="flex items-center space-x-3.5 overflow-hidden">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-yellow-500 via-pink-600 to-purple-700 flex items-center justify-center text-white shadow-sm shrink-0">
+                  <InstagramIcon className="w-5 h-5" />
                 </div>
                 <div className="overflow-hidden">
-                  <h4 className="text-xs font-bold text-white truncate">
+                  <h4 className="text-xs min-[390px]:text-[13px] font-bold text-white truncate">
                     Instagram
                   </h4>
-                  <p className="text-[10px] text-white/60 truncate font-mono">
+                  <p className="text-[10px] min-[390px]:text-[11px] text-white/60 truncate font-mono mt-0.5">
                     @f.a.rodrigues
                   </p>
                 </div>
@@ -909,18 +1037,18 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               rel="noreferrer"
               onClick={triggerHaptic}
               style={liquidGlass}
-              className="apple-liquid-glass rounded-[20px] border border-white/15 p-3 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
+              className="apple-liquid-glass rounded-[22px] border border-white/15 px-4 py-3 min-[390px]:py-3.5 flex items-center justify-between text-white transition-all active:scale-[0.98] group hover:brightness-110"
               title="WhatsApp Comercial"
             >
-              <div className="flex items-center space-x-3 overflow-hidden">
-                <div className="w-9 h-9 rounded-xl bg-[#25D366] flex items-center justify-center text-white shadow-sm shrink-0">
-                  <WhatsAppIcon className="w-4.5 h-4.5 fill-white" />
+              <div className="flex items-center space-x-3.5 overflow-hidden">
+                <div className="w-10 h-10 rounded-xl bg-[#25D366] flex items-center justify-center text-white shadow-sm shrink-0">
+                  <WhatsAppIcon className="w-5 h-5 fill-white" />
                 </div>
                 <div className="overflow-hidden">
-                  <h4 className="text-xs font-bold text-white truncate">
+                  <h4 className="text-xs min-[390px]:text-[13px] font-bold text-white truncate">
                     WhatsApp Comercial
                   </h4>
-                  <p className="text-[10px] text-white/60 truncate font-mono">
+                  <p className="text-[10px] min-[390px]:text-[11px] text-white/60 truncate font-mono mt-0.5">
                     +55 (81) 99185-1507
                   </p>
                 </div>

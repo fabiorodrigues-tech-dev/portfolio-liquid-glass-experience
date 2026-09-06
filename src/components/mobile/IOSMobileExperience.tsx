@@ -160,13 +160,18 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
 
   return (
     <div className="relative w-full h-[100dvh] overflow-hidden text-zinc-900 dark:text-white font-sans selection:bg-blue-500 selection:text-white">
-      {/* 1. Wallpaper Dinâmico no Fundo do Mobile (Fim do Fundo Preto Sólido) */}
-      <div className="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
-        {/* Wallpaper adaptativo do iOS (Tahoe Blue/Dark) */}
-        <div className={`w-full h-full transition-all duration-700 ${isDark ? 'bg-gradient-to-b from-[#060814] via-[#0c142c] to-[#04060d]' : 'bg-gradient-to-b from-[#bfe0f8] via-[#e2edfa] to-[#f4f7fc]'}`} />
-        {/* Ondas orgânicas de cor que vazam através do vidro */}
-        <div className={`absolute -top-24 -left-20 w-96 h-96 rounded-full blur-[110px] pointer-events-none transition-colors duration-700 ${isDark ? 'bg-blue-600/30' : 'bg-sky-400/40'}`} />
-        <div className={`absolute top-1/3 -right-20 w-80 h-80 rounded-full blur-[110px] pointer-events-none transition-colors duration-700 ${isDark ? 'bg-indigo-700/25' : 'bg-blue-300/45'}`} />
+      {/* 1. Wallpaper Dinâmico no Fundo do Mobile */}
+      <div className="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none select-none">
+        {/* Wallpaper Oficial do iOS 26 adaptativo */}
+        <img
+          src={isDark ? "/wallpapers/ios26-dark.jpeg" : "/wallpapers/ios26-light.jpeg"}
+          alt="iOS 26 Wallpaper"
+          className="w-full h-full object-cover transition-opacity duration-700"
+          loading="eager"
+          decoding="async"
+        />
+        {/* Película de refração óptica para dar contraste ao Liquid Glass */}
+        <div className={`absolute inset-0 transition-colors duration-700 ${isDark ? 'bg-black/35 backdrop-blur-[1px]' : 'bg-white/10 backdrop-blur-[1px]'}`} />
       </div>
 
       {/* ========================================================================= */}

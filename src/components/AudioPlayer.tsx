@@ -183,8 +183,8 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
       <iframe
         id="youtube-audio-iframe"
         ref={iframeRef}
-        title="macOS Ambient Music"
-        src="https://www.youtube-nocookie.com/embed/2OVsnsqBpp8?enablejsapi=1&version=3&loop=1&playlist=2OVsnsqBpp8&controls=0&playsinline=1&modestbranding=1"
+        title="macOS Ambient Music - MIDNIGHT // CHILL PHONK"
+        src="https://www.youtube-nocookie.com/embed/NJf4A2gjZok?enablejsapi=1&version=3&loop=1&playlist=NJf4A2gjZok&controls=0&playsinline=1&modestbranding=1"
         width="200"
         height="200"
         allow="autoplay; encrypted-media"

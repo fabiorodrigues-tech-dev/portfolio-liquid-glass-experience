@@ -6,8 +6,6 @@ import {
   VolumeX,
   Palette,
   Check,
-  Eye,
-  EyeOff,
   Sparkles,
   Layers,
   Play,
@@ -167,11 +165,15 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
                     : 'bg-black/10 dark:bg-white/10 text-zinc-600 dark:text-zinc-400'
                 }`}
               >
-                {isFocusMode ? (
-                  <EyeOff className="w-3.5 h-3.5" />
-                ) : (
-                  <Eye className="w-3.5 h-3.5" />
-                )}
+                {/* Ícone oficial da Lua do modo Foco (idêntico à versão mobile) */}
+                <Moon
+                  className={`w-3.5 h-3.5 rotate-45 shrink-0 transition-transform ${
+                    isFocusMode ? 'scale-105' : ''
+                  }`}
+                  fill={isFocusMode ? 'white' : 'currentColor'}
+                  stroke="none"
+                  strokeWidth={0}
+                />
               </div>
               <div className="leading-tight overflow-hidden">
                 <div className="text-[11px] font-bold text-zinc-900 dark:text-white truncate">

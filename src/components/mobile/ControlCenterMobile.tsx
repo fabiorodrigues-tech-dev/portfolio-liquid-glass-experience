@@ -118,12 +118,12 @@ interface ControlCenterMobileProps {
 
 type ActiveTab = 'main' | 'media' | 'connections'
 
-// Especificação técnica Liquid Glass fiel ao iOS: blur(20px) saturate(180%)
+// Especificação técnica Liquid Glass fiel ao iOS: blur(30px) saturate(180%)
 const getLiquidGlassStyle = (isDark: boolean): React.CSSProperties => ({
-  backgroundColor: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.12)',
-  backdropFilter: 'blur(20px) saturate(180%)',
-  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-  border: '1px solid rgba(255, 255, 255, 0.20)',
+  backgroundColor: isDark ? 'rgba(12, 14, 23, 0.45)' : 'rgba(255, 255, 255, 0.45)',
+  backdropFilter: 'blur(30px) saturate(180%)',
+  WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+  border: isDark ? '1px solid rgba(255, 255, 255, 0.15)' : '1px solid rgba(255, 255, 255, 0.30)',
   boxShadow: 'inset 0 1px 1px 0 rgba(255, 255, 255, 0.25), 0 8px 32px rgba(0, 0, 0, 0.25)',
   transition: 'all 250ms cubic-bezier(0.16, 1, 0.3, 1)',
 })
@@ -791,7 +791,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         {/* PÁGINA 2: 🎵 PLAYER DE ÁUDIO EXPANDIDO (MÍDIA - Conforme print 616cff)     */}
         {/* ========================================================================= */}
         {activeTab === 'media' && (
-          <div className="w-full max-w-[340px] min-[400px]:max-w-[348px] h-[72vh] max-h-[570px] mx-auto translate-x-2 min-[400px]:translate-x-2.5 mt-12 min-[400px]:mt-16 rounded-[38px] bg-white/[0.12] backdrop-blur-3xl border border-white/20 p-6 shadow-2xl flex flex-col justify-between select-none text-white animate-in fade-in zoom-in-95 duration-200">
+          <div className="w-full max-w-[340px] min-[400px]:max-w-[348px] h-[72vh] max-h-[570px] mx-auto translate-x-2 min-[400px]:translate-x-2.5 mt-12 min-[400px]:mt-16 rounded-[38px] backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 p-6 shadow-2xl flex flex-col justify-between select-none text-white animate-in fade-in zoom-in-95 duration-200">
             {/* 1. Arte de Capa com Visualizador de Áudio Circular (Tuneform) */}
             <div className="relative w-full aspect-square flex items-center justify-center p-6 my-2">
               {/* 1. O Anel Radial de Barras de Espectro (Fundo) */}

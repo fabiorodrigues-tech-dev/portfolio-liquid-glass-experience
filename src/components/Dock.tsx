@@ -32,7 +32,7 @@ export const Dock: React.FC<DockProps> = ({
         WebkitBackdropFilter: 'blur(30px) saturate(200%)',
       }}
       className={`macos-dock-bar border border-white/25 dark:border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.45)] rounded-[22px] px-3 py-1.5 flex items-center gap-2 select-none fixed bottom-4 left-1/2 -translate-x-1/2 z-40 transition-all
-        max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:translate-x-0 max-md:w-full max-md:rounded-none max-md:border-t max-md:border-x-0 max-md:border-b-0 max-md:border-white/25 max-md:dark:border-white/15 max-md:shadow-[0_-8px_32px_rgba(0,0,0,0.25)] max-md:px-3 max-md:pt-2 max-md:pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] max-md:justify-around
+        max-md:bottom-2 max-md:left-1/2 max-md:-translate-x-1/2 max-md:w-[calc(100%-24px)] max-md:max-w-[380px] max-md:h-[84px] max-md:px-3.5 max-md:rounded-[36px] max-md:bg-white/20 max-md:dark:bg-white/[0.12] max-md:backdrop-blur-3xl max-md:backdrop-saturate-200 max-md:border max-md:border-white/35 max-md:dark:border-white/20 max-md:shadow-[0_16px_40px_rgba(0,0,0,0.35)] max-md:justify-around
         ${
           isFocusMode
             ? 'translate-y-28 opacity-0 pointer-events-none'

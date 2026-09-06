@@ -177,7 +177,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       {/* ========================================================================= */}
       {/* 2. BARRA DE STATUS DO TOPO ULTRALIMPA (SEM DYNAMIC ISLAND - REQUISITO 1)  */}
       {/* ========================================================================= */}
-      <header className="fixed top-0 left-0 right-0 z-40 px-5 pt-3 pb-2 flex items-center justify-between select-none backdrop-blur-2xl backdrop-saturate-180 bg-white/40 dark:bg-[#10131d]/45 border-b border-white/60 dark:border-white/10">
+      <header className="fixed top-0 left-0 right-0 z-40 px-5 pt-3 pb-2 flex items-center justify-between select-none backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border-b border-white/30 dark:border-white/15">
         {/* Esquerda: Relógio em tempo real ("19:30") */}
         <div className="flex items-center">
           <span className="font-semibold text-sm tracking-tight text-[#09090b] dark:text-white">
@@ -203,11 +203,11 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       </header>
 
       {/* ========================================================================= */}
-      {/* 3. NAVEGAÇÃO POR ABAS EM TELA CHEIA (PADDING OTIMIZADO: pb-20)            */}
+      {/* 3. NAVEGAÇÃO POR ABAS EM TELA CHEIA (PADDING OTIMIZADO: pb-28)            */}
       {/* ========================================================================= */}
       <main
         id="mobile-scroll-container"
-        className="relative z-10 w-full h-full pt-14 pb-20 overflow-y-auto scroll-smooth px-4 space-y-4"
+        className="relative z-10 w-full h-full pt-14 pb-28 overflow-y-auto scroll-smooth px-4 space-y-4"
       >
         {/* ----------------------------------------------------------------------- */}
         {/* ABA 01: INÍCIO (Widgets de Clima, Foto de Perfil & Apresentação)        */}
@@ -217,7 +217,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             {/* Grid Superior de Widgets */}
             <section className="grid grid-cols-2 gap-3">
               {/* Widget 1: Clima (Recife 25°) */}
-              <div className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[24px] p-4 flex flex-col justify-between select-none relative overflow-hidden group">
+              <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[24px] p-4 flex flex-col justify-between select-none relative overflow-hidden group">
                 <div className="flex items-start justify-between">
                   <div>
                     <span className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 uppercase tracking-wider block">
@@ -244,7 +244,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
               {/* Widget 2: Foto de Perfil & Status */}
               <div
                 onClick={() => handleTabSelect('sobre')}
-                className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[24px] p-4 flex flex-col justify-between select-none cursor-pointer active:scale-98 transition-transform relative overflow-hidden"
+                className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[24px] p-4 flex flex-col justify-between select-none cursor-pointer active:scale-98 transition-transform relative overflow-hidden"
               >
                 <div className="flex items-center space-x-2.5">
                   <div className="relative shrink-0">
@@ -279,7 +279,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </section>
 
             {/* Cartão de Apresentação Executiva */}
-            <section className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-4">
+            <section className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-4">
               <div className="flex items-center justify-between">
                 <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-500/15 text-blue-700 dark:text-blue-400 border border-blue-500/30">
                   APRESENTAÇÃO EXECUTIVA
@@ -355,7 +355,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </div>
 
             {/* CARD 1: PROJETO NOVA (Flagship Backend) */}
-            <article className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3.5 relative overflow-hidden">
+            <article className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3.5 relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-500/15 text-blue-700 dark:text-blue-400 border border-blue-500/30">
                   FLAGSHIP BACKEND
@@ -415,7 +415,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </article>
 
             {/* CARD 2: PROJETO SOFIA (Voice AI) */}
-            <article className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3.5 relative overflow-hidden">
+            <article className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3.5 relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-500/15 text-purple-700 dark:text-purple-400 border border-purple-500/30">
                   VOICE AI ASSISTANT
@@ -475,7 +475,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </article>
 
             {/* CARD 3: UNREAL 5.2 — METAHUMAN VIVIAN */}
-            <article className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3.5 relative overflow-hidden">
+            <article className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3.5 relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-cyan-500/15 text-cyan-700 dark:text-cyan-400 border border-cyan-500/30">
                   REAL-TIME 3D
@@ -522,7 +522,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </article>
 
             {/* CARD 4: FUTUREPRINT SP 2026 // INFINIT TECNOLOGIA */}
-            <article className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3.5 relative overflow-hidden">
+            <article className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3.5 relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30">
                   AUDIOVISUAL & B2B
@@ -581,7 +581,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </article>
 
             {/* CARD 5: WOLF AGENCY & PORTFÓLIOS AUDIOVISUAL/MARKETING */}
-            <article className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3.5 relative overflow-hidden">
+            <article className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3.5 relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
                   DIREÇÃO DE MÍDIA & FILMMAKER
@@ -641,7 +641,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </div>
 
             {/* Perfil Header Card */}
-            <div className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3.5">
+            <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3.5">
               <div className="flex items-center space-x-3.5">
                 <div className="relative shrink-0">
                   <img
@@ -672,7 +672,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             {/* SEPARAÇÃO: DEV VS MKT (Requisito Explícito) */}
             <div className="grid grid-cols-1 gap-3">
               {/* Vertente Dev */}
-              <div className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-blue-500/40 dark:border-blue-500/20 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[24px] p-4 space-y-2">
+              <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-blue-500/40 dark:border-blue-500/20 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[24px] p-4 space-y-2">
                 <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400">
                   <Code2 className="w-4 h-4" />
                   <h4 className="text-xs font-bold uppercase tracking-wider text-[#09090b] dark:text-white">
@@ -685,7 +685,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
               </div>
 
               {/* Vertente MKT & Audiovisual */}
-              <div className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-pink-500/40 dark:border-pink-500/20 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[24px] p-4 space-y-2">
+              <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-pink-500/40 dark:border-pink-500/20 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[24px] p-4 space-y-2">
                 <div className="flex items-center space-x-2 text-pink-600 dark:text-pink-400">
                   <TrendingUp className="w-4 h-4" />
                   <h4 className="text-xs font-bold uppercase tracking-wider text-[#09090b] dark:text-white">
@@ -699,7 +699,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </div>
 
             {/* Linha do Tempo Profissional */}
-            <div className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-4">
+            <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-4">
               <h3 className="text-sm font-bold text-[#09090b] dark:text-white uppercase tracking-wider flex items-center gap-2">
                 <Briefcase className="w-4 h-4 text-zinc-500" />
                 Trajetória Profissional
@@ -816,7 +816,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </div>
 
             {/* Bloco 1: Desenvolvimento & Stack Dev */}
-            <div className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3">
+            <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3">
               <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400">
                 <Code2 className="w-4 h-4" />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#09090b] dark:text-white">
@@ -852,7 +852,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </div>
 
             {/* Bloco 2: Audiovisual & Filmmaker */}
-            <div className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3">
+            <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3">
               <div className="flex items-center space-x-2 text-pink-600 dark:text-pink-400">
                 <Video className="w-4 h-4" />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#09090b] dark:text-white">
@@ -884,7 +884,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </div>
 
             {/* Bloco 3: Marketing & Performance */}
-            <div className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3">
+            <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3">
               <div className="flex items-center space-x-2 text-emerald-600 dark:text-emerald-400">
                 <TrendingUp className="w-4 h-4" />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#09090b] dark:text-white">
@@ -914,7 +914,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </div>
 
             {/* Bloco 4: Hardware & Produção Industrial */}
-            <div className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3">
+            <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3">
               <div className="flex items-center space-x-2 text-amber-600 dark:text-amber-400">
                 <Wrench className="w-4 h-4" />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#09090b] dark:text-white">
@@ -966,7 +966,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                 target="_blank"
                 rel="noreferrer"
                 onClick={triggerHaptic}
-                className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-2xl p-3.5 flex items-center justify-between active:scale-98 transition-transform"
+                className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-2xl p-3.5 flex items-center justify-between active:scale-98 transition-transform"
               >
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-xl bg-[#25D366] text-white flex items-center justify-center shadow-sm shrink-0">
@@ -993,7 +993,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                 target="_blank"
                 rel="noreferrer"
                 onClick={triggerHaptic}
-                className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-2xl p-3.5 flex items-center justify-between active:scale-98 transition-transform"
+                className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-2xl p-3.5 flex items-center justify-between active:scale-98 transition-transform"
               >
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-xl bg-[#0A66C2] text-white flex items-center justify-center shadow-sm shrink-0">
@@ -1022,7 +1022,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                 target="_blank"
                 rel="noreferrer"
                 onClick={triggerHaptic}
-                className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-2xl p-3.5 flex items-center justify-between active:scale-98 transition-transform"
+                className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-2xl p-3.5 flex items-center justify-between active:scale-98 transition-transform"
               >
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-xl bg-[#24292e] text-white flex items-center justify-center shadow-sm shrink-0">
@@ -1044,7 +1044,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
               </a>
 
               {/* Canal 4: E-mail Direto */}
-              <div className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-2xl p-3.5 flex items-center justify-between">
+              <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-2xl p-3.5 flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-xl bg-[#EA4335] text-white flex items-center justify-center shadow-sm shrink-0">
                     <Mail className="w-5 h-5" />
@@ -1079,7 +1079,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </div>
 
             {/* Formulário de Mensagem */}
-            <div className="bg-white/50 dark:bg-[#10131d]/45 backdrop-blur-2xl backdrop-saturate-180 border border-white/80 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3">
+            <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-3">
               <h3 className="text-sm font-bold text-[#09090b] dark:text-white">
                 Envie uma Mensagem Direta
               </h3>
@@ -1158,108 +1158,108 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       {/* 4. DOCK INFERIOR EM AUTÊNTICO LIQUID GLASS COM SQUIRCLES DE APPS (iOS)    */}
       {/* ========================================================================= */}
       <nav
-        className={`fixed bottom-2 left-1/2 -translate-x-1/2 z-40 px-3.5 py-2.5 rounded-[30px] bg-white/25 dark:bg-white/[0.14] backdrop-blur-3xl backdrop-saturate-200 border border-white/30 dark:border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.4)] flex items-center gap-3.5 select-none transition-all duration-300 ${
+        className={`fixed bottom-2 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-24px)] max-w-[380px] h-[84px] px-3.5 rounded-[36px] bg-white/20 dark:bg-white/[0.12] backdrop-blur-3xl backdrop-saturate-200 border border-white/35 dark:border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.35)] flex items-center justify-around select-none transition-all duration-300 ${
           isFocusMode ? 'translate-y-28 opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
         }`}
         aria-label="Navegação móvel oficial em Squircles de Apps"
       >
-        {/* 1. Início: App Safari */}
+        {/* 1. Início: Safari */}
         <button
           type="button"
           onClick={() => handleTabSelect('inicio')}
-          className="relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
+          className="w-[54px] h-[54px] sm:w-[56px] sm:h-[56px] relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
           title="Início (Safari)"
           aria-label="Início"
         >
           <img
             src={isDark ? '/icons/dock/safari-dark.png' : '/icons/dock/safari-light.png'}
             alt="Safari"
-            className="w-13 h-13 rounded-[15px] object-cover shadow-md transition-all select-none pointer-events-none"
+            className="w-full h-full rounded-[14px] object-cover shadow-md transition-all select-none pointer-events-none"
             loading="eager"
             decoding="async"
           />
           {activeTab === 'inicio' && (
-            <span className="w-1 h-1 rounded-full bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
         </button>
 
-        {/* 2. Projetos: App Arquivos / Files */}
+        {/* 2. Projetos: Arquivos (Files) */}
         <button
           type="button"
           onClick={() => handleTabSelect('projetos')}
-          className="relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
+          className="w-[54px] h-[54px] sm:w-[56px] sm:h-[56px] relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
           title="Projetos (Arquivos)"
           aria-label="Projetos"
         >
           <img
             src={isDark ? '/icons/dock/files-dark.png' : '/icons/dock/files-light.png'}
             alt="Arquivos"
-            className="w-13 h-13 rounded-[15px] object-cover shadow-md transition-all select-none pointer-events-none"
+            className="w-full h-full rounded-[14px] object-cover shadow-md transition-all select-none pointer-events-none"
             loading="eager"
             decoding="async"
           />
           {activeTab === 'projetos' && (
-            <span className="w-1 h-1 rounded-full bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
         </button>
 
-        {/* 3. Sobre: App Contatos */}
+        {/* 3. Sobre: Contatos (Contacts) */}
         <button
           type="button"
           onClick={() => handleTabSelect('sobre')}
-          className="relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
+          className="w-[54px] h-[54px] sm:w-[56px] sm:h-[56px] relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
           title="Sobre Mim (Contatos)"
           aria-label="Sobre Mim"
         >
           <img
             src={isDark ? '/icons/dock/contacts-dark.png' : '/icons/dock/contacts-light.png'}
             alt="Contatos"
-            className="w-13 h-13 rounded-[15px] object-cover shadow-md transition-all select-none pointer-events-none"
+            className="w-full h-full rounded-[14px] object-cover shadow-md transition-all select-none pointer-events-none"
             loading="eager"
             decoding="async"
           />
           {activeTab === 'sobre' && (
-            <span className="w-1 h-1 rounded-full bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
         </button>
 
-        {/* 4. Habilidades: App Ajustes / Settings */}
+        {/* 4. Habilidades: Ajustes (Settings) */}
         <button
           type="button"
           onClick={() => handleTabSelect('habilidades')}
-          className="relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
+          className="w-[54px] h-[54px] sm:w-[56px] sm:h-[56px] relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
           title="Habilidades & Stack (Ajustes)"
           aria-label="Habilidades"
         >
           <img
             src={isDark ? '/icons/dock/settings-dark.png' : '/icons/dock/settings-light.png'}
             alt="Ajustes"
-            className="w-13 h-13 rounded-[15px] object-cover shadow-md transition-all select-none pointer-events-none"
+            className="w-full h-full rounded-[14px] object-cover shadow-md transition-all select-none pointer-events-none"
             loading="eager"
             decoding="async"
           />
           {activeTab === 'habilidades' && (
-            <span className="w-1 h-1 rounded-full bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
         </button>
 
-        {/* 5. Contato: App Mensagens / Messages */}
+        {/* 5. Contato: Mensagens (Messages) */}
         <button
           type="button"
           onClick={() => handleTabSelect('contato')}
-          className="relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
+          className="w-[54px] h-[54px] sm:w-[56px] sm:h-[56px] relative flex items-center justify-center cursor-pointer active:scale-90 transition-transform overflow-visible"
           title="Contato (Mensagens)"
           aria-label="Contato"
         >
           <img
             src={isDark ? '/icons/dock/messages-dark.png' : '/icons/dock/messages-light.png'}
             alt="Mensagens"
-            className="w-13 h-13 rounded-[15px] object-cover shadow-md transition-all select-none pointer-events-none"
+            className="w-full h-full rounded-[14px] object-cover shadow-md transition-all select-none pointer-events-none"
             loading="eager"
             decoding="async"
           />
           {activeTab === 'contato' && (
-            <span className="w-1 h-1 rounded-full bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/90 dark:bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
           )}
         </button>
       </nav>

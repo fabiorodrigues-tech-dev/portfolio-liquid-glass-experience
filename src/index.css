@@ -67,7 +67,7 @@ html:not(.dark) .text-muted-foreground {
   color: #374151 !important;
 }
 
-html:not(.dark) .text-white:not(button):not(a):not([data-boot-screen]):not([data-boot-screen] *) {
+html:not(.dark) .text-white:not(button):not(a):not([data-boot-screen]):not([data-boot-screen] *):not([data-control-center]):not([data-control-center] *) {
   color: #09090b !important;
 }
 
@@ -388,6 +388,17 @@ a[class*="bg-red"],
 .light-theme button[class*="bg-red"] *,
 .light-theme a[class*="bg-red"],
 .light-theme a[class*="bg-red"] * {
+  color: #ffffff !important;
+}
+
+/* EXCEÇÃO: Central de Controle Mobile / Controles iOS mantêm texto branco no Modo Dia */
+[data-control-center] .text-white,
+[data-control-center] [class*="text-white"],
+.light-theme [data-control-center] .text-white,
+.light-theme [data-control-center] [class*="text-white"],
+html:not(.dark) [data-control-center] .text-white,
+html:not(.dark) [data-control-center] [class*="text-white"],
+.ios-control-text-white {
   color: #ffffff !important;
 }
 

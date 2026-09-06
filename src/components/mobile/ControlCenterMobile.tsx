@@ -249,6 +249,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
 
   return (
     <div
+      data-control-center="true"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           triggerHaptic()
@@ -581,7 +582,10 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
 
                   {/* Rótulo "Foco" e Seletor Vertical Apple (chevron.up.chevron.down) */}
                   <div className="flex items-center gap-1.5 ml-2.5">
-                    <span className="text-[14px] sm:text-[15px] font-semibold tracking-tight text-white">
+                    <span
+                      style={{ color: '#ffffff' }}
+                      className="text-[14px] sm:text-[15px] font-semibold tracking-tight text-white !text-white ios-control-text-white select-none"
+                    >
                       Foco
                     </span>
                     {/* Duplo chevron de seleção do iOS */}

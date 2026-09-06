@@ -555,7 +555,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                     triggerHaptic()
                     onToggleFocusMode()
                   }}
-                  className={`h-[56px] w-full rounded-full border p-1.5 flex items-center justify-start select-none active:scale-[0.98] transition-all cursor-pointer shadow-[0_10px_30px_rgba(0,0,0,0.25)] ${
+                  className={`h-[56px] w-full rounded-full border p-1.5 flex items-center justify-start select-none scale-[1.10] origin-center active:scale-[1.04] transition-all cursor-pointer shadow-[0_10px_30px_rgba(0,0,0,0.25)] ${
                     isFocusMode 
                       ? 'bg-indigo-600/35 border-indigo-400/50 text-white shadow-[0_0_20px_rgba(99,102,241,0.35)]' 
                       : 'bg-white/[0.14] dark:bg-white/[0.09] hover:bg-white/15 backdrop-blur-3xl border border-white/25 dark:border-white/10 text-white/90'

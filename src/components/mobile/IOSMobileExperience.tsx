@@ -181,7 +181,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
       <header className="fixed top-0 left-0 right-0 h-10 px-4 flex items-center justify-between z-40 select-none bg-transparent">
         {/* Esquerda: Relógio em tempo real ("19:30") */}
         <div className="flex items-center">
-          <span className="text-xs font-semibold tracking-tight text-[#09090b] dark:text-white drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+          <span className="text-xs font-semibold tracking-tight text-zinc-950 dark:text-white transition-colors drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
             {currentTime}
           </span>
         </div>
@@ -194,7 +194,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
               triggerHaptic()
               setIsControlCenterOpen(true)
             }}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-[#09090b] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 active:scale-90 transition-all cursor-pointer drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-950 dark:text-white font-semibold transition-colors hover:bg-black/5 dark:hover:bg-white/10 active:scale-90 cursor-pointer drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
             title="Abrir Central de Controle"
             aria-label="Central de Controle"
           >
@@ -347,10 +347,10 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         {activeTab === 'projetos' && (
           <div className="space-y-3.5 animate-in fade-in duration-200">
             <div className="px-1">
-              <span className="block text-[11px] font-mono tracking-wider uppercase font-semibold text-zinc-700 dark:text-white/60 drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)] dark:drop-shadow-none">
+              <span className="block text-[11px] font-mono tracking-wider uppercase font-semibold text-zinc-700 dark:text-white/60 transition-colors">
                 {currentDateFormatted || 'DOMINGO, 6 DE SETEMBRO'}
               </span>
-              <h2 className="text-2xl sm:text-3xl font-black font-display tracking-tight text-zinc-950 dark:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.12)] dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] transition-colors">
+              <h2 className="text-2xl sm:text-3xl font-black font-display tracking-tight text-zinc-950 dark:text-white transition-colors">
                 Hoje • Projetos em Destaque
               </h2>
             </div>
@@ -633,10 +633,10 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         {activeTab === 'sobre' && (
           <div className="space-y-3.5 animate-in fade-in duration-200">
             <div className="px-1">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 font-mono">
+              <span className="block text-[11px] font-mono tracking-wider uppercase font-semibold text-zinc-700 dark:text-white/60 transition-colors">
                 Biografia & Filosofia
               </span>
-              <h2 className="text-2xl font-black tracking-tight text-[#09090b] dark:text-white">
+              <h2 className="text-2xl sm:text-3xl font-black font-display tracking-tight text-zinc-950 dark:text-white transition-colors">
                 Sobre Fábio Rodrigues
               </h2>
             </div>
@@ -808,10 +808,10 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         {activeTab === 'habilidades' && (
           <div className="space-y-3.5 animate-in fade-in duration-200">
             <div className="px-1">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 font-mono">
+              <span className="block text-[11px] font-mono tracking-wider uppercase font-semibold text-zinc-700 dark:text-white/60 transition-colors">
                 Matriz de Competências
               </span>
-              <h2 className="text-2xl font-black tracking-tight text-[#09090b] dark:text-white">
+              <h2 className="text-2xl sm:text-3xl font-black font-display tracking-tight text-zinc-950 dark:text-white transition-colors">
                 Habilidades Técnicas
               </h2>
             </div>
@@ -951,10 +951,10 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         {activeTab === 'contato' && (
           <div className="space-y-3.5 animate-in fade-in duration-200">
             <div className="px-1">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
+              <span className="block text-[11px] font-mono tracking-wider uppercase font-semibold text-zinc-700 dark:text-white/60 transition-colors">
                 Comunicação Direta
               </span>
-              <h2 className="text-2xl font-black tracking-tight text-[#09090b] dark:text-white">
+              <h2 className="text-2xl sm:text-3xl font-black font-display tracking-tight text-zinc-950 dark:text-white transition-colors">
                 Iniciar Conversa
               </h2>
             </div>

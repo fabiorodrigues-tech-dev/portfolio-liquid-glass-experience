@@ -255,7 +255,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
           onClose()
         }
       }}
-      className="fixed inset-0 z-50 bg-black/45 backdrop-blur-[45px] backdrop-saturate-[2.2] p-4 pt-12 flex flex-col justify-start items-center select-none overflow-y-auto overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-3xl pt-12 px-4 pb-8 flex flex-col justify-start items-center overflow-y-auto select-none overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
     >
       {/* 1. Botão de Fechar no Canto Superior Direito com bom respiro */}
       <button
@@ -264,17 +264,17 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
           triggerHaptic()
           onClose()
         }}
-        className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white/80 z-30 active:scale-90 transition-all shadow-sm"
+        className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white/80 z-30 active:scale-90 transition-all shadow-sm cursor-pointer"
         title="Fechar"
         aria-label="Fechar"
       >
         ✕
       </button>
 
-      {/* Container Central da Central de Controle com Trilho Lateral Integrado */}
-      <div className="relative w-full max-w-[395px] min-[400px]:max-w-[405px] mx-auto my-auto flex items-center justify-center">
+      {/* Container Central da Central de Controle com Trilho Lateral Integrado (mt-2 w-full max-w-[335px]) */}
+      <div className="relative w-full max-w-[335px] mx-auto mt-2 flex flex-col gap-3.5 select-none">
         {/* Trilho Lateral de Ícones (✦, 🎵, 📡) Perfeitamente Centralizado na Altura dos Controles */}
-        <div className="absolute -right-2 min-[400px]:-right-1 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-5 py-2 select-none">
+        <div className="absolute -right-8 min-[400px]:-right-9 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-5 py-2 select-none">
           {/* Ícone 1: Controles (✦) */}
           <button
             type="button"
@@ -329,15 +329,6 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
             <Radio className="w-5 h-5" />
           </button>
         </div>
-
-        {/* 3. Grid em Escala Autêntica iOS 26 */}
-        <div
-          className={`w-full flex flex-col ${
-            activeTab === 'connections'
-              ? 'justify-center items-center pr-8 min-[400px]:pr-9'
-              : 'pr-8 min-[400px]:pr-9 gap-3.5 min-[400px]:gap-4'
-          }`}
-        >
         {/* ========================================================================= */}
         {/* PÁGINA 1: ✦ CONTROLES PRINCIPAIS (TELA PRINCIPAL)                         */}
         {/* ========================================================================= */}
@@ -520,9 +511,9 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
             {/* LINHA 2: Foco & Atalhos (Esquerda) + Sliders Verticais ~2.7:1 (Direita) */}
             <div className="w-full grid grid-cols-2 gap-3.5 min-[400px]:gap-4 h-[162px] min-[400px]:h-[170px] mx-auto">
               {/* Lado Esquerdo: 2 Quadrados Superiores + Pílula Horizontal de Foco */}
-              <div className="flex flex-col justify-between h-[162px] min-[400px]:h-[170px]">
+              <div className="flex flex-col justify-between h-[160px] w-full">
                 {/* 2 Botões Circulares Superiores (Bloqueio de Rotação + Espelhar Tela) */}
-                <div className="grid grid-cols-2 gap-3.5 min-[400px]:gap-4 place-items-center h-[74px] min-[400px]:h-[78px]">
+                <div className="grid grid-cols-2 gap-3.5 place-items-center h-[102px]">
                   {/* Botão: Bloqueio de Orientação Oficial (Cadeado com Seta Curva Circular — Destaque quando ativo) */}
                   <button
                     type="button"
@@ -530,7 +521,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       triggerHaptic()
                       setIsOrientationLocked((prev) => !prev)
                     }}
-                    className={`w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 ${
+                    className={`w-[60px] h-[60px] rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 ${
                       isOrientationLocked
                         ? 'bg-white text-[#ff3b30] border border-white/40 shadow-[0_2px_14px_rgba(255,59,48,0.35)]'
                         : 'bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.3)] text-white/85 hover:text-white'
@@ -548,7 +539,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                       triggerHaptic()
                       setActiveTab('media')
                     }}
-                    className="w-[58px] h-[58px] min-[400px]:w-[64px] min-[400px]:h-[64px] rounded-full bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.3)] flex items-center justify-center text-white/85 hover:text-white cursor-pointer active:scale-95 transition-all duration-200"
+                    className="w-[60px] h-[60px] rounded-full bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.3)] flex items-center justify-center text-white/85 hover:text-white cursor-pointer active:scale-95 transition-all duration-200"
                     title="Espelhar Tela (AirPlay)"
                     aria-label="Espelhar Tela"
                   >
@@ -556,38 +547,26 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   </button>
                 </div>
 
-                {/* Botão Foco: Pill Horizontal Oficial (Ícone + Label alinhado à esquerda dos sliders) */}
+                {/* Botão FOCO Redesenhado (Cápsula horizontal esguia de linha única oficial da Apple) */}
                 <button
                   type="button"
                   onClick={() => {
                     triggerHaptic()
                     onToggleFocusMode()
                   }}
-                  className={`w-full h-[76px] min-[400px]:h-[80px] rounded-[28px] backdrop-blur-3xl border shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all px-4 flex items-center gap-3.5 cursor-pointer active:scale-[0.98] ${
-                    isFocusMode
-                      ? 'border-indigo-400/40 bg-indigo-500/30 text-white'
-                      : 'bg-white/[0.14] dark:bg-white/[0.09] border-white/25 dark:border-white/10 hover:brightness-110'
+                  className={`h-11 w-full rounded-full border px-3.5 flex items-center justify-between select-none active:scale-95 transition-all cursor-pointer ${
+                    isFocusMode 
+                      ? 'bg-indigo-600/30 border-indigo-400/40 text-white' 
+                      : 'bg-white/10 hover:bg-white/15 border-white/10 text-white/90'
                   }`}
                   title="Modo Foco: Oculta o Dock e minimiza distrações"
                   aria-label="Modo Foco"
                 >
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all ${
-                      isFocusMode
-                        ? 'bg-indigo-500 text-white shadow-md'
-                        : 'bg-white/10 text-white/70'
-                    }`}
-                  >
-                    <Moon className="w-5 h-5" />
+                  <div className="flex items-center gap-2.5">
+                    <Moon className={`w-4 h-4 ${isFocusMode ? 'text-indigo-400 fill-indigo-400' : 'text-white/80'}`} />
+                    <span className="text-xs font-semibold tracking-tight">Foco</span>
                   </div>
-                  <div className="flex flex-col text-left overflow-hidden">
-                    <span className="text-[13.5px] font-bold text-white tracking-wide leading-tight">
-                      Foco
-                    </span>
-                    <span className="text-[11px] text-white/50 leading-tight mt-0.5 font-medium">
-                      {isFocusMode ? 'Ativado' : 'Desativado'}
-                    </span>
-                  </div>
+                  <span className="text-white/40 text-xs">⌄</span>
                 </button>
               </div>
 
@@ -1005,7 +984,6 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
           </div>
         )}
       </div>
-    </div>
     </div>
   )
 }

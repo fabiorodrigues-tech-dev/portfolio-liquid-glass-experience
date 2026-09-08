@@ -114,6 +114,7 @@ interface ControlCenterMobileProps {
   onNextTrack?: () => void
   brightness?: number
   onChangeBrightness?: (val: number) => void
+  audioPlayerRef?: React.RefObject<any>
 }
 
 type ActiveTab = 'main' | 'media' | 'connections'
@@ -136,6 +137,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
   onNextTrack,
   brightness: propBrightness,
   onChangeBrightness,
+  audioPlayerRef: propAudioPlayerRef,
 }) => {
   // Active tab state for iOS pagination ('main' | 'media' | 'connections')
   const [activeTab, setActiveTab] = useState<ActiveTab>('main')
@@ -164,41 +166,74 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
   // Orientation lock state
   const [isOrientationLocked, setIsOrientationLocked] = useState(false)
 
-  // Local volume state with RAF throttling to guarantee 120fps instant UI response
-  const [localVolume, setLocalVolume] = useState<number>(soundVolume)
-  const isDraggingVolumeRef = useRef(false)
-  const rafVolumeRef = useRef<number | null>(null)
+  // Volume local com latência zero (desacoplado do áudio do player)
+  const [volume, setVolume] = useState<number>(soundVolume)
 
-  // Keep local volume in sync with external props when not actively dragging
   useEffect(() => {
-    if (!isDraggingVolumeRef.current) {
-      setLocalVolume(soundVolume)
-    }
+    setVolume(soundVolume)
   }, [soundVolume])
 
-  const updateVolume = (val: number) => {
-    setLocalVolume(val)
-    if (rafVolumeRef.current !== null) {
-      cancelAnimationFrame(rafVolumeRef.current)
+  const lastAudioUpdate = useRef(0)
+
+  const internalAudioPlayerRef = useRef<{ setVolume: (percentage: number) => void }>({
+    setVolume: (percentage: number) => onChangeVolume(percentage),
+  })
+
+  useEffect(() => {
+    internalAudioPlayerRef.current = {
+      setVolume: (percentage: number) => onChangeVolume(percentage),
     }
-    rafVolumeRef.current = requestAnimationFrame(() => {
-      onChangeVolume(val)
-      rafVolumeRef.current = null
-    })
+  }, [onChangeVolume])
+
+  const audioPlayerRef = propAudioPlayerRef || internalAudioPlayerRef
+
+  const handleVolumeTouch = (e: React.TouchEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const touch = e.touches[0]
+    if (!touch) return
+    const percentage = Math.max(
+      0,
+      Math.min(100, Math.round(((rect.bottom - touch.clientY) / rect.height) * 100))
+    )
+
+    // 1. Atualização visual instantânea (latência 0ms idêntica ao brilho)
+    setVolume(percentage)
+
+    // 2. Atualização amortecida do áudio para não travar o thread do navegador
+    const now = Date.now()
+    if (now - lastAudioUpdate.current > 50) {
+      lastAudioUpdate.current = now
+      if (audioPlayerRef.current) {
+        audioPlayerRef.current.setVolume(percentage)
+      }
+    }
   }
 
-  const finalizeVolume = (val?: number) => {
-    isDraggingVolumeRef.current = false
-    if (rafVolumeRef.current !== null) {
-      cancelAnimationFrame(rafVolumeRef.current)
-      rafVolumeRef.current = null
+  const handleVolumeMouse = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const percentage = Math.max(
+      0,
+      Math.min(100, Math.round(((rect.bottom - e.clientY) / rect.height) * 100))
+    )
+
+    setVolume(percentage)
+
+    const now = Date.now()
+    if (now - lastAudioUpdate.current > 50) {
+      lastAudioUpdate.current = now
+      if (audioPlayerRef.current) {
+        audioPlayerRef.current.setVolume(percentage)
+      }
     }
-    const finalVal = val !== undefined ? val : localVolume
-    onChangeVolume(finalVal)
   }
 
-  const volume = localVolume
-  const setVolume = updateVolume
+  const handleVolumeEnd = () => {
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.setVolume(volume)
+    } else {
+      onChangeVolume(volume)
+    }
+  }
 
   const [isDark, setIsDark] = useState<boolean>(() => {
     if (typeof document !== 'undefined') {
@@ -301,73 +336,34 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
     setter(percentage)
   }
 
-  // Gestos de deslizar para fechar (Swipe Up to Close)
-  const touchStartYRef = useRef<number | null>(null)
-
-  const handleTouchStartGlobal = (e: React.TouchEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLElement
-    if (target.closest('.touch-none')) return
-    touchStartYRef.current = e.touches[0].clientY
-  }
-
-  const handleTouchEndGlobal = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (touchStartYRef.current === null) return
-    const endY = e.changedTouches[0].clientY
-    const deltaY = endY - touchStartYRef.current
-    touchStartYRef.current = null
-    // Deslizar para cima fecha a Central de Controle instantaneamente
-    if (deltaY < -50) {
-      triggerHaptic()
-      onClose()
-    }
-  }
-
-  // Toque fora de cards/botões interativos fecha a Central (comportamento nativo iOS)
-  const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLElement
-    if (
-      target.closest('button') ||
-      target.closest('a') ||
-      target.closest('input') ||
-      target.closest('.touch-none') ||
-      target.closest('[data-interactive="true"]')
-    ) {
-      return
-    }
-    triggerHaptic()
-    onClose()
-  }
+  if (!isOpen) return null
 
   return (
     <div
       data-control-center="true"
-      onClick={handleContainerClick}
-      onTouchStart={handleTouchStartGlobal}
-      onTouchEnd={handleTouchEndGlobal}
-      className="fixed inset-0 z-50 bg-black/40 backdrop-blur-3xl pt-14 px-4 pb-8 flex flex-col justify-start items-center overflow-y-auto select-none overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+      className="fixed inset-0 z-50 bg-black/40 backdrop-blur-3xl pt-12 px-4 pb-8 flex flex-col justify-start items-center overflow-y-auto select-none overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
     >
-      {/* 1. Botão de Fechar no Canto Superior Direito (Fixo, Safe Area, 44x44px Touch Target) */}
+      {/* 1. Botão de Fechar no Canto Superior Direito com clique garantido */}
       <button
         type="button"
-        onClick={(e) => {
-          e.stopPropagation()
-          triggerHaptic()
-          onClose()
-        }}
-        onTouchEnd={(e) => {
-          e.stopPropagation()
-          triggerHaptic()
-          onClose()
-        }}
-        className="fixed top-3 right-3 min-[400px]:top-4 min-[400px]:right-4 w-11 h-11 rounded-full bg-white/20 active:bg-white/40 hover:bg-white/30 backdrop-blur-2xl border border-white/25 flex items-center justify-center text-white z-[70] active:scale-90 transition-all shadow-xl cursor-pointer touch-manipulation"
-        title="Fechar Central de Controle"
-        aria-label="Fechar Central de Controle"
+        onClick={onClose}
+        className="absolute top-3 right-4 w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white/90 text-sm z-50 cursor-pointer pointer-events-auto active:scale-90 transition-transform"
+        title="Fechar"
+        aria-label="Fechar"
       >
-        <span className="text-xl font-bold leading-none select-none">✕</span>
+        ✕
       </button>
 
       {/* Container Central da Central de Controle com Trilho Lateral Integrado (mt-2 w-full max-w-[335px]) */}
-      <div className="relative w-full max-w-[335px] mx-auto mt-2 flex flex-col gap-3.5 select-none">
+      <div 
+        onClick={(e) => {
+          if (e.target === e.currentTarget) onClose()
+        }}
+        className="relative w-full max-w-[335px] mx-auto mt-2 flex flex-col gap-3.5 select-none"
+      >
         {/* Trilho Lateral de Ícones (✦, 🎵, 📡) Perfeitamente Centralizado na Altura dos Controles */}
         <div className="absolute -right-8 min-[400px]:-right-9 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-5 py-2 select-none">
           {/* Ícone 1: Controles (✦) */}
@@ -724,35 +720,23 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   </div>
                 </div>
 
-                {/* Slider de Volume Fluido com Latência Zero */}
+                {/* Slider de Volume */}
                 <div 
-                  onTouchStart={(e) => {
-                    isDraggingVolumeRef.current = true
-                    handleTouchSlider(e, updateVolume)
-                  }}
-                  onTouchMove={(e) => {
-                    handleTouchSlider(e, updateVolume)
-                  }}
-                  onTouchEnd={(e) => {
-                    handleTouchSlider(e, (v) => finalizeVolume(v))
-                  }}
-                  onMouseDown={(e) => {
-                    isDraggingVolumeRef.current = true
-                    handleMouseSlider(e, updateVolume)
-                  }}
+                  onTouchMove={handleVolumeTouch}
+                  onTouchStart={handleVolumeTouch}
+                  onTouchEnd={handleVolumeEnd}
+                  onMouseDown={handleVolumeMouse}
                   onMouseMove={(e) => {
-                    if (e.buttons === 1) handleMouseSlider(e, updateVolume)
+                    if (e.buttons === 1) handleVolumeMouse(e)
                   }}
-                  onMouseUp={() => {
-                    finalizeVolume()
-                  }}
+                  onMouseUp={handleVolumeEnd}
                   className="relative w-[74px] h-[155px] rounded-[32px] bg-white/[0.14] backdrop-blur-2xl border border-white/20 overflow-hidden flex flex-col justify-end select-none shadow-lg cursor-pointer touch-none"
                   title="Volume do Som"
                 >
                   {/* Preenchimento com latência 0ms durante o toque (sem transition-all engasgando o dedo) */}
                   <div 
                     className="w-full bg-white rounded-b-[32px] pointer-events-none" 
-                    style={{ height: `${localVolume}%` }} 
+                    style={{ height: `${volume}%` }} 
                   />
                   {/* Ícone centralizado em contraste */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mix-blend-difference text-white">
@@ -909,7 +893,18 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                   min="0"
                   max="100"
                   value={volume}
-                  onChange={(e) => setVolume(Number(e.target.value))}
+                  onChange={(e) => {
+                    const val = Number(e.target.value)
+                    setVolume(val)
+                    const now = Date.now()
+                    if (now - lastAudioUpdate.current > 50) {
+                      lastAudioUpdate.current = now
+                      if (audioPlayerRef.current) {
+                        audioPlayerRef.current.setVolume(val)
+                      }
+                    }
+                  }}
+                  onPointerUp={() => handleVolumeEnd()}
                   aria-label="Volume"
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
@@ -1063,19 +1058,10 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
         )}
 
         {/* Barra Inferior Oficial de Fechar (iOS Home Indicator) */}
-        <div className="w-full flex flex-col items-center justify-center pt-3 pb-2 z-20">
+        <div className="w-full flex flex-col items-center justify-center pt-2 pb-1 z-20">
           <button
             type="button"
-            onClick={(e) => {
-              e.stopPropagation()
-              triggerHaptic()
-              onClose()
-            }}
-            onTouchEnd={(e) => {
-              e.stopPropagation()
-              triggerHaptic()
-              onClose()
-            }}
+            onClick={onClose}
             className="group flex flex-col items-center gap-1.5 py-2 px-8 cursor-pointer active:scale-95 transition-all touch-manipulation"
             title="Fechar Central de Controle"
             aria-label="Fechar Central de Controle"

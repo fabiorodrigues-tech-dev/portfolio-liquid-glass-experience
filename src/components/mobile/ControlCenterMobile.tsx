@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Sun,
   Moon,
-  Volume,
   Volume1,
   Volume2,
-  VolumeX,
   MapPin,
   Music,
   Radio,
@@ -114,6 +112,8 @@ interface ControlCenterMobileProps {
   onSkipTrack: () => void
   onPrevTrack?: () => void
   onNextTrack?: () => void
+  brightness?: number
+  onChangeBrightness?: (val: number) => void
 }
 
 type ActiveTab = 'main' | 'media' | 'connections'
@@ -134,18 +134,32 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
   onSkipTrack,
   onPrevTrack,
   onNextTrack,
+  brightness: propBrightness,
+  onChangeBrightness,
 }) => {
   // Active tab state for iOS pagination ('main' | 'media' | 'connections')
   const [activeTab, setActiveTab] = useState<ActiveTab>('main')
 
-  // Screen Brightness (20% - 100%)
-  const [brightness, setBrightness] = useState<number>(() => {
+  // Screen Brightness (0% - 100%)
+  const [internalBrightness, setInternalBrightness] = useState<number>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('macos_brightness')
-      return saved ? Math.max(20, Math.min(100, Number(saved))) : 100
+      return saved ? Math.max(0, Math.min(100, Number(saved))) : 100
     }
     return 100
   })
+
+  const brightness = propBrightness !== undefined ? propBrightness : internalBrightness
+  const setBrightness = (val: number) => {
+    if (onChangeBrightness) {
+      onChangeBrightness(val)
+    } else {
+      setInternalBrightness(val)
+    }
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('macos_brightness', String(val))
+    }
+  }
 
   // Orientation lock state
   const [isOrientationLocked, setIsOrientationLocked] = useState(false)
@@ -203,13 +217,13 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
     onToggleTheme()
   }
 
-  const isDraggingBrightnessRef = useRef(false)
-  const isDraggingVolumeRef = useRef(false)
-
-  // Sync brightness to HTML root element
+  // Ensure no filter is on documentElement or body (Hardware accelerated curtain is used instead)
   useEffect(() => {
-    document.documentElement.style.filter = `brightness(${brightness}%)`
-  }, [brightness])
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.filter = ''
+      document.body.style.filter = ''
+    }
+  }, [])
 
   // Close on Escape key press
   useEffect(() => {
@@ -226,25 +240,32 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
     }
   }, [isOpen, onClose])
 
-  if (!isOpen) return null
-
-  // Pointer drag handler for vertical brightness slider
-  const handleBrightnessPointer = (e: React.PointerEvent<HTMLDivElement>) => {
+  // Lógica de toque vertical sem lag para Brilho e Volume (Latência Zero)
+  const handleTouchSlider = (
+    e: React.TouchEvent<HTMLDivElement>,
+    setter: (val: number) => void
+  ) => {
     const rect = e.currentTarget.getBoundingClientRect()
-    const y = e.clientY - rect.top
-    const pct = Math.round(100 - (y / rect.height) * 100)
-    const clamped = Math.max(20, Math.min(100, pct))
-    setBrightness(clamped)
-    localStorage.setItem('macos_brightness', String(clamped))
+    const touch = e.touches[0]
+    if (!touch) return
+    const percentage = Math.max(
+      0,
+      Math.min(100, Math.round(((rect.bottom - touch.clientY) / rect.height) * 100))
+    )
+    setter(percentage)
   }
 
-  // Pointer drag handler for vertical volume slider
-  const handleVolumePointer = (e: React.PointerEvent<HTMLDivElement>) => {
+  // Suporte a mouse para desktop / emulador
+  const handleMouseSlider = (
+    e: React.MouseEvent<HTMLDivElement>,
+    setter: (val: number) => void
+  ) => {
     const rect = e.currentTarget.getBoundingClientRect()
-    const y = e.clientY - rect.top
-    const pct = Math.round(100 - (y / rect.height) * 100)
-    const clamped = Math.max(0, Math.min(100, pct))
-    setVolume(clamped)
+    const percentage = Math.max(
+      0,
+      Math.min(100, Math.round(((rect.bottom - e.clientY) / rect.height) * 100))
+    )
+    setter(percentage)
   }
 
   return (
@@ -256,7 +277,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
           onClose()
         }
       }}
-      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-3xl pt-12 px-4 pb-8 flex flex-col justify-start items-center overflow-y-auto select-none overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 bg-black/40 backdrop-blur-3xl pt-12 px-4 pb-8 flex flex-col justify-start items-center overflow-y-auto select-none overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden animate-in fade-in duration-200"
     >
       {/* 1. Botão de Fechar no Canto Superior Direito com bom respiro */}
       <button
@@ -606,116 +627,50 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
                 </button>
               </div>
 
-              {/* Lado Direito: Sliders Verticais Mais Robustos (w-[76px] h-[160px] rounded-[34px]) */}
+              {/* Lado Direito: Sliders Verticais (Brilho e Volume com Latência Zero) */}
               <div className="flex items-center justify-center gap-2.5 min-[400px]:gap-3 h-[160px] w-full mx-auto">
-                {/* Slider de Brilho: Ícone Sun fino (strokeWidth=1.5) acompanhando o nível de preenchimento */}
-                <div
-                  onPointerDownCapture={(e) => {
-                    try {
-                      e.currentTarget.setPointerCapture(e.pointerId)
-                    } catch {}
-                    isDraggingBrightnessRef.current = true
-                    handleBrightnessPointer(e)
+                {/* Slider de Brilho */}
+                <div 
+                  onTouchMove={(e) => handleTouchSlider(e, setBrightness)}
+                  onTouchStart={(e) => handleTouchSlider(e, setBrightness)}
+                  onMouseDown={(e) => handleMouseSlider(e, setBrightness)}
+                  onMouseMove={(e) => {
+                    if (e.buttons === 1) handleMouseSlider(e, setBrightness)
                   }}
-                  onPointerMoveCapture={(e) => {
-                    if (isDraggingBrightnessRef.current) {
-                      handleBrightnessPointer(e)
-                    }
-                  }}
-                  onPointerUpCapture={(e) => {
-                    try {
-                      e.currentTarget.releasePointerCapture(e.pointerId)
-                    } catch {}
-                    isDraggingBrightnessRef.current = false
-                  }}
-                  onPointerCancelCapture={() => {
-                    isDraggingBrightnessRef.current = false
-                  }}
-                  className="relative w-[76px] h-[160px] rounded-[34px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 overflow-hidden flex flex-col justify-end shadow-xl select-none cursor-pointer"
+                  className="relative w-[74px] h-[155px] rounded-[32px] bg-white/[0.14] backdrop-blur-2xl border border-white/20 overflow-hidden flex flex-col justify-end select-none shadow-lg cursor-pointer touch-none"
                   title="Brilho da Tela"
                 >
-                  {/* Preenchimento inferior */}
-                  <div
-                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-[34px]"
-                    style={{ height: `${brightness}%` }}
+                  {/* Preenchimento com latência 0ms durante o toque (sem transition-all engasgando o dedo) */}
+                  <div 
+                    className="w-full bg-white rounded-b-[32px] pointer-events-none" 
+                    style={{ height: `${brightness}%` }} 
                   />
-                  {/* Ícone Sun mais fino (strokeWidth=1.5) acompanhando dinamicamente o nível de preenchimento */}
-                  <div
-                    style={{
-                      bottom: `clamp(14px, calc(${brightness}% - 12px), calc(100% - 36px))`,
-                    }}
-                    className="absolute inset-x-0 flex items-center justify-center pointer-events-none mix-blend-difference text-white transition-all duration-75"
-                  >
-                    <Sun className="w-5 h-5 stroke-[1.5]" />
+                  {/* Ícone centralizado em contraste */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mix-blend-difference text-white">
+                    <Sun className="w-6 h-6" />
                   </div>
-                  <input
-                    type="range"
-                    min="20"
-                    max="100"
-                    value={brightness}
-                    onChange={(e) => {
-                      const val = Number(e.target.value)
-                      setBrightness(val)
-                      localStorage.setItem('macos_brightness', String(val))
-                    }}
-                    aria-label="Brilho da Tela"
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer touch-none"
-                  />
                 </div>
 
-                {/* Slider de Volume: Ícone Speaker Fill sólido (sem ondas) acompanhando o nível de preenchimento */}
-                <div
-                  onPointerDownCapture={(e) => {
-                    try {
-                      e.currentTarget.setPointerCapture(e.pointerId)
-                    } catch {}
-                    isDraggingVolumeRef.current = true
-                    handleVolumePointer(e)
+                {/* Slider de Volume */}
+                <div 
+                  onTouchMove={(e) => handleTouchSlider(e, setVolume)}
+                  onTouchStart={(e) => handleTouchSlider(e, setVolume)}
+                  onMouseDown={(e) => handleMouseSlider(e, setVolume)}
+                  onMouseMove={(e) => {
+                    if (e.buttons === 1) handleMouseSlider(e, setVolume)
                   }}
-                  onPointerMoveCapture={(e) => {
-                    if (isDraggingVolumeRef.current) {
-                      handleVolumePointer(e)
-                    }
-                  }}
-                  onPointerUpCapture={(e) => {
-                    try {
-                      e.currentTarget.releasePointerCapture(e.pointerId)
-                    } catch {}
-                    isDraggingVolumeRef.current = false
-                  }}
-                  onPointerCancelCapture={() => {
-                    isDraggingVolumeRef.current = false
-                  }}
-                  className="relative w-[76px] h-[160px] rounded-[34px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 overflow-hidden flex flex-col justify-end shadow-xl select-none cursor-pointer"
+                  className="relative w-[74px] h-[155px] rounded-[32px] bg-white/[0.14] backdrop-blur-2xl border border-white/20 overflow-hidden flex flex-col justify-end select-none shadow-lg cursor-pointer touch-none"
                   title="Volume do Som"
                 >
-                  {/* Preenchimento inferior */}
-                  <div
-                    className="w-full bg-white dark:bg-white/95 transition-all duration-75 rounded-b-[34px]"
-                    style={{ height: `${volume}%` }}
+                  {/* Preenchimento com latência 0ms durante o toque (sem transition-all engasgando o dedo) */}
+                  <div 
+                    className="w-full bg-white rounded-b-[32px] pointer-events-none" 
+                    style={{ height: `${volume}%` }} 
                   />
-                  {/* Ícone estilo Speaker Fill minimalista (fill="currentColor") acompanhando dinamicamente o nível */}
-                  <div
-                    style={{
-                      bottom: `clamp(14px, calc(${volume}% - 12px), calc(100% - 36px))`,
-                    }}
-                    className="absolute inset-x-0 flex items-center justify-center pointer-events-none mix-blend-difference text-white transition-all duration-75"
-                  >
-                    {volume === 0 ? (
-                      <VolumeX className="w-5 h-5 stroke-[1.5]" fill="currentColor" />
-                    ) : (
-                      <Volume className="w-5 h-5 stroke-[1.5]" fill="currentColor" />
-                    )}
+                  {/* Ícone centralizado em contraste */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mix-blend-difference text-white">
+                    <Volume2 className="w-6 h-6" />
                   </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={volume}
-                    onChange={(e) => setVolume(Number(e.target.value))}
-                    aria-label="Volume do Som"
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer touch-none"
-                  />
                 </div>
               </div>
             </div>

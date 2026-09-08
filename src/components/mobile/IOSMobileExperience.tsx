@@ -68,6 +68,23 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
   const [currentTime, setCurrentTime] = useState<string>('19:30')
   const [currentDateFormatted, setCurrentDateFormatted] = useState<string>('')
 
+  // Screen Brightness (0% - 100%)
+  const [brightness, setBrightness] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('macos_brightness')
+      return saved ? Math.max(0, Math.min(100, Number(saved))) : 100
+    }
+    return 100
+  })
+
+  // Ensure root elements have no inline filter (prevents backdrop blur flattening bug)
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.filter = ''
+      document.body.style.filter = ''
+    }
+  }, [])
+
   // Contact form states
   const [emailCopied, setEmailCopied] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -1165,6 +1182,14 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         isFocusMode={isFocusMode}
       />
 
+      {/* Cortina Global de Brilho Físico (Z-30: fica atrás da Central de Controle que é Z-50) */}
+      <div 
+        className="fixed inset-0 bg-black pointer-events-none z-30 transition-opacity duration-75 ease-out"
+        style={{ 
+          opacity: (100 - brightness) * 0.007 // 100% brilho = 0 opacidade; 30% brilho = 0.49 opacidade
+        }} 
+      />
+
       {/* ========================================================================= */}
       {/* 5. CENTRAL DE CONTROLE NATIVA iOS (COMPONENTE EXCLUSIVO ControlCenterMobile) */}
       {/* ========================================================================= */}
@@ -1185,6 +1210,8 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
         onChangeVolume={onChangeVolume}
         onSkipTrack={onSkipTrack}
         onPrevTrack={onPrevTrack}
+        brightness={brightness}
+        onChangeBrightness={setBrightness}
       />
     </div>
   )

@@ -1056,22 +1056,6 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
             </a>
           </div>
         )}
-
-        {/* Barra Inferior Oficial de Fechar (iOS Home Indicator) */}
-        <div className="w-full flex flex-col items-center justify-center pt-2 pb-1 z-20">
-          <button
-            type="button"
-            onClick={onClose}
-            className="group flex flex-col items-center gap-1.5 py-2 px-8 cursor-pointer active:scale-95 transition-all touch-manipulation"
-            title="Fechar Central de Controle"
-            aria-label="Fechar Central de Controle"
-          >
-            <div className="w-36 h-1.5 rounded-full bg-white/40 group-hover:bg-white/70 group-active:bg-white/90 transition-colors shadow-sm" />
-            <span className="text-[11px] font-medium text-white/50 group-hover:text-white/80 select-none">
-              Toque para fechar
-            </span>
-          </button>
-        </div>
       </div>
     </div>
   )

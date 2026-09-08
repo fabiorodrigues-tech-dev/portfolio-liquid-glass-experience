@@ -209,7 +209,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             type="button"
             onClick={() => {
               triggerHaptic()
-              setIsControlCenterOpen(true)
+              setIsControlCenterOpen((prev) => !prev)
             }}
             className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-950 dark:text-white font-semibold transition-colors hover:bg-black/5 dark:hover:bg-white/10 active:scale-90 cursor-pointer drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
             title="Abrir Central de Controle"

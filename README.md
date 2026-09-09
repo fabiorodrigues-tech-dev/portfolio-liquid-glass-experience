@@ -27,6 +27,15 @@
 
 ---
 
+## 🏛️ Engineering Architecture & Documentation
+
+For a comprehensive technical deep-dive into optical physics, GPU layer composition, and dual-platform state orchestration, read the official dossier:
+👉 **[Technical Architecture & Design System Dossier (docs/ARCHITECTURE.md)](./docs/ARCHITECTURE.md)**
+
+*Specification grounded in [Apple Developer's Adopting Liquid Glass Documentation](https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass).*
+
+---
+
 ## 📸 Vitrine Visual & Demonstração da Interface
 
 ### 🖥️ Experiência Desktop — macOS 26 Tahoe Concept
@@ -119,6 +128,8 @@ Portfólio interativo concebido como um sistema operacional desktop e mobile de 
 
 ```plaintext
 portfolio-liquid-glass-experience/
+├── docs/
+│   └── ARCHITECTURE.md             # Technical Architecture & Design System Dossier
 ├── public/                         # Assets estáticos, capturas e wallpapers
 │   ├── docs/images/                # Capturas de tela oficiais (Desktop & Mobile, Dark & Light)
 │   ├── wallpapers/                 # Papéis de parede dinâmicos (Tahoe Light/Dark)
@@ -135,8 +146,7 @@ portfolio-liquid-glass-experience/
 │   │   ├── MenuBar.tsx             # Barra superior nativa do macOS
 │   │   ├── ControlCenter.tsx       # Central de Controle desktop
 │   │   ├── SpotlightModal.tsx      # Janela de busca Spotlight
-│   │   ├── MainWindow.tsx          # Janela principal do sistema
-│   │   └── WindowFrame.tsx         # Moldura com semáforo (Traffic Lights)
+│   │   └── WindowFrame.tsx         # Janela principal e moldura com semáforo (Traffic Lights)
 │   ├── context/                    # Contextos globais (ex: ThemeContext)
 │   ├── data/                       # Dados dos projetos, habilidades e configurações
 │   ├── lib/                        # Utilitários auxiliares e efeitos sonoros

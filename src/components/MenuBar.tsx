@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Search } from 'lucide-react'
+import { Search, Mic } from 'lucide-react'
 import { AppleControlCenterIcon } from './icons/ControlCenterIcon'
 import type { TabType, ThemeMode } from '../types'
 
@@ -9,6 +9,8 @@ interface MenuBarProps {
   isControlCenterOpen: boolean
   onSelectTab?: (tab: TabType) => void
   theme?: ThemeMode
+  onActivateNova?: () => void
+  isNovaActive?: boolean
 }
 
 export const MenuBar: React.FC<MenuBarProps> = ({
@@ -17,6 +19,8 @@ export const MenuBar: React.FC<MenuBarProps> = ({
   isControlCenterOpen,
   onSelectTab,
   theme,
+  onActivateNova,
+  isNovaActive = false,
 }) => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const [currentTime, setCurrentTime] = useState<string>('')
@@ -177,6 +181,35 @@ export const MenuBar: React.FC<MenuBarProps> = ({
 
       {/* 2. Lado Direito: Spotlight, Relógio e Central de Controle */}
       <div className="flex items-center space-x-2 text-[12px]">
+        {/* NOVA Apple Intelligence Button */}
+        {onActivateNova && (
+          <button
+            type="button"
+            id="nova-assistant-btn"
+            onClick={onActivateNova}
+            className={`p-1 rounded transition-all flex items-center gap-1 ${
+              isNovaActive
+                ? 'nova-menubar-active text-purple-400'
+                : 'hover:bg-black/5 dark:hover:bg-white/10 text-zinc-900 dark:text-white'
+            }`}
+            title={isNovaActive ? 'NOVA está ouvindo… (Esc para fechar)' : 'Assistente NOVA — Apple Intelligence (Space longa)'}
+            aria-label="Assistente NOVA"
+          >
+            <Mic
+              className={`w-3.5 h-3.5 transition-all ${
+                isNovaActive
+                  ? 'text-purple-400 scale-110'
+                  : 'text-zinc-900 dark:text-white'
+              }`}
+            />
+            {isNovaActive && (
+              <span className="text-[9px] font-mono font-bold tracking-wide" style={{ color: 'rgba(168,85,247,0.9)' }}>
+                NOVA
+              </span>
+            )}
+          </button>
+        )}
+
         {/* Spotlight Search (Cmd + K) */}
         <button
           type="button"

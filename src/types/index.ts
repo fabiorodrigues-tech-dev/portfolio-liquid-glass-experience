@@ -1,5 +1,7 @@
 export type TabType = 'projetos' | 'sobre' | 'habilidades' | 'contato'
 
+export type NovaState = 'idle' | 'listening' | 'executing'
+
 export type ThemeMode = 'light' | 'dark'
 
 export type GlassStyle = 'translucent' | 'tinted'

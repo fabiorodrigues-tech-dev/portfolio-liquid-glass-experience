@@ -23,19 +23,25 @@ export const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md animate-in fade-in duration-200 max-md:items-end max-md:p-0"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200 max-md:items-end max-md:p-0"
       onClick={onClose}
     >
       {/* Modal Window / Mobile Bottom Sheet */}
       <div
-        className="w-full max-w-2xl bg-[#f5f6fa]/95 dark:bg-[#0c0d14]/95 backdrop-blur-2xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 border border-black/10 dark:border-white/15 rounded-2xl max-md:rounded-t-[28px] max-md:rounded-b-none max-md:max-h-[90dvh] flex flex-col max-md:slide-in-from-bottom"
+        className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-3xl p-6 sm:p-8 select-none shadow-[0_25px_60px_rgba(0,0,0,0.5)] transition-all animate-in zoom-in-95 duration-200 flex flex-col custom-scrollbar max-md:rounded-t-[28px] max-md:rounded-b-none max-md:max-h-[90dvh] max-md:slide-in-from-bottom"
+        style={{
+          backgroundColor: isDark ? 'rgba(13, 16, 25, 0.62)' : 'rgba(255, 255, 255, 0.68)',
+          backdropFilter: 'blur(32px) saturate(190%)',
+          WebkitBackdropFilter: 'blur(32px) saturate(190%)',
+          border: isDark ? '1px solid rgba(255, 255, 255, 0.15)' : '1px solid rgba(255, 255, 255, 0.8)'
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Mobile Grabber Handle */}
-        <div className="w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mt-2.5 mb-1 max-md:block hidden" />
+        <div className="w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto -mt-2 mb-3 max-md:block hidden" />
 
         {/* Modal Header with Title and Close Button */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-black/10 dark:border-white/10 shrink-0 max-md:px-4 max-md:py-3">
+        <div className="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10 shrink-0">
           <div className="flex items-center space-x-2">
             <span
               className="w-3 h-3 rounded-full"
@@ -57,7 +63,7 @@ export const ProjectQuickLook: React.FC<ProjectQuickLookProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 max-h-[75vh] overflow-y-auto custom-scrollbar space-y-6 flex-1 max-md:p-4">
+        <div className="pt-6 space-y-6 flex-1">
           {/* Visual Hero Banner with Liquid Glass Accent Gradient */}
           <div
             className={`w-full h-44 rounded-2xl bg-gradient-to-br ${project.imageGradient} p-6 flex flex-col justify-end relative overflow-hidden border border-black/10 dark:border-white/10`}

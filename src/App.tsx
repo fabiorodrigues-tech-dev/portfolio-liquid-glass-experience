@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import type { AccentColor, Project, TabType, ThemeMode, GlassStyle } from './types'
+import type { AccentColor, Project, TabType, ThemeMode, GlassStyle, NovaState } from './types'
 import { TahoeWallpaper } from './components/TahoeWallpaper'
 import { MenuBar } from './components/MenuBar'
 import { WindowFrame } from './components/WindowFrame'
@@ -10,6 +10,7 @@ import { Dock } from './components/Dock'
 import { AudioPlayer } from './components/AudioPlayer'
 import { IntroBootScreen } from './components/IntroBootScreen'
 import { IOSMobileExperience } from './components/mobile/IOSMobileExperience'
+import { NovaAssistant } from './components/NovaAssistant'
 import { PROJECTS_DATA } from './data/portfolioData'
 import { ACCENT_COLORS } from './data/accentColors'
 import { playHapticClick } from './lib/soundEffects'
@@ -61,6 +62,9 @@ export function App() {
   const [skipTrigger, setSkipTrigger] = useState(0)
   const [prevTrigger, setPrevTrigger] = useState(0)
 
+  // NOVA Apple Intelligence Assistant
+  const [isNovaActive, setIsNovaActive] = useState(false)
+  const [novaSpeechState, setNovaSpeechState] = useState<NovaState>('idle')
 
   // Synchronize document dark class & local storage
   useEffect(() => {
@@ -178,6 +182,35 @@ export function App() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleTabChange])
 
+  // Escuta evento global de navegação disparado pela assistente ("portfolio-navigate")
+  useEffect(() => {
+    const handleNavigate = (e: Event) => {
+      const detail = (e as CustomEvent<string>).detail
+      if (detail === 'projects' || detail === 'projetos') {
+        handleTabChange('projetos')
+      } else if (detail === 'about' || detail === 'sobre') {
+        handleTabChange('sobre')
+      } else if (detail === 'skills' || detail === 'habilidades') {
+        handleTabChange('habilidades')
+      } else if (detail === 'contact' || detail === 'contato') {
+        handleTabChange('contato')
+      }
+    }
+    window.addEventListener('portfolio-navigate', handleNavigate)
+    return () => window.removeEventListener('portfolio-navigate', handleNavigate)
+  }, [handleTabChange])
+
+  // Escuta eventos globais de áudio disparados pela assistente ("portfolio-music-play" e "portfolio-music-pause")
+  useEffect(() => {
+    const handlePlay = () => setIsPlayingMusic(true)
+    const handlePause = () => setIsPlayingMusic(false)
+    window.addEventListener('portfolio-music-play', handlePlay)
+    window.addEventListener('portfolio-music-pause', handlePause)
+    return () => {
+      window.removeEventListener('portfolio-music-play', handlePlay)
+      window.removeEventListener('portfolio-music-pause', handlePause)
+    }
+  }, [])
 
   return (
     <>
@@ -195,6 +228,8 @@ export function App() {
           isControlCenterOpen={isControlCenterOpen}
           onSelectTab={handleTabChange}
           theme={theme}
+          onActivateNova={() => setIsNovaActive((prev) => !prev)}
+          isNovaActive={isNovaActive}
         />
 
         {/* 3. Main Window Frame (Liquid Glass Large) */}
@@ -256,6 +291,25 @@ export function App() {
 
         {/* 9. macOS Intro Boot Screen (First Visit) */}
         <IntroBootScreen />
+
+        {/* 10. NOVA — Apple Intelligence Assistant */}
+        <NovaAssistant
+          isActive={isNovaActive}
+          onActivate={() => setIsNovaActive(true)}
+          onDeactivate={() => setIsNovaActive(false)}
+          novaSpeechState={novaSpeechState}
+          onStateChange={setNovaSpeechState}
+          onTogglePlay={togglePlayMusic}
+          onSetTheme={setTheme}
+          onToggleTheme={toggleTheme}
+          onToggleFocus={() => setIsFocusMode((prev) => !prev)}
+          onOpenSpotlight={(term) => {
+            setIsSpotlightOpen(true)
+            // Spotlight will receive the term via URL search or direct prop if implemented
+            console.debug('NOVA Spotlight:', term)
+          }}
+          onSelectTab={handleTabChange}
+        />
       </div>
 
       {/* ========================================================================= */}

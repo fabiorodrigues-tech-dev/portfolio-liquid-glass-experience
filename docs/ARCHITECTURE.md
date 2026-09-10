@@ -49,3 +49,108 @@ Orchestrates independent enterprise repositories:
 - Unreal 5.2 MetaHuman: Lumen, Nanite, Quixel Megascans, Realtime Rigging.
 
 ---
+
+## 6. NOVA Assistant — Apple Intelligence Layer
+
+**Component**: [`NovaAssistant.tsx`](../src/components/NovaAssistant.tsx)  
+**State Types**: `NovaState = 'idle' | 'listening' | 'executing'` (see [`types/index.ts`](../src/types/index.ts))
+
+### 6.1 Activation Vectors
+| Trigger | Behaviour |
+|---------|-----------|
+| `Space` held ≥ 700ms | Toggle NOVA (long-press via `keydown` timer, prevents default scroll) |
+| MenuBar `🎙️` button | Toggle NOVA with single click |
+| `Esc` key | Deactivate NOVA unconditionally |
+
+### 6.2 Perimeter Glow — CSS Optical Engine
+Two-layer pseudo-element system on `.nova-glow-frame` (z-index: 60):
+- **`::before`** — 5px hard-edge conic border using `padding-box / border-box` gradient trick (no SVG, no canvas)
+- **`::after`** — 14px soft halo with `filter: blur(10px)` for the luminous spread
+- Gradient: `#00f2fe → #a855f7 → #ec4899 → #f59e0b → #22d3ee` rotating at 3s linear cycle
+- Outer ring pulses via `nova-pulse-ring` (opacity 0.82 ↔ 1.0, 2s ease-in-out)
+
+### 6.3 Harmonic Chime — Web Audio API
+Pure synthesis via `AudioContext` singleton (`_chimeCtx`). Two sinusoidal oscillators in major-third interval:
+
+| Note | Frequency | Delay | Attack | Release |
+|------|-----------|-------|--------|---------|
+| C5   | 523.25 Hz | 0ms   | 25ms   | 420ms   |
+| E5   | 659.25 Hz | 80ms  | 25ms   | 420ms   |
+
+Gain envelope: `linearRamp(0→0.16, 25ms)` → `exponentialRamp(0.16→0.0001, 420ms)`. Matches Apple Intelligence double-chime harmonic signature.
+
+### 6.4 Voice Command Pipeline
+Uses `webkitSpeechRecognition` (PT-BR locale) in continuous + interimResults mode. Commands are parsed via `parseCommand()` against a priority-ordered string-match table:
+
+```
+tocar/play          → togglePlay()
+pausar/pause        → togglePlay()
+modo claro/escuro   → toggleTheme()
+modo foco           → toggleFocus()
+buscar [termo]      → openSpotlight(termo)
+abrir [seção]       → selectTab(seção)
+```
+
+On `isFinal = true`: executes command → `onStateChange('executing')` → `onDeactivate()` after 800ms.  
+Auto-restart on `onend` while `isNovaActive = true` (prevents recognition timeout).
+
+### 6.5 Transcript Caption Capsule
+`.nova-caption-capsule` — fixed bottom center pill (z-65):
+- `backdrop-filter: blur(32px) saturate(190%)`
+- Animated entry via `nova-caption-appear` keyframe (translateY + scale from 0.95)
+- Pulsing gradient dot (`nova-caption-dot`) indicating live mic state
+
+---
+
+## 7. Desktop Control Center — macOS 26 Reconstruction
+
+**Component**: [`ControlCenter.tsx`](../src/components/ControlCenter.tsx)
+
+### 7.1 Native Popover Behaviour (Desktop vs Mobile)
+| Platform | Scrim | z-index | Position |
+|----------|-------|---------|----------|
+| Desktop ≥ 768px | **None** — content visible behind | z-40 | `fixed top-9 right-3 w-[330px]` |
+| Mobile < 768px | Full-screen dismiss overlay | z-50 | Bottom sheet `rounded-t-[28px]` |
+
+O popover flutua nativamente sobre o conteúdo com Liquid Glass e sem backdrop escuro. A paleta de cores de acento foi completamente removida no desktop, aderindo ao design real do macOS 26.
+
+### 7.2 Estrutura Oficial em 5 Linhas (Fiel ao macOS Nativo)
+```
+┌──────────────────────────────────────────────────────────┐
+│ LINHA 1 (Topo):                                         │
+│ ┌─────────────────────────┐ ┌──────────────────────────┐ │
+│ │ Conexões (Pílulas):     │ │ Mídia:                   │ │
+│ │ • Status (Recife, PE)   │ │ • Capa álbum (EQ animado)│ │
+│ │ • LinkedIn Oficial      │ │ • Faixa MIDNIGHT         │ │
+│ │ • GitHub Repositórios   │ │ • Botão Play/Pause + Pular││
+│ └─────────────────────────┘ └──────────────────────────┘ │
+│                                                          │
+│ LINHA 2:                                                 │
+│ [ 🌙 Foco                              Ativo / Desativar ]│
+│                                                          │
+│ LINHA 3:                                                 │
+│ Tela                                             [ 100% ]│
+│ ☀ dim ──────[━━━━●────────]────── ☀ bright                │
+│                                                          │
+│ LINHA 4:                                                 │
+│ Som                                               [ 70% ]│
+│ 🔊 dim ─────[━━━━●────────]────── 🔊 bright               │
+│                                                          │
+│ LINHA 5 (Base):                                          │
+│ [ ☀ / 🌙 Modo Dia / Modo Noite ]  ( 💬 WPP )  ( 📁 Drive ) │
+└──────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 8. NOVA — Assistente Apple Intelligence
+
+- **Borda Fina Perimetral de 3.5px**: Utiliza cantos arredondados (`rounded-[28px]`, `inset-2 sm:inset-3`) com gradiente fluido (#00f2fe, #a855f7, #ec4899, #f59e0b) estritamente restrito à borda via técnica `border-box`/`padding-box`. O centro da tela permanece 100% limpo, transparente, nítido e interativo.
+- **Reconhecimento de Voz (pt-BR)**: Web Speech API configurado com `lang = 'pt-BR'`, `continuous = false`, `interimResults = true`, com execução instantânea dos comandos de voz:
+  - "Tocar" / "Música" / "Musica" / "Play" -> `togglePlay()`, `closeNova()`
+  - "Pausar" / "Pause" / "Parar" -> `togglePlay()`, `closeNova()`
+  - "Claro" / "Dia" -> `setTheme('light')`, `closeNova()`
+  - "Escuro" / "Noite" -> `setTheme('dark')`, `closeNova()`
+  - "Foco" / "Ocultar dock" -> `toggleFocus()`, `closeNova()`
+  - "Buscar" -> `openSpotlightWith(term)`, `closeNova()`
+- **Feedback Visual**: Cápsula de transcrição inferior flutuante exibindo em tempo real o que o usuário está falando.

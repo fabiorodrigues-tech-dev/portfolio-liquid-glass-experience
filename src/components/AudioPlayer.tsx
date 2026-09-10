@@ -40,6 +40,52 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
     onStateChangeRef.current = onStateChange
   }, [isPlaying, volume, isMuted, onStateChange])
 
+  // Escuta eventos globais para disparo por voz ("portfolio-music-play" e "portfolio-music-pause")
+  useEffect(() => {
+    const handlePlayEvent = () => {
+      if (onStateChangeRef.current) {
+        onStateChangeRef.current(true)
+      }
+      if (playerRef.current && typeof playerRef.current.playVideo === 'function') {
+        try {
+          playerRef.current.playVideo()
+        } catch {
+          /* noop */
+        }
+      } else if (iframeRef.current?.contentWindow) {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func: 'playVideo', args: '' }),
+          '*'
+        )
+      }
+    }
+
+    const handlePauseEvent = () => {
+      if (onStateChangeRef.current) {
+        onStateChangeRef.current(false)
+      }
+      if (playerRef.current && typeof playerRef.current.pauseVideo === 'function') {
+        try {
+          playerRef.current.pauseVideo()
+        } catch {
+          /* noop */
+        }
+      } else if (iframeRef.current?.contentWindow) {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func: 'pauseVideo', args: '' }),
+          '*'
+        )
+      }
+    }
+
+    window.addEventListener('portfolio-music-play', handlePlayEvent)
+    window.addEventListener('portfolio-music-pause', handlePauseEvent)
+    return () => {
+      window.removeEventListener('portfolio-music-play', handlePlayEvent)
+      window.removeEventListener('portfolio-music-pause', handlePauseEvent)
+    }
+  }, [])
+
   // Load YouTube Iframe API once
   useEffect(() => {
     if (typeof window === 'undefined') return

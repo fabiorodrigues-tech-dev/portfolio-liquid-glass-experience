@@ -332,6 +332,7 @@ export function App() {
           isFocusMode={isFocusMode}
           isWindowMinimized={isWindowMinimized}
           onRestoreWindow={handleRestoreWindow}
+          isControlCenterOpen={isControlCenterOpen}
         />
 
         {/* 9. macOS Intro Boot Screen (First Visit) */}

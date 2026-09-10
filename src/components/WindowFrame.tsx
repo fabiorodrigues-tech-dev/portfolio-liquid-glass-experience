@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TrafficLights } from './TrafficLights'
 import { SegmentedControl } from './SegmentedControl'
 import type { TabType, ThemeMode, Project } from '../types'
@@ -7,6 +7,7 @@ import { AboutTab } from './tabs/AboutTab'
 import { SkillsTab } from './tabs/SkillsTab'
 import { ContactTab } from './tabs/ContactTab'
 import { Sun, Moon, Search } from 'lucide-react'
+import { playHapticClick } from '../lib/soundEffects'
 
 interface WindowFrameProps {
   activeTab: TabType
@@ -16,6 +17,12 @@ interface WindowFrameProps {
   onOpenSpotlight: () => void
   onSelectProject: (project: Project) => void
   isFocusMode?: boolean
+  isMinimized?: boolean
+  isMinimizing?: boolean
+  isRestoring?: boolean
+  onMinimize?: () => void
+  onFinishMinimize?: () => void
+  onFinishRestore?: () => void
 }
 
 export const WindowFrame: React.FC<WindowFrameProps> = ({
@@ -26,56 +33,77 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
   onOpenSpotlight,
   onSelectProject,
   isFocusMode = false,
+  isMinimized = false,
+  isMinimizing = false,
+  isRestoring = false,
+  onMinimize,
+  onFinishMinimize,
+  onFinishRestore,
 }) => {
   const [isMaximized, setIsMaximized] = useState(false)
-  const [isMinimized, setIsMinimized] = useState(false)
   const isDark = theme === 'dark'
 
-  const handleClose = () => {
-    setIsMinimized(true)
-  }
-
-  const handleMinimize = () => {
-    setIsMinimized(!isMinimized)
-  }
-
   const handleZoom = () => {
-    setIsMaximized(!isMaximized)
+    playHapticClick()
+    setIsMaximized((prev) => !prev)
   }
 
-  if (isMinimized) {
-    return (
-      <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-40">
-        <button
-          type="button"
-          onClick={() => setIsMinimized(false)}
-          className="bg-[#f5f6fa]/95 dark:bg-[#0c0d14]/95 backdrop-blur-xl border border-black/15 dark:border-white/15 rounded-xl px-4 py-2 flex items-center space-x-2 text-xs font-semibold shadow-2xl hover:scale-105 transition-transform text-zinc-900 dark:text-white cursor-pointer"
-        >
-          <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-          <span>Restaurar Janela de Fábio Rodrigues (macOS)</span>
-        </button>
-      </div>
-    )
+  // Fallback safety timers to ensure animation ends cleanly
+  useEffect(() => {
+    if (isMinimizing) {
+      const timer = setTimeout(() => {
+        onFinishMinimize?.()
+      }, 560)
+      return () => clearTimeout(timer)
+    }
+    if (isRestoring) {
+      const timer = setTimeout(() => {
+        onFinishRestore?.()
+      }, 540)
+      return () => clearTimeout(timer)
+    }
+  }, [isMinimizing, isRestoring, onFinishMinimize, onFinishRestore])
+
+  if (isMinimized && !isMinimizing && !isRestoring) {
+    return null
   }
 
   return (
     <div
-      className={`w-full transition-all duration-300 relative ${
+      onAnimationEnd={(e) => {
+        if (e.target === e.currentTarget) {
+          if (isMinimizing) onFinishMinimize?.()
+          if (isRestoring) onFinishRestore?.()
+        }
+      }}
+      className={`w-full relative ${
         isMaximized
-          ? 'max-w-[98vw] h-[calc(100vh-75px)] mt-9'
+          ? isFocusMode
+            ? 'max-w-[calc(100vw-32px)] h-[calc(100vh-56px)]'
+            : 'max-w-[calc(100vw-32px)] h-[calc(100vh-80px)]'
           : isFocusMode
-          ? 'max-w-5xl h-[calc(100vh-62px)] mt-8'
-          : 'max-w-5xl h-[calc(100vh-110px)] mt-10'
-      } ${isDark ? 'dark-theme' : 'light-theme'} mx-auto flex flex-col apple-liquid-glass window-frame rounded-3xl overflow-hidden select-none
-      max-md:fixed max-md:inset-0 max-md:w-full max-md:h-full max-md:h-[100dvh] max-md:max-w-none max-md:mt-0 max-md:rounded-none max-md:border-0 max-md:shadow-none max-md:z-10`}
+          ? 'max-w-5xl h-[calc(100vh-64px)]'
+          : 'max-w-5xl h-[calc(100vh-112px)]'
+      } ${isDark ? 'dark-theme' : 'light-theme'} mx-auto my-auto flex flex-col apple-liquid-glass window-frame ${
+        isMinimizing ? 'window-genie-minimizing' : ''
+      } ${
+        isRestoring ? 'window-genie-restoring' : ''
+      } rounded-3xl overflow-hidden select-none
+      max-md:fixed max-md:inset-0 max-md:w-full max-md:h-full max-md:h-[100dvh] max-md:max-w-none max-md:m-0 max-md:rounded-none max-md:border-0 max-md:shadow-none max-md:z-10`}
     >
       {/* Window Top Toolbar Header - Desktop Only */}
-      <div className="h-13 px-4 flex items-center justify-between border-b border-black/5 dark:border-white/10 shrink-0 relative max-md:hidden">
+      <div
+        onDoubleClick={(e) => {
+          if ((e.target as HTMLElement).closest('button, a, input, [role="tab"]')) return
+          handleZoom()
+        }}
+        className="h-13 px-4 flex items-center justify-between border-b border-black/5 dark:border-white/10 shrink-0 relative max-md:hidden cursor-default"
+      >
         {/* Left: Official Apple Traffic Lights & Window Title */}
         <div className="flex items-center space-x-3.5">
           <TrafficLights
-            onClose={handleClose}
-            onMinimize={handleMinimize}
+            onClose={onMinimize}
+            onMinimize={onMinimize}
             onZoom={handleZoom}
             isMaximized={isMaximized}
           />

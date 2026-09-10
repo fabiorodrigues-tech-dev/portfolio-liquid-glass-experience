@@ -95,12 +95,15 @@ Portfólio interativo concebido como um sistema operacional desktop e mobile de 
 ## ⚡ Principais Funcionalidades
 
 ### 🖥️ Desktop (macOS Tahoe)
-- **Menu Bar Interativa:** Relógio em tempo real, status de conectividade (Wi-Fi, Bluetooth, Bateria), Menu Apple oficial e acesso à Central de Controle.
-- **Dock Dinâmica:** Efeito de escala e elevação com indicadores de aplicativos ativos e glassmorphism refinado.
+- **Efeito Gênio (Genie Effect) Oficial:** Deformação em funil 3D e sucção acelerada da janela para o Dock acionável via botão amarelo do semáforo ou atalho `Cmd + M`, com cartão miniatura dedicado no Dock e restauração elástica instantânea.
+- **Física de Janelas Tahoe:** Motor de física com interpolação contínua de dimensões (`480ms cubic-bezier(0.16, 1, 0.3, 1)`), duplo clique na barra de títulos e semáforo com ícones dinâmicos de restauração.
+- **Central de Controle macOS:** Sliders táteis sem latência para brilho e volume, alternância de modo Foco, controle óptico Liquid Glass (*Translúcido* vs *Tonalizado*), controle de som do site e calibração óptica de alto contraste no Modo Dia (WCAG AAA).
+- **Assistente NOVA (Apple Intelligence):** Integração multimodal com reconhecimento de voz contínuo, edge glow perimetral SVG, sintetizador harmônico Web Audio e controle por voz do sistema.
+- **Menu Bar Interativa:** Relógio em tempo real, status de conectividade (Wi-Fi, Bluetooth, Bateria), microfone da NOVA, Menu Apple oficial e acesso rápido à Central de Controle.
+- **Dock Dinâmica:** Efeito de escala e elevação com indicadores de aplicativos ativos, miniatura de janela minimizada e glassmorphism refinado.
 - **Spotlight Search (`Cmd + K` / Ícone):** Janela de busca instantânea com filtro inteligente por projetos, tecnologias e contatos.
-- **Central de Controle:** Sliders fluidos e sem latência para ajuste de brilho de tela e volume de áudio, alternância de modo Foco e controle de tema.
-- **Player de Áudio & Visualizador Sonoro:** Player integrado com visualizador de frequências circular (`CircularVisualizer`) e efeitos sonoros nativos de interação.
-- **Janelas & Quick Look:** Navegação por abas (*Sobre Mim*, *Projetos*, *Habilidades* e *Contato*) com suporte a visualização rápida em modal de alta resolução.
+- **Player de Áudio & Visualizador Sonoro:** Player integrado com visualizador de frequências circular (`CircularVisualizer`) e efeitos sonoros hápticos nativos.
+- **Janelas & Quick Look:** Navegação fluida por abas (*Sobre Mim*, *Projetos*, *Habilidades* e *Contato*) com suporte a visualização rápida em modal de alta resolução.
 
 ### 📱 Mobile (iOS Liquid Glass)
 - **Detecção Automática de Viewport:** Reconhecimento em tempo de execução para servir a experiência mobile sob medida.

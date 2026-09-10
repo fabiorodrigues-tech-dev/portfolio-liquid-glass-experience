@@ -9,11 +9,10 @@ import {
   Pause,
   SkipForward,
   Music,
-  FolderOpen,
+  Layers,
 } from 'lucide-react'
 import type { AccentColor, ThemeMode, GlassStyle } from '../types'
-import { PROFILE_LINKS } from '../data/portfolioData'
-import { LinkedinIcon, WhatsAppIcon } from './icons/SocialIcons'
+import { playHapticClick } from '../lib/soundEffects'
 
 interface ControlCenterProps {
   isOpen: boolean
@@ -45,6 +44,9 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
   isFocusMode,
   onToggleFocusMode,
   glassStyle = 'translucent',
+  onToggleGlassStyle,
+  isSoundEffectsEnabled = true,
+  onToggleSoundEffects,
   isPlayingMusic,
   onTogglePlayMusic,
   soundVolume,
@@ -83,14 +85,14 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
 
       {/* Control Center Panel — macOS Native 5-Row Structure */}
       <div
-        className={`fixed top-9 right-3 w-[330px] p-3 rounded-[22px] apple-liquid-glass ${
+        className={`fixed top-9 right-3 w-[330px] p-3 rounded-[22px] apple-liquid-glass control-center-panel ${
           isDark
             ? glassStyle === 'tinted'
               ? 'bg-[#0c0d14]/92 text-white'
-              : 'bg-[#0c0d14]/65 text-white'
+              : 'bg-[#0c0d14]/75 text-white'
             : glassStyle === 'tinted'
-            ? 'bg-white/92 text-zinc-950'
-            : 'bg-white/70 text-zinc-950'
+            ? 'bg-white/95 text-zinc-950'
+            : 'bg-[#f6f8fc]/90 text-zinc-950'
         } shadow-2xl z-40 animate-in fade-in slide-in-from-top-2 duration-150 border border-black/10 dark:border-white/15 select-none
         max-md:top-auto max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:w-full max-md:rounded-t-[28px] max-md:rounded-b-none max-md:border-t max-md:border-x-0 max-md:border-b-0 max-md:px-4 max-md:pt-3 max-md:pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] max-md:max-h-[85dvh] max-md:overflow-y-auto max-md:slide-in-from-bottom max-md:z-50`}
         onClick={(e) => e.stopPropagation()}
@@ -101,74 +103,97 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
         {/* ── LINHA 1 (Topo): Grid 2 Colunas (Conexões + Mídia) ──────────── */}
         <div className="grid grid-cols-2 gap-2 mb-2">
           {/* Esquerda: Bloco com pílulas arredondadas de Conexões */}
-          <div className="bg-black/[0.04] dark:bg-white/[0.05] rounded-[18px] p-2 flex flex-col justify-between gap-1 border border-black/5 dark:border-white/5">
+          <div className="cc-tile bg-white/70 dark:bg-white/[0.05] rounded-[18px] p-2 flex flex-col justify-between gap-1 border border-black/6 dark:border-white/5">
             {/* Pill 1 — Status Recife */}
             <div className="flex items-center gap-2 px-1.5 py-1 rounded-xl">
               <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center shrink-0 shadow-sm">
                 <Sparkles className="w-3.5 h-3.5 text-white" />
               </div>
               <div className="overflow-hidden leading-tight">
-                <div className="text-[11px] font-bold text-zinc-900 dark:text-white truncate">Recife, PE</div>
-                <div className="text-[9.5px] text-zinc-500 dark:text-zinc-400 truncate font-medium">macOS 26 Tahoe</div>
+                <div className="text-[11px] font-bold cc-text-primary text-zinc-900 dark:text-white truncate">Recife, PE</div>
+                <div className="text-[9.5px] cc-text-secondary text-zinc-600 dark:text-zinc-400 truncate font-medium">macOS 26 Tahoe</div>
               </div>
             </div>
 
             {/* Divider */}
-            <div className="h-px bg-black/6 dark:bg-white/8 mx-1" />
+            <div className="cc-divider h-px bg-black/8 dark:bg-white/8 mx-1" />
 
-            {/* Pill 2 — LinkedIn */}
-            <a
-              href={PROFILE_LINKS.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-2 px-1.5 py-1 rounded-xl hover:bg-black/5 dark:hover:bg-white/8 transition-all cursor-pointer group"
-              title="Conectar no LinkedIn"
+            {/* Pill 2 — Liquid Glass (Translúcido / Tonalizado) */}
+            <button
+              type="button"
+              onClick={() => {
+                playHapticClick()
+                onToggleGlassStyle?.()
+              }}
+              className={`flex items-center gap-2 px-1.5 py-1 rounded-xl transition-all cursor-pointer group text-left ${
+                glassStyle === 'tinted'
+                  ? 'bg-[#007aff]/15 dark:bg-[#0a84ff]/25'
+                  : 'hover:bg-black/5 dark:hover:bg-white/8'
+              }`}
+              title="Alternar estilo óptico: Translúcido vs Tonalizado"
             >
-              <div className="w-7 h-7 rounded-full bg-[#0077b5] flex items-center justify-center shrink-0 shadow-sm text-white group-hover:scale-105 transition-transform">
-                <LinkedinIcon className="w-3.5 h-3.5 fill-white" />
+              <div
+                className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                  glassStyle === 'tinted'
+                    ? 'bg-[#007aff] text-white shadow-sm'
+                    : 'bg-black/8 dark:bg-white/10 text-zinc-700 dark:text-zinc-300'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5" />
               </div>
               <div className="overflow-hidden leading-tight flex-1 min-w-0">
-                <div className="text-[11px] font-bold text-zinc-900 dark:text-white truncate">LinkedIn</div>
-                <div className="text-[9.5px] text-zinc-500 dark:text-zinc-400 truncate font-medium">Conectar</div>
-              </div>
-            </a>
-
-            {/* Divider */}
-            <div className="h-px bg-black/6 dark:bg-white/8 mx-1" />
-
-            {/* Pill 3 — GitHub */}
-            <a
-              href="https://github.com/fabiorodrigues-tech-dev/portfolio-liquid-glass-experience"
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-2 px-1.5 py-1 rounded-xl hover:bg-black/5 dark:hover:bg-white/8 transition-all cursor-pointer group"
-              title="Acessar Repositório Oficial do Projeto no GitHub"
-            >
-              <div className="w-7 h-7 rounded-xl bg-white border border-zinc-300 dark:bg-[#0d1117] dark:border-white/20 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                <div className="w-5 h-5 rounded-full bg-[#0d1117] dark:bg-white flex items-center justify-center overflow-hidden">
-                  <svg className="w-3.5 h-3.5 fill-white dark:fill-black" viewBox="0 0 24 24">
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                    />
-                  </svg>
+                <div className="text-[11px] font-bold cc-text-primary text-zinc-900 dark:text-white truncate">Liquid Glass</div>
+                <div className="text-[9.5px] cc-text-secondary text-zinc-600 dark:text-zinc-400 truncate font-medium">
+                  {glassStyle === 'tinted' ? 'Tonalizado' : 'Translúcido'}
                 </div>
               </div>
-              <div className="overflow-hidden leading-tight flex-1 min-w-0">
-                <div className="text-[11px] font-bold text-zinc-900 dark:text-white truncate">GitHub</div>
-                <div className="text-[9.5px] text-zinc-500 dark:text-zinc-400 truncate font-medium">Repositório</div>
+            </button>
+
+            {/* Divider */}
+            <div className="cc-divider h-px bg-black/8 dark:bg-white/8 mx-1" />
+
+            {/* Pill 3 — Som do Site (Ativar / Desativar Efeitos Sonoros) */}
+            <button
+              type="button"
+              onClick={() => {
+                onToggleSoundEffects?.()
+              }}
+              className={`flex items-center gap-2 px-1.5 py-1 rounded-xl transition-all cursor-pointer group text-left ${
+                isSoundEffectsEnabled
+                  ? 'bg-[#34c759]/15 dark:bg-[#30d158]/25'
+                  : 'hover:bg-black/5 dark:hover:bg-white/8'
+              }`}
+              title={isSoundEffectsEnabled ? 'Desativar som do site' : 'Ativar som do site'}
+            >
+              <div
+                className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                  isSoundEffectsEnabled
+                    ? 'bg-[#34c759] text-white shadow-sm'
+                    : 'bg-black/8 dark:bg-white/10 text-zinc-600 dark:text-zinc-400'
+                }`}
+              >
+                {isSoundEffectsEnabled ? (
+                  <Volume2 className="w-3.5 h-3.5" />
+                ) : (
+                  <VolumeX className="w-3.5 h-3.5" />
+                )}
               </div>
-            </a>
+              <div className="overflow-hidden leading-tight flex-1 min-w-0">
+                <div className="text-[11px] font-bold cc-text-primary text-zinc-900 dark:text-white truncate">Som do Site</div>
+                <div className="text-[9.5px] cc-text-secondary text-zinc-600 dark:text-zinc-400 truncate font-medium">
+                  {isSoundEffectsEnabled ? 'Ativado' : 'Desativado'}
+                </div>
+              </div>
+            </button>
           </div>
 
           {/* Direita: Bloco de Mídia com capa, título e controles Play/Pause */}
           <div
-            className="rounded-[18px] p-2.5 flex flex-col justify-between gap-2 relative overflow-hidden border border-black/5 dark:border-white/5"
+            className="cc-media-card rounded-[18px] p-2.5 flex flex-col justify-between gap-2 relative overflow-hidden border border-black/6 dark:border-white/5"
             style={{
               background: isDark
                 ? 'linear-gradient(145deg, rgba(88,40,156,0.38) 0%, rgba(20,22,35,0.65) 100%)'
-                : 'linear-gradient(145deg, rgba(140,80,220,0.18) 0%, rgba(200,180,255,0.28) 100%)',
+                : 'linear-gradient(145deg, rgba(235, 230, 255, 0.90) 0%, rgba(220, 235, 255, 0.85) 100%)',
             }}
           >
             {/* Album Art & Title */}
@@ -197,9 +222,9 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
                 </div>
               </div>
               <div className="overflow-hidden flex-1 min-w-0">
-                <div className="text-[11px] font-bold text-zinc-900 dark:text-white truncate leading-tight">MIDNIGHT</div>
-                <div className="text-[9.5px] text-zinc-500 dark:text-zinc-400 truncate font-medium">CHILL PHONK</div>
-                <div className="text-[9px] text-zinc-400 dark:text-zinc-500 truncate">Nemi FM</div>
+                <div className="text-[11px] font-bold cc-text-primary text-zinc-900 dark:text-white truncate leading-tight">MIDNIGHT</div>
+                <div className="text-[9.5px] cc-text-secondary text-zinc-600 dark:text-zinc-400 truncate font-medium">CHILL PHONK</div>
+                <div className="text-[9px] cc-text-secondary text-zinc-500 dark:text-zinc-500 truncate">Nemi FM</div>
               </div>
             </div>
 
@@ -226,7 +251,7 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
               <button
                 type="button"
                 onClick={onSkipTrack}
-                className="w-7 h-7 rounded-full bg-black/8 dark:bg-white/12 text-zinc-700 dark:text-zinc-200 flex items-center justify-center hover:bg-black/12 dark:hover:bg-white/20 transition-all cursor-pointer"
+                className="w-7 h-7 rounded-full bg-black/8 dark:bg-white/12 text-zinc-800 dark:text-zinc-200 flex items-center justify-center hover:bg-black/15 dark:hover:bg-white/20 transition-all cursor-pointer"
                 title="Pular faixa"
               >
                 <SkipForward className="w-3.5 h-3.5" />
@@ -239,7 +264,7 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
         <button
           type="button"
           onClick={onToggleFocusMode}
-          className={`w-full mb-2 bg-black/[0.04] dark:bg-white/[0.05] hover:bg-black/[0.07] dark:hover:bg-white/[0.08] rounded-[18px] p-2 flex items-center justify-between transition-all cursor-pointer border border-black/5 dark:border-white/5 text-left ${
+          className={`cc-tile w-full mb-2 bg-white/70 dark:bg-white/[0.05] hover:bg-white/90 dark:hover:bg-white/[0.08] rounded-[18px] p-2 flex items-center justify-between transition-all cursor-pointer border border-black/6 dark:border-white/5 text-left ${
             isFocusMode ? 'ring-1 ring-[#5856d6]/40 dark:ring-[#5e5ce6]/50' : ''
           }`}
           title="Modo Foco: Oculta o Dock para máxima concentração"
@@ -247,7 +272,7 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
           <div className="flex items-center gap-2.5">
             <div
               className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all ${
-                isFocusMode ? 'bg-[#5856d6] text-white shadow-sm' : 'bg-black/10 dark:bg-white/10 text-zinc-600 dark:text-zinc-300'
+                isFocusMode ? 'bg-[#5856d6] text-white shadow-sm' : 'bg-black/8 dark:bg-white/10 text-zinc-700 dark:text-zinc-300'
               }`}
             >
               <Moon
@@ -257,8 +282,8 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
               />
             </div>
             <div>
-              <div className="text-[11.5px] font-bold text-zinc-900 dark:text-white leading-tight">Foco</div>
-              <div className="text-[9.5px] text-zinc-500 dark:text-zinc-400 font-medium">
+              <div className="text-[11.5px] font-bold cc-text-primary text-zinc-900 dark:text-white leading-tight">Foco</div>
+              <div className="text-[9.5px] cc-text-secondary text-zinc-600 dark:text-zinc-400 font-medium">
                 {isFocusMode ? 'Ativo • Dock Oculto' : 'Desativado'}
               </div>
             </div>
@@ -266,21 +291,21 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
           <div className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-all ${
             isFocusMode
               ? 'bg-[#5856d6]/20 text-[#5856d6] dark:text-[#a5b4fc]'
-              : 'bg-black/5 dark:bg-white/5 text-zinc-500 dark:text-zinc-400'
+              : 'bg-black/6 dark:bg-white/5 cc-text-secondary text-zinc-700 dark:text-zinc-400 font-semibold'
           }`}>
             {isFocusMode ? 'Ativo' : 'Ativar'}
           </div>
         </button>
 
         {/* ── LINHA 3: Slider Horizontal de "Tela" (Brilho) ──────────────── */}
-        <div className="bg-black/[0.04] dark:bg-white/[0.05] rounded-[18px] px-3 py-2 mb-2 border border-black/5 dark:border-white/5">
+        <div className="cc-tile bg-white/70 dark:bg-white/[0.05] rounded-[18px] px-3 py-2 mb-2 border border-black/6 dark:border-white/5">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-[11px] font-semibold text-zinc-700 dark:text-zinc-300">Tela</span>
-            <span className="text-[9.5px] font-mono text-zinc-500 dark:text-zinc-400">{brightness}%</span>
+            <span className="text-[11px] font-bold cc-text-primary text-zinc-900 dark:text-zinc-300">Tela</span>
+            <span className="text-[9.5px] font-mono cc-text-secondary text-zinc-600 dark:text-zinc-400 font-semibold">{brightness}%</span>
           </div>
           <div className="flex items-center gap-2">
             {/* Sun dim */}
-            <Sun className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500 shrink-0" style={{ opacity: 0.55 }} />
+            <Sun className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 shrink-0" />
             {/* Barra horizontal fina com knob */}
             <div className="relative flex-1 h-5 flex items-center">
               <div className="relative w-full h-1.5 bg-black/10 dark:bg-white/15 rounded-full">
@@ -309,10 +334,10 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
         </div>
 
         {/* ── LINHA 4: Slider Horizontal de "Som" (Volume) ───────────────── */}
-        <div className="bg-black/[0.04] dark:bg-white/[0.05] rounded-[18px] px-3 py-2 mb-2 border border-black/5 dark:border-white/5">
+        <div className="cc-tile bg-white/70 dark:bg-white/[0.05] rounded-[18px] px-3 py-2 mb-2 border border-black/6 dark:border-white/5">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-[11px] font-semibold text-zinc-700 dark:text-zinc-300">Som</span>
-            <span className="text-[9.5px] font-mono text-zinc-500 dark:text-zinc-400">{isSoundMuted ? '0%' : `${soundVolume}%`}</span>
+            <span className="text-[11px] font-bold cc-text-primary text-zinc-900 dark:text-zinc-300">Som</span>
+            <span className="text-[9.5px] font-mono cc-text-secondary text-zinc-600 dark:text-zinc-400 font-semibold">{isSoundMuted ? '0%' : `${soundVolume}%`}</span>
           </div>
           <div className="flex items-center gap-2">
             {/* Volume/Headphone icon (mute/unmute) */}
@@ -325,7 +350,7 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
               {isSoundMuted || soundVolume === 0 ? (
                 <VolumeX className="w-3.5 h-3.5 text-[#ff3b30]" />
               ) : (
-                <Volume2 className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500" style={{ opacity: 0.65 }} />
+                <Volume2 className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
               )}
             </button>
             {/* Barra horizontal fina com knob */}
@@ -355,15 +380,17 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
           </div>
         </div>
 
-        {/* ── LINHA 5 (Base): Botão Largo de Aparência + Botões Circulares ── */}
-        <div className="flex items-center gap-2">
-          {/* Botão Largo com Ícone de Sol/Lua para Alternar Modo Dia e Modo Noite */}
-          <button
-            type="button"
-            onClick={onToggleTheme}
-            className="flex-1 h-10 px-3 rounded-[18px] bg-black/[0.04] dark:bg-white/[0.05] hover:bg-black/[0.07] dark:hover:bg-white/[0.08] border border-black/5 dark:border-white/5 flex items-center gap-2.5 transition-all cursor-pointer text-left group"
-            title={isDark ? 'Alternar para Modo Dia' : 'Alternar para Modo Noite'}
-          >
+        {/* ── LINHA 5 (Base): Botão de Aparência (Modo Dia / Modo Noite) ── */}
+        <button
+          type="button"
+          onClick={() => {
+            playHapticClick()
+            onToggleTheme()
+          }}
+          className="cc-tile w-full h-10 px-3 rounded-[18px] bg-white/70 dark:bg-white/[0.05] hover:bg-white/90 dark:hover:bg-white/[0.08] border border-black/6 dark:border-white/5 flex items-center justify-between transition-all cursor-pointer text-left group"
+          title={isDark ? 'Alternar para Modo Dia' : 'Alternar para Modo Noite'}
+        >
+          <div className="flex items-center gap-2.5">
             <div
               className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 ${
                 isDark ? 'bg-amber-400/20 text-amber-400' : 'bg-[#007aff]/15 text-[#007aff]'
@@ -372,37 +399,18 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({
               {isDark ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
             </div>
             <div className="overflow-hidden leading-tight">
-              <div className="text-[11px] font-bold text-zinc-900 dark:text-white truncate">
+              <div className="text-[11px] font-bold cc-text-primary text-zinc-900 dark:text-white truncate">
                 {isDark ? 'Modo Dia' : 'Modo Noite'}
               </div>
-              <div className="text-[9px] text-zinc-500 dark:text-zinc-400 truncate">
-                Aparência
+              <div className="text-[9.5px] cc-text-secondary text-zinc-600 dark:text-zinc-400 truncate font-medium">
+                Aparência do Sistema
               </div>
             </div>
-          </button>
-
-          {/* Botão Circular: WhatsApp Comercial */}
-          <a
-            href={PROFILE_LINKS.whatsapp}
-            target="_blank"
-            rel="noreferrer"
-            className="w-10 h-10 rounded-full bg-[#25d366]/15 hover:bg-[#25d366]/25 dark:bg-[#25d366]/20 dark:hover:bg-[#25d366]/30 text-[#25d366] flex items-center justify-center border border-[#25d366]/20 shadow-sm transition-all hover:scale-105 active:scale-95 shrink-0"
-            title="WhatsApp Comercial (+55 81 99185-1507)"
-          >
-            <WhatsAppIcon className="w-4 h-4 fill-current" />
-          </a>
-
-          {/* Botão Circular: Google Drive */}
-          <a
-            href={PROFILE_LINKS.drive}
-            target="_blank"
-            rel="noreferrer"
-            className="w-10 h-10 rounded-full bg-amber-500/15 hover:bg-amber-500/25 dark:bg-amber-400/20 dark:hover:bg-amber-400/30 text-amber-600 dark:text-amber-400 flex items-center justify-center border border-amber-500/20 shadow-sm transition-all hover:scale-105 active:scale-95 shrink-0"
-            title="Google Drive Oficial (Portfólios e CVs)"
-          >
-            <FolderOpen className="w-4 h-4" />
-          </a>
-        </div>
+          </div>
+          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-black/6 dark:bg-white/5 cc-text-secondary text-zinc-700 dark:text-zinc-400 uppercase tracking-wider">
+            {isDark ? 'Escuro' : 'Claro'}
+          </span>
+        </button>
       </div>
     </>
   )

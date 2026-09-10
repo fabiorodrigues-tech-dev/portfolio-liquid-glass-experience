@@ -118,8 +118,8 @@ O popover flutua nativamente sobre o conteúdo com Liquid Glass e sem backdrop e
 │ ┌─────────────────────────┐ ┌──────────────────────────┐ │
 │ │ Conexões (Pílulas):     │ │ Mídia:                   │ │
 │ │ • Status (Recife, PE)   │ │ • Capa álbum (EQ animado)│ │
-│ │ • LinkedIn Oficial      │ │ • Faixa MIDNIGHT         │ │
-│ │ • GitHub Repositórios   │ │ • Botão Play/Pause + Pular││
+│ │ • Liquid Glass (Modo)   │ │ • Faixa MIDNIGHT         │ │
+│ │ • Som do Site (Ativo)   │ │ • Botão Tocar + Pular    │ │
 │ └─────────────────────────┘ └──────────────────────────┘ │
 │                                                          │
 │ LINHA 2:                                                 │
@@ -134,9 +134,13 @@ O popover flutua nativamente sobre o conteúdo com Liquid Glass e sem backdrop e
 │ 🔊 dim ─────[━━━━●────────]────── 🔊 bright               │
 │                                                          │
 │ LINHA 5 (Base):                                          │
-│ [ ☀ / 🌙 Modo Dia / Modo Noite ]  ( 💬 WPP )  ( 📁 Drive ) │
+│ [ ☀ / 🌙 Modo Dia / Modo Noite ]        [ CLARO / ESCURO ]│
 └──────────────────────────────────────────────────────────┘
 ```
+
+- **Pílula Liquid Glass**: Alterna dinamicamente entre os modos ópticos *Translúcido* (vidro de alta refração) e *Tonalizado* (vidro de maior densidade com matiz do sistema).
+- **Pílula Som do Site**: Permite habilitar ou silenciar imediatamente a camada de efeitos sonoros e respostas hápticas do portfólio.
+- **Botão de Aparência**: Layout em largura total com rótulo dinâmico e badge de status.
 
 ---
 
@@ -168,4 +172,67 @@ O popover flutua nativamente sobre o conteúdo com Liquid Glass e sem backdrop e
   - Internal icons / SVGs: `w-12 h-12 object-contain`
   - Hover physics: `hover:-translate-y-2 hover:scale-110 active:scale-95 transition-all`
 - **Active Indicator**: Centered dot positioned at `-bottom-1.5`.
+
+---
+
+## 10. macOS Window Physics & Tahoe Elastic Zoom Engine
+
+**Components**: [`WindowFrame.tsx`](../src/components/WindowFrame.tsx), [`TrafficLights.tsx`](../src/components/TrafficLights.tsx), [`index.css`](../src/index.css)
+
+- **Elastic Easing Curve**:
+  ```css
+  .window-frame {
+    transition: max-width 480ms cubic-bezier(0.16, 1, 0.3, 1),
+                width 480ms cubic-bezier(0.16, 1, 0.3, 1),
+                height 480ms cubic-bezier(0.16, 1, 0.3, 1),
+                margin 480ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 480ms cubic-bezier(0.16, 1, 0.3, 1),
+                border-radius 480ms cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 480ms cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: max-width, height, transform;
+  }
+  ```
+- **Symmetric Geometry**: Centralized alignment (`my-auto`) guarantees smooth expansion and retraction from center without visual jumping.
+- **Dual Zoom Vectors**:
+  1. Green Traffic Light button with dynamic glyphs (outward diagonal arrows for maximize, inward arrows for restore).
+  2. Double-click anywhere on the window title bar header.
+
+---
+
+## 11. macOS Genie Effect Minimization & Dock Pipeline
+
+**Components**: [`App.tsx`](../src/App.tsx), [`WindowFrame.tsx`](../src/components/WindowFrame.tsx), [`Dock.tsx`](../src/components/Dock.tsx), [`index.css`](../src/index.css)
+
+- **3D Funnel Vortex Deformation**:
+  - `@keyframes macos-genie-minimize`: Non-linear suction sequence tapering the base toward the dock target (`clip-path: polygon(...)`), tilting in 3D perspective (`perspective(700px) rotateX(...)`), and plunging into zero-scale at the dock center.
+  - `@keyframes macos-genie-restore`: Reverse elastic emergence with Apple bounce curve (`cubic-bezier(0.16, 1, 0.3, 1)`), uncreasing the window back onto the desktop.
+  - GPU Acceleration: `transform-origin: 50% 100% !important; will-change: transform, clip-path, opacity, filter;`.
+- **Minimized Dock Miniature**:
+  - A dedicated miniature window card mounts dynamically on the right side of the Dock separator when the window is minimized.
+  - Displays miniature traffic lights, content lines, and a glowing amber minimize indicator dot.
+- **Omni-Directional Restoration**:
+  - Clicking the Dock miniature card restores the window.
+  - Clicking any active app in the Dock (Finder/Projetos, Sobre Mim, Terminal, Contato) automatically restores the window.
+  - Keyboard shortcut **`Cmd + M`** (or `Ctrl + M`) minimizes and restores the window seamlessly.
+
+---
+
+## 12. High-Contrast Day Mode Optical Calibration (Tailwind CSS v4)
+
+**Files**: [`src/index.css`](../src/index.css), [`src/components/ControlCenter.tsx`](../src/components/ControlCenter.tsx)
+
+- **Root Issue Resolution**: Tailwind CSS v4 defaults `dark:` variants to `@media (prefers-color-scheme: dark)`. On macOS systems in dark mode, light theme was incorrectly inheriting dark text styles.
+- **Class-Based Variant Directive**:
+  ```css
+  @import "tailwindcss";
+  @custom-variant dark (&:where(.dark, .dark *));
+  ```
+- **Optical Typography Tokens**:
+  - `.control-center-panel`: Frosted glass background `rgba(246, 248, 252, 0.88)` with 48px blur and 200% saturation.
+  - `.cc-tile`: Internal module card `rgba(255, 255, 255, 0.68)` with subtle specular highlight `inset 0 1px 0 0 rgba(255, 255, 255, 0.85)`.
+  - `.cc-text-primary`: Deep black `#09090b` with weight 700 (WCAG AAA contrast).
+  - `.cc-text-secondary`: Refined gray `#4b5563` with weight 500 for secondary text and percentages.
+  - `.cc-divider`: Subtle hairline separator `rgba(0, 0, 0, 0.08)`.
+
 

@@ -62,6 +62,33 @@ export function App() {
   const [skipTrigger, setSkipTrigger] = useState(0)
   const [prevTrigger, setPrevTrigger] = useState(0)
 
+  // Window Minimize / macOS Genie Effect State
+  const [isWindowMinimized, setIsWindowMinimized] = useState(false)
+  const [isMinimizing, setIsMinimizing] = useState(false)
+  const [isRestoring, setIsRestoring] = useState(false)
+
+  const handleMinimizeWindow = useCallback(() => {
+    if (isMinimizing || isRestoring || isWindowMinimized) return
+    if (isSoundEffectsEnabled) playHapticClick()
+    setIsMinimizing(true)
+  }, [isMinimizing, isRestoring, isWindowMinimized, isSoundEffectsEnabled])
+
+  const handleFinishMinimize = useCallback(() => {
+    setIsMinimizing(false)
+    setIsWindowMinimized(true)
+  }, [])
+
+  const handleRestoreWindow = useCallback(() => {
+    if (isMinimizing || isRestoring || !isWindowMinimized) return
+    if (isSoundEffectsEnabled) playHapticClick()
+    setIsWindowMinimized(false)
+    setIsRestoring(true)
+  }, [isMinimizing, isRestoring, isWindowMinimized, isSoundEffectsEnabled])
+
+  const handleFinishRestore = useCallback(() => {
+    setIsRestoring(false)
+  }, [])
+
   // NOVA Apple Intelligence Assistant
   const [isNovaActive, setIsNovaActive] = useState(false)
   const [novaSpeechState, setNovaSpeechState] = useState<NovaState>('idle')
@@ -135,7 +162,10 @@ export function App() {
       playHapticClick()
     }
     setActiveTab(tab)
-  }, [isSoundEffectsEnabled])
+    if (isWindowMinimized || isMinimizing) {
+      handleRestoreWindow()
+    }
+  }, [isSoundEffectsEnabled, isWindowMinimized, isMinimizing, handleRestoreWindow])
 
   const togglePlayMusic = () => {
     setIsPlayingMusic((prev) => !prev)
@@ -153,7 +183,7 @@ export function App() {
     setPrevTrigger((prev) => prev + 1)
   }
 
-  // Global keyboard shortcuts (Cmd+K, Tab switching with keys 1-4, Esc)
+  // Global keyboard shortcuts (Cmd+K, Cmd+M, Tab switching with keys 1-4, Esc)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Don't trigger shortcuts if user is typing in an input or textarea
@@ -167,6 +197,13 @@ export function App() {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault()
         setIsSpotlightOpen((prev) => !prev)
+      } else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'm') {
+        e.preventDefault()
+        if (isWindowMinimized) {
+          handleRestoreWindow()
+        } else {
+          handleMinimizeWindow()
+        }
       } else if (e.key === '1') {
         handleTabChange('projetos')
       } else if (e.key === '2') {
@@ -180,7 +217,7 @@ export function App() {
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handleTabChange])
+  }, [handleTabChange, isWindowMinimized, handleMinimizeWindow, handleRestoreWindow])
 
   // Escuta evento global de navegação disparado pela assistente ("portfolio-navigate")
   useEffect(() => {
@@ -242,6 +279,12 @@ export function App() {
             onOpenSpotlight={() => setIsSpotlightOpen(true)}
             onSelectProject={setSelectedProject}
             isFocusMode={isFocusMode}
+            isMinimized={isWindowMinimized}
+            isMinimizing={isMinimizing}
+            isRestoring={isRestoring}
+            onMinimize={handleMinimizeWindow}
+            onFinishMinimize={handleFinishMinimize}
+            onFinishRestore={handleFinishRestore}
           />
         </div>
 
@@ -287,6 +330,8 @@ export function App() {
           onToggleControlCenter={() => setIsControlCenterOpen((prev) => !prev)}
           theme={theme}
           isFocusMode={isFocusMode}
+          isWindowMinimized={isWindowMinimized}
+          onRestoreWindow={handleRestoreWindow}
         />
 
         {/* 9. macOS Intro Boot Screen (First Visit) */}

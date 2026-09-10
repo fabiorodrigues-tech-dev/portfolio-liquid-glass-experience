@@ -91,7 +91,11 @@ export const TrafficLights: React.FC<TrafficLightsProps> = ({
           }`}
           fill="currentColor"
         >
-          <path d="M0.5 0.5 L2.5 0.5 L0.5 2.5 Z M5.5 5.5 L3.5 5.5 L5.5 3.5 Z" />
+          {isMaximized ? (
+            <path d="M2.5 0.5 L2.5 2.5 L0.5 2.5 Z M3.5 5.5 L3.5 3.5 L5.5 3.5 Z" />
+          ) : (
+            <path d="M0.5 0.5 L2.5 0.5 L0.5 2.5 Z M5.5 5.5 L3.5 5.5 L5.5 3.5 Z" />
+          )}
         </svg>
       </button>
     </div>

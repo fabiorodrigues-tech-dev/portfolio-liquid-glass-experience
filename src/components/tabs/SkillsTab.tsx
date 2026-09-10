@@ -38,7 +38,7 @@ export const SkillsTab: React.FC<SkillsTabProps> = ({ theme }) => {
       </div>
 
       {/* Categories Grid with Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 transition-all duration-300">
         {SKILL_CATEGORIES.map((cat, idx) => {
           const accentDef = ACCENT_COLORS[cat.accentColor] || ACCENT_COLORS.blue
           const accentHex = isDark ? accentDef.dark : accentDef.light

@@ -1,4 +1,6 @@
-  @import "tailwindcss";
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro", "Helvetica Neue", system-ui, sans-serif;
@@ -122,14 +124,125 @@ main,
 }
 
 /* Official Apple Liquid Glass Optical Motor */
-.apple-liquid-glass,
-.window-frame {
+.apple-liquid-glass {
   border: none !important;
   outline: none !important;
   transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               backdrop-filter 0.3s ease,
               border-color 0.3s ease,
               box-shadow 0.3s ease;
+}
+
+/* macOS Tahoe Signature Window Frame Stretch / Zoom Physics */
+.window-frame {
+  border: none !important;
+  outline: none !important;
+  transition: max-width 480ms cubic-bezier(0.16, 1, 0.3, 1),
+              width 480ms cubic-bezier(0.16, 1, 0.3, 1),
+              height 480ms cubic-bezier(0.16, 1, 0.3, 1),
+              margin 480ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 480ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 480ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 480ms cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              backdrop-filter 300ms ease,
+              border-color 300ms ease;
+  will-change: max-width, height, transform;
+}
+
+/* =========================================================================== */
+/* macOS Signature Genie Effect (Efeito Gênio de Minimizar e Restaurar)        */
+/* =========================================================================== */
+
+@keyframes macos-genie-minimize {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  18% {
+    /* Base começa a afunilar rapidamente em direção ao Dock */
+    transform: translate3d(0, 3vh, 0) scaleX(0.93) scaleY(0.96) perspective(900px) rotateX(8deg);
+    clip-path: polygon(0% 0%, 100% 0%, 86% 100%, 14% 100%);
+    opacity: 0.98;
+  }
+  42% {
+    /* Sucção acelerada: o corpo curva e a base se estreita */
+    transform: translate3d(0, 16vh, 0) scaleX(0.70) scaleY(0.80) perspective(700px) rotateX(16deg);
+    clip-path: polygon(3% 0%, 97% 0%, 70% 100%, 30% 100%);
+    opacity: 0.92;
+  }
+  68% {
+    /* O fluxo atinge a boca do Dock com estreitamento pronunciado */
+    transform: translate3d(0, 30vh, 0) scaleX(0.44) scaleY(0.54) perspective(500px) rotateX(26deg);
+    clip-path: polygon(12% 10%, 88% 10%, 58% 100%, 42% 100%);
+    opacity: 0.80;
+    filter: blur(0.5px);
+  }
+  88% {
+    /* Sucção quase completa do topo pelo funil */
+    transform: translate3d(0, 41vh, 0) scaleX(0.20) scaleY(0.24) perspective(400px) rotateX(34deg);
+    clip-path: polygon(26% 30%, 74% 30%, 53% 100%, 47% 100%);
+    opacity: 0.45;
+    filter: blur(1px);
+  }
+  100% {
+    /* Desaparece no ponto do Dock */
+    transform: translate3d(0, 48vh, 0) scaleX(0.02) scaleY(0.02) perspective(300px) rotateX(42deg);
+    clip-path: polygon(48% 50%, 52% 50%, 51% 100%, 49% 100%);
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+@keyframes macos-genie-restore {
+  0% {
+    transform: translate3d(0, 48vh, 0) scaleX(0.02) scaleY(0.02) perspective(300px) rotateX(42deg);
+    clip-path: polygon(48% 50%, 52% 50%, 51% 100%, 49% 100%);
+    opacity: 0;
+    filter: blur(2px);
+  }
+  18% {
+    transform: translate3d(0, 36vh, 0) scaleX(0.26) scaleY(0.30) perspective(400px) rotateX(30deg);
+    clip-path: polygon(22% 25%, 78% 25%, 55% 100%, 45% 100%);
+    opacity: 0.65;
+    filter: blur(1px);
+  }
+  48% {
+    transform: translate3d(0, 18vh, 0) scaleX(0.64) scaleY(0.72) perspective(600px) rotateX(18deg);
+    clip-path: polygon(4% 5%, 96% 5%, 72% 100%, 28% 100%);
+    opacity: 0.90;
+    filter: blur(0.5px);
+  }
+  75% {
+    transform: translate3d(0, 5vh, 0) scaleX(0.90) scaleY(0.94) perspective(850px) rotateX(8deg);
+    clip-path: polygon(0% 0%, 100% 0%, 88% 100%, 12% 100%);
+    opacity: 0.98;
+    filter: blur(0px);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) perspective(1000px) rotateX(0deg);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+.window-genie-minimizing {
+  transform-origin: 50% 100% !important;
+  animation: macos-genie-minimize 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  will-change: transform, clip-path, opacity, filter !important;
+}
+
+.window-genie-restoring {
+  transform-origin: 50% 100% !important;
+  animation: macos-genie-restore 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  will-change: transform, clip-path, opacity, filter !important;
 }
 
 /* Modo Translúcido (Padrão) - Vidro de alta refração (backdrop-blur-3xl bg-opacity-40) */
@@ -411,13 +524,74 @@ html:not(.dark) .light-theme .liquid-card {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
-/* FORÇA LINHAS DIVISÓRIAS EM PRETO NO MODO DIA */
-html:not(.dark) hr,
-html:not(.dark) [role="separator"],
-html:not(.dark) div[class*="h-[1px]"],
-html:not(.dark) div[class*="h-px"] {
+/* FORÇA LINHAS DIVISÓRIAS EM PRETO NO MODO DIA (Exceto Central de Controle) */
+html:not(.dark) hr:not(.cc-divider),
+html:not(.dark) [role="separator"]:not(.cc-divider),
+html:not(.dark) div[class*="h-[1px]"]:not(.cc-divider),
+html:not(.dark) div[class*="h-px"]:not(.cc-divider) {
   background-color: rgba(0, 0, 0, 0.7) !important;
   border-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* =========================================================================== */
+/* Central de Controle macOS Desktop — Legibilidade e Contraste no Modo Claro  */
+/* =========================================================================== */
+
+html:not(.dark) .control-center-panel {
+  background-color: rgba(246, 248, 252, 0.88) !important;
+  backdrop-filter: blur(48px) saturate(200%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(48px) saturate(200%) contrast(105%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.90) !important;
+  box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.22),
+              0 0 0 1px rgba(0, 0, 0, 0.08),
+              inset 0 1px 1.5px 0 rgba(255, 255, 255, 1) !important;
+  color: #09090b !important;
+}
+
+html:not(.dark).glass-tinted .control-center-panel {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Módulos internos com fundo de cartão refinado no Modo Claro */
+html:not(.dark) .control-center-panel .cc-tile {
+  background-color: rgba(255, 255, 255, 0.68) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03), inset 0 1px 0 0 rgba(255, 255, 255, 0.85) !important;
+}
+
+html:not(.dark) .control-center-panel .cc-tile:hover {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Tipografia de Alta Definição: Títulos e Rótulos Primários */
+html:not(.dark) .control-center-panel .cc-text-primary,
+html:not(.dark) .control-center-panel span.cc-text-primary,
+html:not(.dark) .control-center-panel div.cc-text-primary {
+  color: #09090b !important;
+  font-weight: 700 !important;
+}
+
+/* Tipografia Secundária: Subtítulos, Status e Porcentagens */
+html:not(.dark) .control-center-panel .cc-text-secondary,
+html:not(.dark) .control-center-panel span.cc-text-secondary,
+html:not(.dark) .control-center-panel div.cc-text-secondary {
+  color: #4b5563 !important;
+  font-weight: 500 !important;
+}
+
+/* Divisores Sutis estilo macOS Tahoe no Modo Claro */
+html:not(.dark) .control-center-panel .cc-divider {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  border: none !important;
+  height: 1px !important;
+}
+
+/* Card de Mídia no Modo Claro com Gradiente Refinado e Texto Escuro */
+html:not(.dark) .control-center-panel .cc-media-card {
+  background: linear-gradient(145deg, rgba(235, 228, 255, 0.90) 0%, rgba(220, 235, 255, 0.80) 100%) !important;
+  border: 1px solid rgba(120, 60, 220, 0.14) !important;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.9) !important;
 }
 
 /* Mobile Safe Area & Touch Utilities */

@@ -515,16 +515,28 @@ a[class*="bg-red"] *,
   color: #ffffff !important;
 }
 
-/* EXCEÇÃO: Central de Controle Mobile / Controles iOS mantêm texto branco no Modo Dia */
-[data-control-center] .text-white,
-[data-control-center] [class*="text-white"],
-.light-theme [data-control-center] .text-white,
-.light-theme [data-control-center] [class*="text-white"],
-html:not(.dark) [data-control-center] .text-white,
-html:not(.dark) [data-control-center] [class*="text-white"],
+/* EXCEÇÃO: Central de Controle Mobile / Controles iOS mantêm texto branco no Modo Dia (Exceto Popovers) */
+[data-control-center] .text-white:not([data-cc-popover] *),
+[data-control-center] [class*="text-white"]:not([data-cc-popover]):not([data-cc-popover] *),
+.light-theme [data-control-center] .text-white:not([data-cc-popover] *),
+.light-theme [data-control-center] [class*="text-white"]:not([data-cc-popover]):not([data-cc-popover] *),
+html:not(.dark) [data-control-center] .text-white:not([data-cc-popover] *),
+html:not(.dark) [data-control-center] [class*="text-white"]:not([data-cc-popover]):not([data-cc-popover] *),
 .ios-control-text-white {
   color: #ffffff !important;
 }
+
+/* Regras de Contraste para Popovers Flutuantes da Central de Controle */
+html:not(.dark) [data-cc-popover] {
+  color: #09090b !important;
+}
+html:not(.dark) [data-cc-popover] button[class*="bg-"],
+html:not(.dark) [data-cc-popover] button[class*="bg-"] *,
+html:not(.dark) [data-cc-popover] a[class*="bg-"],
+html:not(.dark) [data-cc-popover] a[class*="bg-"] * {
+  color: #ffffff !important;
+}
+
 
 /* Suporte a Vidro Líquido Refinado para cards e painéis no Modo Claro */
 html:not(.dark) .light-theme .liquid-card {

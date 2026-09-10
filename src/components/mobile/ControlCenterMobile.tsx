@@ -166,6 +166,41 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
   // Orientation lock state
   const [isOrientationLocked, setIsOrientationLocked] = useState(false)
 
+  // Active popover in Central de Controle: 'location' | 'wifi' | null
+  const [activePopover, setActivePopover] = useState<'location' | 'wifi' | null>(null)
+
+  // Relógio dinâmico no fuso oficial de Recife (BRT UTC-3)
+  const [recifeTime, setRecifeTime] = useState<string>(() => {
+    return new Intl.DateTimeFormat('pt-BR', {
+      timeZone: 'America/Recife',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    }).format(new Date())
+  })
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRecifeTime(
+        new Intl.DateTimeFormat('pt-BR', {
+          timeZone: 'America/Recife',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false,
+        }).format(new Date())
+      )
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    if (!isOpen) {
+      setActivePopover(null)
+    }
+  }, [isOpen])
+
   // Volume local com latência zero (desacoplado do áudio do player)
   const [volume, setVolume] = useState<number>(soundVolume)
 
@@ -293,11 +328,15 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
     }
   }, [])
 
-  // Close on Escape key press
+  // Close on Escape key press (fecha popover antes de fechar painel)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onClose()
+        if (activePopover) {
+          setActivePopover(null)
+        } else {
+          onClose()
+        }
       }
     }
     if (isOpen) {
@@ -306,7 +345,7 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [isOpen, onClose])
+  }, [isOpen, onClose, activePopover])
 
   // Lógica de toque vertical sem lag para Brilho e Volume (Latência Zero)
   const handleTouchSlider = (
@@ -360,10 +399,185 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
       {/* Container Central da Central de Controle com Trilho Lateral Integrado (mt-2 w-full max-w-[335px]) */}
       <div 
         onClick={(e) => {
-          if (e.target === e.currentTarget) onClose()
+          if (e.target === e.currentTarget) {
+            if (activePopover) {
+              setActivePopover(null)
+            } else {
+              onClose()
+            }
+          }
         }}
         className="relative w-full max-w-[335px] mx-auto mt-2 flex flex-col gap-3.5 select-none"
       >
+        {/* Popover 1: Base Operacional & Disponibilidade (Liquid Glass) */}
+        {activePopover === 'location' && (
+          <div
+            data-cc-popover="true"
+            className="absolute top-2 left-2 right-2 z-50 p-4 rounded-2xl bg-white/95 dark:bg-[#0c0e17]/95 backdrop-blur-2xl border border-black/10 dark:border-white/15 shadow-2xl text-zinc-900 dark:text-white animate-in fade-in zoom-in-95 duration-150 select-none"
+          >
+            {/* Cabeçalho */}
+            <div className="flex items-center justify-between pb-2 border-b border-black/10 dark:border-white/10">
+              <div className="flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-emerald-500" />
+                <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+                  Base Operacional
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  triggerHaptic()
+                  setActivePopover(null)
+                }}
+                className="w-6 h-6 rounded-full flex items-center justify-center text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-xs font-bold cursor-pointer"
+                title="Fechar"
+                aria-label="Fechar"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Local & Fuso com Relógio Local Dinâmico */}
+            <div className="mt-2.5 space-y-1">
+              <div className="text-xs font-bold text-zinc-900 dark:text-white flex items-center justify-between">
+                <span>Recife - PE, Brasil</span>
+                <span className="font-mono text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+                  {recifeTime} BRT
+                </span>
+              </div>
+              <p className="text-[11px] text-zinc-600 dark:text-zinc-400">
+                Fuso Horário BRT (UTC-3)
+              </p>
+            </div>
+
+            {/* Status de Contratação */}
+            <div className="mt-3 p-2.5 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/[0.08] border border-emerald-500/20">
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                </span>
+                <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                  Disponível para Contratação Imediata
+                </span>
+              </div>
+              <p className="text-[10.5px] text-zinc-600 dark:text-zinc-400 mt-1 pl-4">
+                Atuação Remota Global e Híbrido
+              </p>
+            </div>
+
+            {/* Botão de Ação Direta */}
+            <a
+              href="https://wa.me/5581991851507"
+              target="_blank"
+              rel="noreferrer"
+              onClick={triggerHaptic}
+              className="w-full py-2 px-3 mt-3 rounded-xl bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md hover:bg-emerald-500 active:scale-98 transition-all cursor-pointer"
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5" />
+              <span>Conversar no WhatsApp Comercial ↗</span>
+            </a>
+          </div>
+        )}
+
+        {/* Popover 2: Monitor de Conexão & Telemetria DevOps (Liquid Glass) */}
+        {activePopover === 'wifi' && (
+          <div
+            data-cc-popover="true"
+            className="absolute top-2 left-2 right-2 z-50 p-4 rounded-2xl bg-white/95 dark:bg-[#0c0e17]/95 backdrop-blur-2xl border border-black/10 dark:border-white/15 shadow-2xl text-zinc-900 dark:text-white animate-in fade-in zoom-in-95 duration-150 select-none"
+          >
+            {/* Cabeçalho */}
+            <div className="flex items-center justify-between pb-2 border-b border-black/10 dark:border-white/10">
+              <div className="flex items-center gap-1.5">
+                <Wifi className="w-3.5 h-3.5 text-sky-500" />
+                <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
+                  STATUS DOS MICROSSERVIÇOS
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="flex items-center gap-1 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  99.99% Operacional
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    triggerHaptic()
+                    setActivePopover(null)
+                  }}
+                  className="w-6 h-6 rounded-full flex items-center justify-center text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-xs font-bold cursor-pointer"
+                  title="Fechar"
+                  aria-label="Fechar"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+
+            {/* Três blocos de telemetria em micro-cards translúcidos */}
+            <div className="mt-2.5 space-y-2 font-mono">
+              {/* 1. Render Cloud (NOVA API) */}
+              <div className="p-2 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/10 flex items-center justify-between">
+                <div className="overflow-hidden pr-2">
+                  <div className="text-xs font-bold font-sans text-zinc-900 dark:text-white truncate">
+                    Render Cloud (NOVA API)
+                  </div>
+                  <div className="text-[10px] text-zinc-600 dark:text-zinc-400 truncate">
+                    Java 21 LTS • Spring Boot 3 • Latência: 42ms
+                  </div>
+                </div>
+                <span className="shrink-0 flex items-center gap-1 text-[10px] font-sans font-semibold text-emerald-600 dark:text-emerald-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  Ativo / Produção
+                </span>
+              </div>
+
+              {/* 2. Vercel Global Edge (Web OS) */}
+              <div className="p-2 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/10 flex items-center justify-between">
+                <div className="overflow-hidden pr-2">
+                  <div className="text-xs font-bold font-sans text-zinc-900 dark:text-white truncate">
+                    Vercel Global Edge (Web OS)
+                  </div>
+                  <div className="text-[10px] text-zinc-600 dark:text-zinc-400 truncate">
+                    React 19 • CDN Global • Latência: 14ms
+                  </div>
+                </div>
+                <span className="shrink-0 flex items-center gap-1 text-[10px] font-sans font-semibold text-emerald-600 dark:text-emerald-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  Conectado
+                </span>
+              </div>
+
+              {/* 3. Voice Engine & ElevenLabs (Sofia) */}
+              <div className="p-2 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/10 flex items-center justify-between">
+                <div className="overflow-hidden pr-2">
+                  <div className="text-xs font-bold font-sans text-zinc-900 dark:text-white truncate">
+                    Voice Engine & ElevenLabs (Sofia)
+                  </div>
+                  <div className="text-[10px] text-zinc-600 dark:text-zinc-400 truncate">
+                    Vapi Webhooks • Latência: &lt;600ms
+                  </div>
+                </div>
+                <span className="shrink-0 flex items-center gap-1 text-[10px] font-sans font-semibold text-emerald-600 dark:text-emerald-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  Operacional
+                </span>
+              </div>
+            </div>
+
+            {/* Botão de Link */}
+            <a
+              href="https://github.com/fabiorodrigues-tech-dev/NOVA"
+              target="_blank"
+              rel="noreferrer"
+              onClick={triggerHaptic}
+              className="w-full py-2 px-3 mt-3 rounded-xl bg-blue-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md hover:bg-blue-500 active:scale-98 transition-all cursor-pointer"
+            >
+              <span>Ver Arquitetura no GitHub ↗</span>
+            </a>
+          </div>
+        )}
+
         {/* Trilho Lateral de Ícones (✦, 🎵, 📡) Perfeitamente Centralizado na Altura dos Controles */}
         <div className="absolute -right-8 min-[400px]:-right-9 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-5 py-2 select-none">
           {/* Ícone 1: Controles (✦) */}
@@ -431,28 +645,42 @@ export const ControlCenterMobile: React.FC<ControlCenterMobileProps> = ({
               <div
                 className="rounded-[36px] bg-white/[0.14] dark:bg-white/[0.09] backdrop-blur-3xl border border-white/25 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all h-[162px] min-[400px]:h-[170px] p-3 grid grid-cols-2 gap-3 place-items-center select-none"
               >
-                {/* Pastilha 1 (Recife / Status Online): Fundo próprio e sombra interna */}
-                <div
-                  className="w-[54px] h-[54px] min-[400px]:w-[58px] min-[400px]:h-[58px] rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-400/30 flex items-center justify-center relative shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] active:scale-95 transition-all duration-200"
-                  title="Recife, PE • BR (Status: Online)"
-                >
-                  <MapPin className="w-6 h-6 text-emerald-400" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 absolute top-2 right-2 animate-ping" />
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 absolute top-2 right-2" />
-                </div>
-
-                {/* Pastilha 2 (Conexões / Wi-Fi) */}
+                {/* Pastilha 1 (Recife / Status Online / Popover Disponibilidade) */}
                 <button
                   type="button"
                   onClick={() => {
                     triggerHaptic()
-                    setActiveTab('connections')
+                    setActivePopover((prev) => (prev === 'location' ? null : 'location'))
                   }}
-                  className="w-[54px] h-[54px] min-[400px]:w-[58px] min-[400px]:h-[58px] rounded-full bg-sky-500/20 text-sky-400 border border-sky-400/30 flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
-                  title="Conexões e Redes (Wi-Fi 6 • Conectado)"
-                  aria-label="Conexões e Redes"
+                  className={`w-[54px] h-[54px] min-[400px]:w-[58px] min-[400px]:h-[58px] rounded-full flex items-center justify-center relative cursor-pointer active:scale-95 transition-all duration-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] ${
+                    activePopover === 'location'
+                      ? 'bg-emerald-500 text-white shadow-[0_0_16px_rgba(16,185,129,0.6)]'
+                      : 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
+                  }`}
+                  title="Base Operacional e Disponibilidade (Recife • BRT)"
+                  aria-label="Base Operacional e Disponibilidade"
                 >
-                  <Wifi className="w-6 h-6 text-sky-400" />
+                  <MapPin className={`w-6 h-6 ${activePopover === 'location' ? 'text-white' : 'text-emerald-400'}`} />
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 absolute top-2 right-2 animate-ping" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 absolute top-2 right-2" />
+                </button>
+
+                {/* Pastilha 2 (Conexões / Wi-Fi / Telemetria DevOps) */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    triggerHaptic()
+                    setActivePopover((prev) => (prev === 'wifi' ? null : 'wifi'))
+                  }}
+                  className={`w-[54px] h-[54px] min-[400px]:w-[58px] min-[400px]:h-[58px] rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] ${
+                    activePopover === 'wifi'
+                      ? 'bg-sky-500 text-white shadow-[0_0_16px_rgba(14,165,233,0.6)]'
+                      : 'bg-sky-500/20 text-sky-400 border border-sky-400/30'
+                  }`}
+                  title="Monitor de Infraestrutura e Microsserviços"
+                  aria-label="Monitor de Infraestrutura"
+                >
+                  <Wifi className={`w-6 h-6 ${activePopover === 'wifi' ? 'text-white' : 'text-sky-400'}`} />
                 </button>
 
                 {/* Pastilha 3 (Tema Dia/Noite) */}

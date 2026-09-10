@@ -5,6 +5,7 @@ import {
   Check,
   Send,
   ArrowUpRight,
+  Loader2,
 } from 'lucide-react'
 import { WhatsAppIcon } from '../icons/SocialIcons'
 import type { ThemeMode } from '../../types'
@@ -15,7 +16,7 @@ interface ContactTabProps {
 
 export const ContactTab: React.FC<ContactTabProps> = () => {
   const [copied, setCopied] = useState(false)
-  const [formSubmitted, setFormSubmitted] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,14 +32,36 @@ export const ContactTab: React.FC<ContactTabProps> = () => {
     setTimeout(() => setCopied(false), 2500)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!formData.name || !formData.email || !formData.message) return
-    setFormSubmitted(true)
-    setTimeout(() => {
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      setFormSubmitted(false)
-    }, 4000)
+    setStatus('loading')
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: "6f590737-4c38-4362-aa0c-e263c1891c11",
+          subject: `[Portfólio Web OS] Nova Mensagem de ${formData.name}`,
+          from_name: formData.name,
+          email: formData.email,
+          message: `Nome: ${formData.name}\nE-mail Corporativo: ${formData.email}\nAssunto: ${formData.subject || 'Oportunidade'}\n\nMensagem:\n${formData.message}`,
+          to_email: "fabioandre777@gmail.com"
+        })
+      })
+
+      const result = await response.json()
+      if (result.success) {
+        setStatus('success')
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        setTimeout(() => setStatus('idle'), 6000)
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -70,16 +93,16 @@ export const ContactTab: React.FC<ContactTabProps> = () => {
               Respondo habitualmente em menos de 24 horas úteis.
             </p>
 
-            {formSubmitted ? (
-              <div className="p-8 rounded-2xl bg-black/[0.04] dark:bg-black/20 border border-black/10 dark:border-white/10 text-center space-y-3 animate-in zoom-in-95 duration-200">
+            {status === 'success' ? (
+              <div className="p-8 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/[0.08] backdrop-blur-2xl border border-emerald-500/20 text-center space-y-3 animate-in zoom-in-95 duration-200">
                 <div className="w-12 h-12 rounded-full bg-[#34c759] text-white flex items-center justify-center mx-auto shadow-lg shadow-green-500/20">
                   <Check className="w-6 h-6 stroke-[3]" />
                 </div>
                 <h3 className="text-base font-bold text-zinc-900 dark:text-white">
-                  Mensagem Enviada com Sucesso!
+                  ✓ Mensagem entregue com sucesso!
                 </h3>
-                <p className="text-xs text-zinc-600 dark:text-zinc-400 max-w-sm mx-auto">
-                  Obrigado pelo contato. Uma confirmação foi enviada para o seu endereço de e-mail.
+                <p className="text-xs text-zinc-600 dark:text-zinc-300 max-w-sm mx-auto">
+                  Responderei em menos de 24 horas úteis.
                 </p>
               </div>
             ) : (
@@ -141,12 +164,41 @@ export const ContactTab: React.FC<ContactTabProps> = () => {
                   />
                 </div>
 
+                {status === 'error' && (
+                  <div className="p-3.5 rounded-xl bg-red-500/10 dark:bg-red-500/[0.08] border border-red-500/20 text-center space-y-2 animate-in fade-in duration-200">
+                    <p className="text-xs text-red-600 dark:text-red-400 font-medium">
+                      Houve um erro no envio.
+                    </p>
+                    <a
+                      href="https://wa.me/5581991851507"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-sm active:scale-95"
+                    >
+                      <WhatsAppIcon className="w-3.5 h-3.5" />
+                      <span>Clique aqui para enviar via WhatsApp ↗</span>
+                    </a>
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  className="w-full py-2.5 rounded-xl bg-[#007aff] hover:bg-[#0062cc] active:scale-[0.99] text-white text-xs font-semibold shadow-md flex items-center justify-center space-x-2 transition-all cursor-pointer"
+                  disabled={status === 'loading'}
+                  className={`w-full py-2.5 rounded-xl bg-[#007aff] hover:bg-[#0062cc] active:scale-[0.99] text-white text-xs font-semibold shadow-md flex items-center justify-center space-x-2 transition-all cursor-pointer ${
+                    status === 'loading' ? 'opacity-80 cursor-not-allowed' : ''
+                  }`}
                 >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>Enviar Mensagem</span>
+                  {status === 'loading' ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Enviando...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-3.5 h-3.5" />
+                      <span>Enviar Mensagem</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}

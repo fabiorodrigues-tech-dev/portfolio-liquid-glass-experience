@@ -14,6 +14,7 @@ import {
   TrendingUp,
   Video,
   Wrench,
+  Loader2,
 } from 'lucide-react'
 import { GithubIcon, WhatsAppIcon } from '../icons/SocialIcons'
 import { AppleControlCenterIcon } from '../icons/ControlCenterIcon'
@@ -87,13 +88,13 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
 
   // Contact form states
   const [emailCopied, setEmailCopied] = useState(false)
-  const [formSubmitted, setFormSubmitted] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     message: '',
   })
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
   const [isDark, setIsDark] = useState<boolean>(() => {
     if (typeof document !== 'undefined') {
@@ -163,15 +164,37 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
     setTimeout(() => setEmailCopied(false), 2500)
   }
 
-  const handleSubmitContact = (e: React.FormEvent) => {
+  const handleSubmitContact = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!formData.name || !formData.email || !formData.message) return
     triggerHaptic()
-    setFormSubmitted(true)
-    setTimeout(() => {
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      setFormSubmitted(false)
-    }, 4000)
+    setStatus('loading')
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: "6f590737-4c38-4362-aa0c-e263c1891c11",
+          subject: `[Portfólio Web OS] Nova Mensagem de ${formData.name}`,
+          from_name: formData.name,
+          email: formData.email,
+          message: `Nome: ${formData.name}\nE-mail Corporativo: ${formData.email}\nAssunto: ${formData.subject || 'Oportunidade'}\n\nMensagem:\n${formData.message}`,
+          to_email: "fabioandre777@gmail.com"
+        })
+      })
+
+      const result = await response.json()
+      if (result.success) {
+        setStatus('success')
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        setTimeout(() => setStatus('idle'), 6000)
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
   }
 
 
@@ -1102,16 +1125,16 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                 Envie uma Mensagem Direta
               </h3>
 
-              {formSubmitted ? (
-                <div className="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center space-y-2 animate-in zoom-in-95 duration-200">
-                  <div className="w-10 h-10 rounded-full bg-[#34c759] text-white flex items-center justify-center mx-auto shadow-sm">
+              {status === 'success' ? (
+                <div className="p-6 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/[0.08] backdrop-blur-2xl border border-emerald-500/20 text-center space-y-2.5 animate-in zoom-in-95 duration-200">
+                  <div className="w-11 h-11 rounded-full bg-[#34c759] text-white flex items-center justify-center mx-auto shadow-md shadow-green-500/20">
                     <Check className="w-5 h-5 stroke-[3]" />
                   </div>
                   <h4 className="text-sm font-bold text-[#09090b] dark:text-white">
-                    Mensagem Enviada!
+                    ✓ Mensagem entregue com sucesso!
                   </h4>
                   <p className="text-xs text-[#27272a] dark:text-zinc-300">
-                    Obrigado pelo contato. Retornarei em breve.
+                    Responderei em menos de 24 horas úteis.
                   </p>
                 </div>
               ) : (
@@ -1146,6 +1169,19 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
 
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold uppercase tracking-wider text-[#09090b] dark:text-zinc-400">
+                      Assunto
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      placeholder="Nova oportunidade / projeto"
+                      className="w-full bg-white/70 dark:bg-black/30 border border-black/15 dark:border-white/10 rounded-xl px-3 py-2.5 text-xs text-[#09090b] dark:text-white placeholder:text-zinc-400 outline-none focus:border-blue-500 transition-colors"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-bold uppercase tracking-wider text-[#09090b] dark:text-zinc-400">
                       Mensagem *
                     </label>
                     <textarea
@@ -1158,12 +1194,41 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                     />
                   </div>
 
+                  {status === 'error' && (
+                    <div className="p-3 rounded-xl bg-red-500/10 dark:bg-red-500/[0.08] border border-red-500/20 text-center space-y-2 animate-in fade-in duration-200">
+                      <p className="text-xs text-red-600 dark:text-red-400 font-medium">
+                        Houve um erro no envio.
+                      </p>
+                      <a
+                        href="https://wa.me/5581991851507"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-sm active:scale-95"
+                      >
+                        <WhatsAppIcon className="w-3.5 h-3.5" />
+                        <span>Clique aqui para enviar via WhatsApp ↗</span>
+                      </a>
+                    </div>
+                  )}
+
                   <button
                     type="submit"
-                    className="w-full py-3 rounded-xl bg-[#007aff] hover:bg-[#0071eb] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-transform cursor-pointer"
+                    disabled={status === 'loading'}
+                    className={`w-full py-3 rounded-xl bg-[#007aff] hover:bg-[#0071eb] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-all cursor-pointer ${
+                      status === 'loading' ? 'opacity-80 cursor-not-allowed' : ''
+                    }`}
                   >
-                    <Send className="w-3.5 h-3.5" />
-                    <span>ENVIAR MENSAGEM</span>
+                    {status === 'loading' ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <span>Enviando...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-3.5 h-3.5" />
+                        <span>ENVIAR MENSAGEM</span>
+                      </>
+                    )}
                   </button>
                 </form>
               )}

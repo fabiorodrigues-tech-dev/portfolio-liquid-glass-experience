@@ -53,13 +53,13 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({
     if (isMinimizing) {
       const timer = setTimeout(() => {
         onFinishMinimize?.()
-      }, 560)
+      }, 330)
       return () => clearTimeout(timer)
     }
     if (isRestoring) {
       const timer = setTimeout(() => {
         onFinishRestore?.()
-      }, 540)
+      }, 310)
       return () => clearTimeout(timer)
     }
   }, [isMinimizing, isRestoring, onFinishMinimize, onFinishRestore])

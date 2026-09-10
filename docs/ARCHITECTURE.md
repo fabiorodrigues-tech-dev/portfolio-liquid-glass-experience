@@ -204,10 +204,11 @@ O popover flutua nativamente sobre o conteúdo com Liquid Glass e sem backdrop e
 
 **Components**: [`App.tsx`](../src/App.tsx), [`WindowFrame.tsx`](../src/components/WindowFrame.tsx), [`Dock.tsx`](../src/components/Dock.tsx), [`index.css`](../src/index.css)
 
-- **3D Funnel Vortex Deformation**:
-  - `@keyframes macos-genie-minimize`: Non-linear suction sequence tapering the base toward the dock target (`clip-path: polygon(...)`), tilting in 3D perspective (`perspective(700px) rotateX(...)`), and plunging into zero-scale at the dock center.
-  - `@keyframes macos-genie-restore`: Reverse elastic emergence with Apple bounce curve (`cubic-bezier(0.16, 1, 0.3, 1)`), uncreasing the window back onto the desktop.
-  - GPU Acceleration: `transform-origin: 50% 100% !important; will-change: transform, clip-path, opacity, filter;`.
+- **High-Performance Compositor Acceleration**:
+  - `@keyframes macos-genie-minimize`: Snappy 300ms sequence (`cubic-bezier(0.22, 1, 0.36, 1)`) executing exclusively on GPU compositor thread via `transform: translate3d(...) scale3d(...)` and `opacity`.
+  - `@keyframes macos-genie-restore`: Snappy 280ms sequence (`cubic-bezier(0.16, 1, 0.3, 1)`) with native Apple elastic bounce.
+  - Zero Layout/Paint Overhead: Removed CPU polygon clipping and raster blur filters during motion, guaranteeing stable 60/120 FPS.
+  - Transition Isolation: `transition: none !important;` prevents race conditions with `.window-frame` dimension transitions.
 - **Minimized Dock Miniature**:
   - A dedicated miniature window card mounts dynamically on the right side of the Dock separator when the window is minimized.
   - Displays miniature traffic lights, content lines, and a glowing amber minimize indicator dot.

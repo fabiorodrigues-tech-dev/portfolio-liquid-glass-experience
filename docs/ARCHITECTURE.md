@@ -62,12 +62,12 @@ Orchestrates independent enterprise repositories:
 | MenuBar `🎙️` button | Toggle NOVA with single click |
 | `Esc` key | Deactivate NOVA unconditionally |
 
-### 6.2 Perimeter Glow — CSS Optical Engine
-Two-layer pseudo-element system on `.nova-glow-frame` (z-index: 60):
-- **`::before`** — 5px hard-edge conic border using `padding-box / border-box` gradient trick (no SVG, no canvas)
-- **`::after`** — 14px soft halo with `filter: blur(10px)` for the luminous spread
-- Gradient: `#00f2fe → #a855f7 → #ec4899 → #f59e0b → #22d3ee` rotating at 3s linear cycle
-- Outer ring pulses via `nova-pulse-ring` (opacity 0.82 ↔ 1.0, 2s ease-in-out)
+### 6.2 Perimeter Edge Glow (Edge-to-Edge)
+SVG optical engine locked 100% to screen boundaries (no insets or margins):
+- Container: `fixed inset-0 top-0 left-0 right-0 bottom-0 w-screen h-screen pointer-events-none z-50 overflow-hidden`
+- SVG Rect: `x="2" y="2" width="calc(100% - 4px)" height="calc(100% - 4px)" rx="0"`
+- Stroke: 5px gradient (`#00f2fe → #a855f7 → #ec4899 → #f59e0b → #00f2fe`) with `filter="url(#edge-glow)"`
+- Interior: `fill="none"` ensuring 100% transparency and center sharpness.
 
 ### 6.3 Harmonic Chime — Web Audio API
 Pure synthesis via `AudioContext` singleton (`_chimeCtx`). Two sinusoidal oscillators in major-third interval:
@@ -79,26 +79,23 @@ Pure synthesis via `AudioContext` singleton (`_chimeCtx`). Two sinusoidal oscill
 
 Gain envelope: `linearRamp(0→0.16, 25ms)` → `exponentialRamp(0.16→0.0001, 420ms)`. Matches Apple Intelligence double-chime harmonic signature.
 
-### 6.4 Voice Command Pipeline
-Uses `webkitSpeechRecognition` (PT-BR locale) in continuous + interimResults mode. Commands are parsed via `parseCommand()` against a priority-ordered string-match table:
-
-```
-tocar/play          → togglePlay()
-pausar/pause        → togglePlay()
-modo claro/escuro   → toggleTheme()
-modo foco           → toggleFocus()
-buscar [termo]      → openSpotlight(termo)
-abrir [seção]       → selectTab(seção)
-```
-
-On `isFinal = true`: executes command → `onStateChange('executing')` → `onDeactivate()` after 800ms.  
-Auto-restart on `onend` while `isNovaActive = true` (prevents recognition timeout).
+### 6.4 Voice Recognition Pipeline & Microphone Permissions
+1. **Explicit Permission**: Requests access via `navigator.mediaDevices.getUserMedia({ audio: true })`.
+2. **Recognition Engine**: `webkitSpeechRecognition` / `SpeechRecognition` configured for `pt-BR`, `continuous: true`, and `interimResults: true`.
+3. **NFD Normalization**: Raw transcript is normalized via `.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim()` to strip accents and match voice intents robustly.
+4. **Global Event Dispatch**:
+   - `portfolio-music-play`: Plays audio track via YouTube Iframe API.
+   - `portfolio-music-pause`: Pauses audio playback.
+   - `portfolio-navigate`: Navigates to target tab ('projects', 'about', 'skills', 'contact').
+   - Theme toggle: switches `dark` class on root document.
+   - Spotlight search & Focus mode toggles.
+5. **Resource Cleanup**: On closing, tracks are stopped (`track.stop()`), safely releasing browser recording status.
 
 ### 6.5 Transcript Caption Capsule
 `.nova-caption-capsule` — fixed bottom center pill (z-65):
 - `backdrop-filter: blur(32px) saturate(190%)`
-- Animated entry via `nova-caption-appear` keyframe (translateY + scale from 0.95)
-- Pulsing gradient dot (`nova-caption-dot`) indicating live mic state
+- Displays live feedback: `Ouvi: "${raw}"`, `"▶ Tocando música..."`, `"☀️ Modo Claro."`, etc.
+- Pulsing gradient dot (`nova-caption-dot`) indicating live mic state.
 
 ---
 
@@ -112,7 +109,7 @@ Auto-restart on `onend` while `isNovaActive = true` (prevents recognition timeou
 | Desktop ≥ 768px | **None** — content visible behind | z-40 | `fixed top-9 right-3 w-[330px]` |
 | Mobile < 768px | Full-screen dismiss overlay | z-50 | Bottom sheet `rounded-t-[28px]` |
 
-O popover flutua nativamente sobre o conteúdo com Liquid Glass e sem backdrop escuro. A paleta de cores de acento foi completamente removida no desktop, aderindo ao design real do macOS 26.
+O popover flutua nativamente sobre o conteúdo com Liquid Glass e sem backdrop escuro.
 
 ### 7.2 Estrutura Oficial em 5 Linhas (Fiel ao macOS Nativo)
 ```
@@ -143,14 +140,32 @@ O popover flutua nativamente sobre o conteúdo com Liquid Glass e sem backdrop e
 
 ---
 
-## 8. NOVA — Assistente Apple Intelligence
+## 8. Liquid Glass Quick Look Modal Specification
 
-- **Borda Fina Perimetral de 3.5px**: Utiliza cantos arredondados (`rounded-[28px]`, `inset-2 sm:inset-3`) com gradiente fluido (#00f2fe, #a855f7, #ec4899, #f59e0b) estritamente restrito à borda via técnica `border-box`/`padding-box`. O centro da tela permanece 100% limpo, transparente, nítido e interativo.
-- **Reconhecimento de Voz (pt-BR)**: Web Speech API configurado com `lang = 'pt-BR'`, `continuous = false`, `interimResults = true`, com execução instantânea dos comandos de voz:
-  - "Tocar" / "Música" / "Musica" / "Play" -> `togglePlay()`, `closeNova()`
-  - "Pausar" / "Pause" / "Parar" -> `togglePlay()`, `closeNova()`
-  - "Claro" / "Dia" -> `setTheme('light')`, `closeNova()`
-  - "Escuro" / "Noite" -> `setTheme('dark')`, `closeNova()`
-  - "Foco" / "Ocultar dock" -> `toggleFocus()`, `closeNova()`
-  - "Buscar" -> `openSpotlightWith(term)`, `closeNova()`
-- **Feedback Visual**: Cápsula de transcrição inferior flutuante exibindo em tempo real o que o usuário está falando.
+**Component**: [`ProjectQuickLook.tsx`](../src/components/ProjectQuickLook.tsx)
+
+- **Translucent High-Refraction Optics**:
+  - `backgroundColor: isDark ? 'rgba(13, 16, 25, 0.62)' : 'rgba(255, 255, 255, 0.68)'`
+  - `backdropFilter: 'blur(32px) saturate(190%)'`
+  - `border: isDark ? '1px solid rgba(255, 255, 255, 0.15)' : '1px solid rgba(255, 255, 255, 0.8)'`
+- **Subtle Backdrop**: `bg-black/40 backdrop-blur-sm` leaves desktop wallpaper visible and luminous behind modal.
+- **Scroll Architecture**: Single unified scroll container with custom scrollbar, avoiding double-nested bars.
+
+---
+
+## 9. Desktop Dock Ergonomics & Scaling
+
+**Component**: [`Dock.tsx`](../src/components/Dock.tsx)
+
+- **Container Dimensions**:
+  - Height: `h-[68px]`
+  - Padding: `px-3.5 py-2`
+  - Radius: `rounded-[24px]`
+  - Glass: `bg-white/20 dark:bg-white/[0.12] backdrop-blur-3xl border border-white/25 dark:border-white/18 shadow-2xl`
+- **Screen Positioning**: `bottom-2` for base alignment.
+- **Icon Sizing**:
+  - Standard 48px × 48px square buttons: `w-12 h-12 rounded-xl`
+  - Internal icons / SVGs: `w-12 h-12 object-contain`
+  - Hover physics: `hover:-translate-y-2 hover:scale-110 active:scale-95 transition-all`
+- **Active Indicator**: Centered dot positioned at `-bottom-1.5`.
+

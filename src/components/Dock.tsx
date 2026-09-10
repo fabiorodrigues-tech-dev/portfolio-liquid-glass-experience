@@ -176,9 +176,9 @@ export const Dock: React.FC<DockProps> = ({
         </span>
         {/* Halo de luz sutil da cor do app */}
         <div className="absolute inset-0 rounded-xl bg-blue-500/35 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-        {/* Squircle de Alto Contraste (Estilo Oficial Apple Control Center) com máxima visibilidade no Modo Dia */}
-        <div className="w-12 h-12 max-md:w-9 max-md:h-9 rounded-xl bg-gradient-to-b from-[#3a3a3c] via-[#2c2c2e] to-[#1c1c1e] text-white border border-white/25 shadow-[0_4px_14px_rgba(0,0,0,0.35)] p-2.5 max-md:p-1.5 flex items-center justify-center relative z-10 transition-all group-hover:border-blue-400/60 group-hover:shadow-[0_6px_20px_rgba(0,122,255,0.4)]">
-          <AppleControlCenterIcon className="w-6 h-6 max-md:w-4 max-md:h-4 object-contain text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]" fillPills={true} />
+        {/* Squircle Adaptativo Oficial Apple Control Center */}
+        <div className="w-12 h-12 max-md:w-9 max-md:h-9 rounded-xl bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-center text-zinc-900 dark:text-white relative z-10 transition-all shadow-sm">
+          <AppleControlCenterIcon className="w-6 h-6 max-md:w-4 max-md:h-4 object-contain" fillPills={true} />
         </div>
         {isControlCenterOpen && (
           <span className="w-1 h-1 rounded-full bg-white/80 dark:bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2" />
@@ -197,8 +197,8 @@ export const Dock: React.FC<DockProps> = ({
           GitHub
         </span>
         <div className="absolute inset-0 rounded-xl bg-zinc-400/30 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-        <div className="w-12 h-12 max-md:w-9 max-md:h-9 rounded-xl bg-[#0d1117] border border-white/20 text-white p-2.5 max-md:p-1.5 flex items-center justify-center shadow-md relative z-10">
-          <GithubIcon className="w-12 h-12 max-md:w-4 max-md:h-4 object-contain" />
+        <div className="w-12 h-12 max-md:w-9 max-md:h-9 rounded-xl bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-center text-zinc-900 dark:text-white relative z-10 transition-all shadow-sm">
+          <GithubIcon className="w-6 h-6 max-md:w-4 max-md:h-4 object-contain" />
         </div>
       </a>
 

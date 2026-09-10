@@ -555,9 +555,9 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                 target="_blank"
                 rel="noreferrer"
                 onClick={triggerHaptic}
-                className="w-full py-2.5 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold tracking-wide flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-transform"
+                className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold tracking-wide flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-transform"
               >
-                <span>DEMO VIVIAN (DRIVE)</span>
+                <span>ACESSAR PROJETO NO DRIVE ↗</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </article>

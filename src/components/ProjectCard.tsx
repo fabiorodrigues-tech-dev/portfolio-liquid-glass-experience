@@ -118,6 +118,20 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             </div>
           ))}
         </div>
+
+        {/* Botão de Ação Oficial UNREAL 5.2 (Drive) */}
+        {(project.id === 'unreal-metahuman-vivian' || project.title.includes('UNREAL 5.2')) && (
+          <div className="mt-4 flex gap-2.5" onClick={(e) => e.stopPropagation()}>
+            <a
+              href="https://drive.google.com/drive/folders/1AsF5mKlXNVl4OMfU4rnzychZqWkDMy63?usp=sharing"
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all active:scale-95"
+            >
+              ACESSAR PROJETO NO DRIVE ↗
+            </a>
+          </div>
+        )}
       </div>
 
       {/* Explicit Divider */}

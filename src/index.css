@@ -405,30 +405,54 @@ html.dark {
 }
 
 /* Exceção Única para Texto Branco: Botões de ação com fundos sólidos e coloridos */
-.bg-blue-600,
-.bg-blue-600 *,
-.bg-red-600,
-.bg-red-600 *,
-.bg-pink-600,
-.bg-pink-600 *,
-.bg-amber-600,
-.bg-amber-600 *,
-[class*="bg-[#007aff]"],
-[class*="bg-[#007aff]"] *,
-[class*="bg-[#25D366]"],
-[class*="bg-[#25D366]"] *,
-[class*="bg-[#34c759]"],
-[class*="bg-[#34c759]"] *,
-[class*="bg-[#0077b5]"],
-[class*="bg-[#0077b5]"] *,
-[class*="bg-[#5856d6]"],
-[class*="bg-[#5856d6]"] *,
-[class*="bg-[#24292e]"],
-[class*="bg-[#24292e]"] *,
+button.bg-blue-600,
+button.bg-blue-600 *,
+a.bg-blue-600,
+a.bg-blue-600 *,
+button.bg-red-600,
+button.bg-red-600 *,
+a.bg-red-600,
+a.bg-red-600 *,
+button.bg-pink-600,
+button.bg-pink-600 *,
+a.bg-pink-600,
+a.bg-pink-600 *,
+button.bg-amber-600,
+button.bg-amber-600 *,
+a.bg-amber-600,
+a.bg-amber-600 *,
+button[class*="bg-[#007aff]"],
+button[class*="bg-[#007aff]"] *,
+a[class*="bg-[#007aff]"],
+a[class*="bg-[#007aff]"] *,
+button[class*="bg-[#25D366]"],
+button[class*="bg-[#25D366]"] *,
+a[class*="bg-[#25D366]"],
+a[class*="bg-[#25D366]"] *,
+button[class*="bg-[#34c759]"],
+button[class*="bg-[#34c759]"] *,
+a[class*="bg-[#34c759]"],
+a[class*="bg-[#34c759]"] *,
+button[class*="bg-[#0077b5]"],
+button[class*="bg-[#0077b5]"] *,
+a[class*="bg-[#0077b5]"],
+a[class*="bg-[#0077b5]"] *,
+button[class*="bg-[#5856d6]"],
+button[class*="bg-[#5856d6]"] *,
+a[class*="bg-[#5856d6]"],
+a[class*="bg-[#5856d6]"] *,
+button[class*="bg-[#24292e]"],
+button[class*="bg-[#24292e]"] *,
+a[class*="bg-[#24292e]"],
+a[class*="bg-[#24292e]"] *,
 button[class*="bg-blue"],
+button[class*="bg-blue"] *,
 button[class*="bg-red"],
+button[class*="bg-red"] *,
 a[class*="bg-blue"],
+a[class*="bg-blue"] *,
 a[class*="bg-red"],
+a[class*="bg-red"] *,
 #intro-boot-screen,
 #intro-boot-screen * {
   color: #ffffff !important;
@@ -452,20 +476,34 @@ a[class*="bg-red"],
 }
 
 /* EXCEÇÃO OBRIGATÓRIA: Botões com fundo azul ou vermelho mantêm texto branco */
-.light-theme .bg-blue-600,
-.light-theme .bg-blue-600 *,
-.light-theme .bg-red-600,
-.light-theme .bg-red-600 *,
-.light-theme [class*="bg-[#007aff]"],
-.light-theme [class*="bg-[#007aff]"] *,
-.light-theme [class*="bg-[#25D366]"],
-.light-theme [class*="bg-[#25D366]"] *,
-.light-theme [class*="bg-[#34c759]"],
-.light-theme [class*="bg-[#34c759]"] *,
-.light-theme [class*="bg-[#0077b5]"],
-.light-theme [class*="bg-[#0077b5]"] *,
-.light-theme [class*="bg-[#5856d6]"],
-.light-theme [class*="bg-[#5856d6]"] *,
+.light-theme button.bg-blue-600,
+.light-theme button.bg-blue-600 *,
+.light-theme a.bg-blue-600,
+.light-theme a.bg-blue-600 *,
+.light-theme button.bg-red-600,
+.light-theme button.bg-red-600 *,
+.light-theme a.bg-red-600,
+.light-theme a.bg-red-600 *,
+.light-theme button[class*="bg-[#007aff]"],
+.light-theme button[class*="bg-[#007aff]"] *,
+.light-theme a[class*="bg-[#007aff]"],
+.light-theme a[class*="bg-[#007aff]"] *,
+.light-theme button[class*="bg-[#25D366]"],
+.light-theme button[class*="bg-[#25D366]"] *,
+.light-theme a[class*="bg-[#25D366]"],
+.light-theme a[class*="bg-[#25D366]"] *,
+.light-theme button[class*="bg-[#34c759]"],
+.light-theme button[class*="bg-[#34c759]"] *,
+.light-theme a[class*="bg-[#34c759]"],
+.light-theme a[class*="bg-[#34c759]"] *,
+.light-theme button[class*="bg-[#0077b5]"],
+.light-theme button[class*="bg-[#0077b5]"] *,
+.light-theme a[class*="bg-[#0077b5]"],
+.light-theme a[class*="bg-[#0077b5]"] *,
+.light-theme button[class*="bg-[#5856d6]"],
+.light-theme button[class*="bg-[#5856d6]"] *,
+.light-theme a[class*="bg-[#5856d6]"],
+.light-theme a[class*="bg-[#5856d6]"] *,
 .light-theme button[class*="bg-blue"],
 .light-theme button[class*="bg-blue"] *,
 .light-theme a[class*="bg-blue"],
@@ -703,4 +741,74 @@ html:not(.dark) .ios-header-contour-label {
 .nova-menubar-active {
   background: linear-gradient(135deg, rgba(0,242,254,0.18), rgba(168,85,247,0.18)) !important;
 }
+
+/* --- FORÇA TEXTO PRETO NO MODO DIA EXCLUSIVAMENTE NO MOBILE --- */
+@media (max-width: 1023px) {
+  html:not(.dark) .mobile-experience,
+  html:not(.dark) [class*="lg:hidden"],
+  html:not(.dark) [class*="lg:hidden"] h1,
+  html:not(.dark) [class*="lg:hidden"] h2,
+  html:not(.dark) [class*="lg:hidden"] h3,
+  html:not(.dark) [class*="lg:hidden"] h4,
+  html:not(.dark) [class*="lg:hidden"] p,
+  html:not(.dark) [class*="lg:hidden"] label,
+  html:not(.dark) [class*="lg:hidden"] [class*="text-white"]:not(button):not(a):not([class*="bg-blue"]):not([class*="bg-red"]):not([class*="bg-purple"]):not([class*="bg-emerald"]),
+  html:not(.dark) [class*="lg:hidden"] [class*="text-zinc-100"],
+  html:not(.dark) [class*="lg:hidden"] [class*="text-zinc-200"],
+  html:not(.dark) [class*="lg:hidden"] [class*="text-zinc-300"] {
+    color: #09090b !important;
+  }
+
+  /* Subtítulos e metadados em cinza-grafite escuro no mobile */
+  @media (max-width: 1023px) {
+    html:not(.dark) [class*="lg:hidden"] .text-muted-foreground,
+    html:not(.dark) [class*="lg:hidden"] .mono-label,
+    html:not(.dark) [class*="lg:hidden"] [class*="text-zinc-400"],
+    html:not(.dark) [class*="lg:hidden"] [class*="text-zinc-500"] {
+      color: #27272a !important;
+    }
+  }
+
+  /* Mantém texto branco apenas nos botões de ação coloridos */
+  html:not(.dark) [class*="lg:hidden"] button[class*="bg-blue"],
+  html:not(.dark) [class*="lg:hidden"] button[class*="bg-blue"] *,
+  html:not(.dark) [class*="lg:hidden"] a[class*="bg-blue"],
+  html:not(.dark) [class*="lg:hidden"] a[class*="bg-blue"] *,
+  html:not(.dark) [class*="lg:hidden"] button[class*="bg-red"],
+  html:not(.dark) [class*="lg:hidden"] button[class*="bg-red"] *,
+  html:not(.dark) [class*="lg:hidden"] a[class*="bg-red"],
+  html:not(.dark) [class*="lg:hidden"] a[class*="bg-red"] *,
+  html:not(.dark) [class*="lg:hidden"] button[class*="bg-purple"],
+  html:not(.dark) [class*="lg:hidden"] button[class*="bg-purple"] *,
+  html:not(.dark) [class*="lg:hidden"] a[class*="bg-purple"],
+  html:not(.dark) [class*="lg:hidden"] a[class*="bg-purple"] *,
+  html:not(.dark) [class*="lg:hidden"] button[class*="bg-emerald"],
+  html:not(.dark) [class*="lg:hidden"] button[class*="bg-emerald"] *,
+  html:not(.dark) [class*="lg:hidden"] a[class*="bg-emerald"],
+  html:not(.dark) [class*="lg:hidden"] a[class*="bg-emerald"] * {
+    color: #ffffff !important;
+  }
+}
+
+/* FORÇA TEXTO PRETO E GRAFITE EM TODOS OS PARÁGRAFOS E TEXTOS NO MODO DIA */
+html:not(.dark) p,
+html:not(.dark) article,
+html:not(.dark) section p,
+html:not(.dark) .window-frame p,
+html:not(.dark) .mobile-experience p,
+html:not(.dark) li,
+html:not(.dark) .text-muted-foreground,
+html:not(.dark) [class*="text-zinc-"],
+html:not(.dark) [class*="text-white/"] {
+  color: #18181b !important;
+}
+
+html:not(.dark) h1,
+html:not(.dark) h2,
+html:not(.dark) h3,
+html:not(.dark) h4,
+html:not(.dark) strong {
+  color: #09090b !important;
+}
+
 

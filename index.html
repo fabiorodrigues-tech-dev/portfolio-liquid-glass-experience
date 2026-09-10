@@ -34,17 +34,15 @@
         color-scheme: dark;
       }
 
-      /* Exceção Estrita: Mantém texto branco apenas nos botões de fundo escuro e colorido */
-      .bg-blue-600, .bg-blue-600 *,
-      .bg-red-600, .bg-red-600 *,
-      [class*="bg-[#007aff]"], [class*="bg-[#007aff]"] *,
-      [class*="bg-[#25D366]"], [class*="bg-[#25D366]"] *,
-      [class*="bg-[#34c759]"], [class*="bg-[#34c759]"] *,
-      [class*="bg-[#0077b5]"], [class*="bg-[#0077b5]"] *,
-      [class*="bg-[#5856d6]"], [class*="bg-[#5856d6]"] *,
-      [class*="bg-[#24292e]"], [class*="bg-[#24292e]"] *,
-      button[class*="bg-blue"], button[class*="bg-red"],
-      a[class*="bg-blue"], a[class*="bg-red"] {
+      /* Mantém texto branco EXCLUSIVAMENTE nos botões de ação sólidos */
+      html:not(.dark) button[class*="bg-blue"],
+      html:not(.dark) a[class*="bg-blue"],
+      html:not(.dark) button[class*="bg-purple"],
+      html:not(.dark) a[class*="bg-purple"],
+      html:not(.dark) button[class*="bg-red"],
+      html:not(.dark) a[class*="bg-red"],
+      html:not(.dark) button[class*="bg-emerald"],
+      html:not(.dark) a[class*="bg-emerald"] {
         color: #ffffff !important;
       }
     </style>

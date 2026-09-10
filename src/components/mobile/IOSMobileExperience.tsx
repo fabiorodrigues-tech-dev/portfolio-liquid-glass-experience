@@ -177,7 +177,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
 
 
   return (
-    <div className="relative w-full h-[100dvh] overflow-hidden text-zinc-900 dark:text-white font-sans selection:bg-blue-500 selection:text-white">
+    <div className="mobile-experience relative w-full h-[100dvh] overflow-hidden text-zinc-900 dark:text-white font-sans selection:bg-blue-500 selection:text-white">
       {/* 1. Wallpaper Dinâmico no Fundo do Mobile */}
       <div className="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none select-none">
         {/* Wallpaper Oficial do iOS 26 adaptativo */}
@@ -235,10 +235,10 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             {/* Grid Superior de Widgets */}
             <section className="grid grid-cols-2 gap-3.5">
               {/* Widget 1: Clima (Recife 25°) */}
-              <div className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[24px] p-4 flex flex-col justify-between select-none relative overflow-hidden group">
+              <div className="bg-white/80 dark:bg-white/[0.04] border border-black/10 dark:border-white/10 backdrop-blur-2xl rounded-[24px] p-4 shadow-sm flex flex-col justify-between select-none relative overflow-hidden group">
                 <div className="flex items-start justify-between">
                   <div>
-                    <span className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 uppercase tracking-wider block">
+                    <span className="text-zinc-600 dark:text-white/60 font-bold text-[10px] uppercase tracking-wider block">
                       Recife
                     </span>
                     <span className="text-3xl font-bold tracking-tight text-[#09090b] dark:text-white mt-0.5 block">
@@ -250,10 +250,10 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="text-[11px] font-medium text-[#27272a] dark:text-zinc-200 block truncate">
+                  <span className="text-zinc-800 dark:text-white/80 font-medium text-xs block truncate">
                     Predominantemente Limpo
                   </span>
-                  <span className="text-[9.5px] text-zinc-600 dark:text-zinc-400 block font-mono">
+                  <span className="text-zinc-600 dark:text-white/60 text-[10px] block font-mono">
                     Máx: 29° • Mín: 23°
                   </span>
                 </div>
@@ -262,7 +262,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
               {/* Widget 2: Foto de Perfil & Status */}
               <div
                 onClick={() => handleTabSelect('sobre')}
-                className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[24px] p-4 flex flex-col justify-between select-none cursor-pointer active:scale-98 transition-transform relative overflow-hidden"
+                className="bg-white/80 dark:bg-white/[0.04] border border-black/10 dark:border-white/10 backdrop-blur-2xl rounded-[24px] p-4 shadow-sm flex flex-col justify-between select-none cursor-pointer active:scale-98 transition-transform relative overflow-hidden"
               >
                 <div className="flex items-center space-x-2.5">
                   <div className="relative shrink-0">
@@ -277,19 +277,19 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                     <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#34c759] border-2 border-white dark:border-[#1c1c1e] animate-pulse" />
                   </div>
                   <div className="overflow-hidden">
-                    <h2 className="text-xs font-bold text-[#09090b] dark:text-white truncate">
+                    <h2 className="text-zinc-950 dark:text-white font-bold text-xs truncate">
                       Fábio Rodrigues
                     </h2>
-                    <span className="text-[10px] text-blue-600 dark:text-blue-400 font-medium block truncate">
+                    <span className="text-zinc-700 dark:text-white/70 text-[11px] block truncate">
                       Creative Technologist
                     </span>
                   </div>
                 </div>
                 <div className="mt-2 pt-2 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
-                  <span className="text-[10px] text-[#27272a] dark:text-zinc-400 flex items-center gap-1 font-medium">
+                  <span className="text-zinc-600 dark:text-white/60 text-[10px] flex items-center gap-1 font-medium">
                     <MapPin className="w-3 h-3 text-[#ff3b30]" /> Recife, PE
                   </span>
-                  <span className="text-[9.5px] text-blue-600 dark:text-blue-400 font-semibold flex items-center">
+                  <span className="text-zinc-900 dark:text-white font-semibold text-[10px] flex items-center">
                     Ver Bio <ArrowUpRight className="w-2.5 h-2.5 ml-0.5" />
                   </span>
                 </div>
@@ -297,9 +297,9 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
             </section>
 
             {/* Cartão de Apresentação Executiva */}
-            <section className="backdrop-blur-3xl backdrop-saturate-180 bg-white/45 dark:bg-[#0c0e17]/45 border border-white/30 dark:border-white/15 text-zinc-950 dark:text-white shadow-[0_8px_25px_rgba(0,0,0,0.06)] dark:shadow-xl rounded-[28px] p-5 space-y-4">
+            <section className="bg-white/85 dark:bg-white/[0.04] border border-black/10 dark:border-white/10 backdrop-blur-2xl rounded-[28px] p-5 shadow-sm space-y-4">
               <div className="flex items-center justify-between">
-                <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-500/15 text-blue-700 dark:text-blue-400 border border-blue-500/30">
+                <span className="bg-black/[0.06] dark:bg-white/10 text-zinc-800 dark:text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                   APRESENTAÇÃO EXECUTIVA
                 </span>
                 <span className="text-[11px] font-mono font-semibold text-zinc-600 dark:text-zinc-400">
@@ -311,27 +311,27 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                 <h1 className="text-xl font-bold tracking-tight text-[#09090b] dark:text-white">
                   Fábio Rodrigues
                 </h1>
-                <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 mt-0.5">
+                <p className="text-zinc-700 dark:text-zinc-300 font-semibold text-xs mt-1">
                   Full Stack Developer • Founder Wolf Agency • Bacharel em Design (UniFBV)
                 </p>
-                <p className="text-xs text-[#27272a] dark:text-zinc-300 mt-2.5 leading-relaxed">
+                <p className="text-zinc-800 dark:text-zinc-200 text-xs leading-relaxed mt-2.5">
                   Convergência entre arquitetura de microsserviços corporativos de alta performance (Java 21, Spring Boot 3, LGPD, React 19) e liderança em direção de arte, inteligência de tráfego de alta escala e captação audiovisual 4K ProRes (60fps).
                 </p>
               </div>
 
               {/* Grid de Métricas Chave */}
               <div className="grid grid-cols-3 gap-2 py-1 text-center font-mono">
-                <div className="p-2.5 rounded-2xl bg-white/60 dark:bg-white/[0.04] border border-black/10 dark:border-white/5 shadow-sm">
-                  <span className="text-xs font-bold text-blue-600 dark:text-blue-400 block">99.99%</span>
-                  <span className="text-[9px] text-[#27272a] dark:text-zinc-400 block font-medium">Uptime Dev</span>
+                <div className="bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/10 rounded-xl p-2.5 text-center">
+                  <span className="text-zinc-950 dark:text-white font-black text-sm block">99.99%</span>
+                  <span className="text-zinc-600 dark:text-zinc-400 text-[10px] font-medium block">Uptime Dev</span>
                 </div>
-                <div className="p-2.5 rounded-2xl bg-white/60 dark:bg-white/[0.04] border border-black/10 dark:border-white/5 shadow-sm">
-                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 block">&gt; 185%</span>
-                  <span className="text-[9px] text-[#27272a] dark:text-zinc-400 block font-medium">ROAS Médio</span>
+                <div className="bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/10 rounded-xl p-2.5 text-center">
+                  <span className="text-zinc-950 dark:text-white font-black text-sm block">&gt; 185%</span>
+                  <span className="text-zinc-600 dark:text-zinc-400 text-[10px] font-medium block">ROAS Médio</span>
                 </div>
-                <div className="p-2.5 rounded-2xl bg-white/60 dark:bg-white/[0.04] border border-black/10 dark:border-white/5 shadow-sm">
-                  <span className="text-xs font-bold text-purple-600 dark:text-purple-400 block">4K 60fps</span>
-                  <span className="text-[9px] text-[#27272a] dark:text-zinc-400 block font-medium">Captação</span>
+                <div className="bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/10 rounded-xl p-2.5 text-center">
+                  <span className="text-zinc-950 dark:text-white font-black text-sm block">4K 60fps</span>
+                  <span className="text-zinc-600 dark:text-zinc-400 text-[10px] font-medium block">Captação</span>
                 </div>
               </div>
 
@@ -348,7 +348,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                 <button
                   type="button"
                   onClick={() => handleTabSelect('contato')}
-                  className="py-3 px-4 rounded-xl bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-[#09090b] dark:text-white text-xs font-bold flex items-center gap-1.5 border border-black/10 dark:border-white/10 active:scale-98 transition-transform cursor-pointer"
+                  className="bg-black/[0.05] hover:bg-black/10 border border-black/15 text-zinc-900 dark:bg-white/[0.08] dark:border-white/15 dark:text-white font-bold text-xs px-4 py-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-98 cursor-pointer"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span>CONTATO</span>
@@ -423,7 +423,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                   target="_blank"
                   rel="noreferrer"
                   onClick={triggerHaptic}
-                  className="py-2.5 px-4 rounded-xl bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-[#09090b] dark:text-white text-xs font-bold flex items-center gap-1.5 border border-black/10 dark:border-white/10 active:scale-98 transition-transform"
+                  className="py-2.5 px-4 rounded-xl bg-black/5 hover:bg-black/10 border border-black/15 text-zinc-900 dark:bg-white/10 dark:border-white/15 dark:text-white font-bold text-xs flex items-center gap-1.5 active:scale-98 transition-all cursor-pointer"
                   title="Repositório GitHub"
                 >
                   <GithubIcon className="w-3.5 h-3.5" />
@@ -483,7 +483,7 @@ export const IOSMobileExperience: React.FC<IOSMobileExperienceProps> = ({
                   target="_blank"
                   rel="noreferrer"
                   onClick={triggerHaptic}
-                  className="py-2.5 px-4 rounded-xl bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-[#09090b] dark:text-white text-xs font-bold flex items-center gap-1.5 border border-black/10 dark:border-white/10 active:scale-98 transition-transform"
+                  className="py-2.5 px-4 rounded-xl bg-black/5 hover:bg-black/10 border border-black/15 text-zinc-900 dark:bg-white/10 dark:border-white/15 dark:text-white font-bold text-xs flex items-center gap-1.5 active:scale-98 transition-all cursor-pointer"
                   title="Repositório GitHub"
                 >
                   <GithubIcon className="w-3.5 h-3.5" />

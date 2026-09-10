@@ -70,7 +70,7 @@ export const ProjectsTab: React.FC<ProjectsTabProps> = ({ onSelectProject, theme
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 transition-all duration-300">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch transition-all duration-300">
         {filteredProjects.map((project) => (
           <ProjectCard
             key={project.id}

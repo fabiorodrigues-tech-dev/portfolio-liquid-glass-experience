@@ -29,14 +29,15 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   return (
     <article
       onClick={() => onSelectProject(project)}
-      className="bg-white/40 dark:bg-white/[0.05] backdrop-blur-xl border border-white/70 dark:border-white/10 rounded-2xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] dark:shadow-none transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer group flex flex-col justify-between relative overflow-hidden"
+      className="bg-white/40 dark:bg-white/[0.05] backdrop-blur-xl border border-white/70 dark:border-white/10 rounded-2xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] dark:shadow-none transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer group flex flex-col justify-between h-full relative overflow-hidden"
     >
       {/* Card Ambient Glow */}
       <div
         className={`absolute -right-16 -top-16 w-36 h-36 rounded-full bg-gradient-to-br ${project.imageGradient} blur-2xl opacity-40 pointer-events-none group-hover:opacity-70 transition-opacity`}
       />
 
-      <div>
+      {/* Bloco Superior: Badge, Título, Subtítulo e Parágrafo Descritivo */}
+      <div className="flex-1 flex flex-col">
         {/* Header: Category Badge & QuickLook trigger */}
         <div className="flex items-center justify-between gap-2 mb-3">
           <span
@@ -71,36 +72,50 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         <p className="text-[12.5px] leading-relaxed text-zinc-800 dark:text-zinc-100 mt-2.5">
           {project.description}
         </p>
+      </div>
 
-        {/* Specific Action Buttons (e.g. Demo NOVA, Ação SOFIA, Repositório GitHub) */}
-        {project.actionButtons && project.actionButtons.length > 0 && (
+      {/* Bloco Inferior: Botões de Ação + Métricas + Tags de Tecnologia com mt-auto */}
+      <div className="mt-auto pt-4 flex flex-col gap-3.5">
+        {/* Linha dos Botões de Ação (Demo / GitHub / Drive) */}
+        {((project.actionButtons && project.actionButtons.length > 0) || project.id === 'unreal-metahuman-vivian' || project.title.includes('UNREAL 5.2')) && (
           <div
-            className="flex flex-col sm:flex-row flex-wrap gap-2 my-3 pt-2 border-t border-black/10 dark:border-white/10"
+            className="flex flex-col sm:flex-row flex-wrap gap-2 pt-2 border-t border-black/10 dark:border-white/10"
             onClick={(e) => e.stopPropagation()}
           >
-            {project.actionButtons.map((btn, bIdx) => (
+            {project.id === 'unreal-metahuman-vivian' || project.title.includes('UNREAL 5.2') ? (
               <a
-                key={bIdx}
-                href={btn.url}
+                href="https://drive.google.com/drive/folders/1AsF5mKlXNVl4OMfU4rnzychZqWkDMy63?usp=sharing"
                 target="_blank"
                 rel="noreferrer"
-                className={`flex items-center justify-between px-4 py-2 rounded-xl text-xs font-bold tracking-wide transition-all shadow-sm active:scale-95 ${
-                  btn.customClass
-                    ? btn.customClass
-                    : btn.variant === 'primary'
-                    ? 'bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-xl'
-                    : 'bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 text-zinc-900 dark:bg-white/10 dark:border-white/15 dark:text-white dark:hover:bg-white/15 font-bold px-4 py-2 rounded-xl'
-                }`}
+                className="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all active:scale-95"
               >
-                <span>{btn.label}</span>
-                <ArrowUpRight className="w-3.5 h-3.5 ml-1.5 shrink-0" />
+                ACESSAR PROJETO NO DRIVE ↗
               </a>
-            ))}
+            ) : (
+              project.actionButtons?.map((btn, bIdx) => (
+                <a
+                  key={bIdx}
+                  href={btn.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`flex items-center justify-between px-4 py-2 rounded-xl text-xs font-bold tracking-wide transition-all shadow-sm active:scale-95 ${
+                    btn.customClass
+                      ? btn.customClass
+                      : btn.variant === 'primary'
+                      ? 'bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-xl'
+                      : 'bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 text-zinc-900 dark:bg-white/10 dark:border-white/15 dark:text-white dark:hover:bg-white/15 font-bold px-4 py-2 rounded-xl'
+                  }`}
+                >
+                  <span>{btn.label}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 ml-1.5 shrink-0" />
+                </a>
+              ))
+            )}
           </div>
         )}
 
-        {/* Project Metrics Display with Kit Accents */}
-        <div className="grid grid-cols-3 gap-2 my-4">
+        {/* Linha das Caixas de Métricas */}
+        <div className="grid grid-cols-3 gap-2">
           {project.metrics.map((m, idx) => (
             <div
               key={idx}
@@ -119,66 +134,51 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           ))}
         </div>
 
-        {/* Botão de Ação Oficial UNREAL 5.2 (Drive) */}
-        {(project.id === 'unreal-metahuman-vivian' || project.title.includes('UNREAL 5.2')) && (
-          <div className="mt-4 flex gap-2.5" onClick={(e) => e.stopPropagation()}>
-            <a
-              href="https://drive.google.com/drive/folders/1AsF5mKlXNVl4OMfU4rnzychZqWkDMy63?usp=sharing"
-              target="_blank"
-              rel="noreferrer"
-              className="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all active:scale-95"
-            >
-              ACESSAR PROJETO NO DRIVE ↗
-            </a>
+        {/* Linha Divisória e Tags de Tecnologia */}
+        <div className="h-px w-full bg-black/60 dark:bg-white/10 my-0.5" />
+
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex flex-wrap gap-1">
+            {project.tags.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="px-2 py-0.5 rounded-md text-[10.5px] font-medium bg-black/[0.04] dark:bg-white/[0.04] text-zinc-800 dark:text-zinc-100"
+              >
+                {tag}
+              </span>
+            ))}
+            {project.tags.length > 3 && (
+              <span className="px-1.5 py-0.5 rounded-md text-[10px] bg-black/[0.04] dark:bg-white/[0.04] text-zinc-600 dark:text-zinc-400">
+                +{project.tags.length - 3}
+              </span>
+            )}
           </div>
-        )}
-      </div>
 
-      {/* Explicit Divider */}
-      <div className="h-px w-full bg-black/60 dark:bg-white/10 my-3.5" />
-
-      {/* Card Footer: Tech Tags & Links */}
-      <div className="flex items-center justify-between gap-2 mt-auto">
-        <div className="flex flex-wrap gap-1">
-          {project.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className="px-2 py-0.5 rounded-md text-[10.5px] font-medium bg-black/[0.04] dark:bg-white/[0.04] text-zinc-800 dark:text-zinc-100"
-            >
-              {tag}
-            </span>
-          ))}
-          {project.tags.length > 3 && (
-            <span className="px-1.5 py-0.5 rounded-md text-[10px] bg-black/[0.04] dark:bg-white/[0.04] text-zinc-600 dark:text-zinc-400">
-              +{project.tags.length - 3}
-            </span>
-          )}
-        </div>
-
-        <div className="flex items-center space-x-1.5 shrink-0" onClick={(e) => e.stopPropagation()}>
-          {project.githubUrl && (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="p-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 text-zinc-900 dark:bg-white/10 dark:border-white/15 dark:text-white dark:hover:bg-white/15 transition-colors"
-              title="GitHub / Repositório"
-            >
-              <GithubIcon className="w-3.5 h-3.5" />
-            </a>
-          )}
-          {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="p-1.5 rounded-lg text-white shadow-sm transition-transform active:scale-95"
-              style={{ backgroundColor: accentHex }}
-              title="Abrir Link / Detalhes"
-            >
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
-          )}
+          <div className="flex items-center space-x-1.5 shrink-0" onClick={(e) => e.stopPropagation()}>
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="p-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 text-zinc-900 dark:bg-white/10 dark:border-white/15 dark:text-white dark:hover:bg-white/15 transition-colors"
+                title="GitHub / Repositório"
+              >
+                <GithubIcon className="w-3.5 h-3.5" />
+              </a>
+            )}
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="p-1.5 rounded-lg text-white shadow-sm transition-transform active:scale-95"
+                style={{ backgroundColor: accentHex }}
+                title="Abrir Link / Detalhes"
+              >
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </article>
